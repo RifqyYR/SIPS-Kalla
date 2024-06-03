@@ -25,6 +25,8 @@
                 <main class="flex flex-grow flex-col p-4 py-8">
                     {{ $slot }}
             </div>
+            <!-- Footer -->
+            @include('layouts.footer')
         </div>
         {{-- <div class="min-h-screen bg-gray-100 flex flex-row">
             @include('layouts.navigation')

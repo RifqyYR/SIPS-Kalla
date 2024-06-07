@@ -1,27 +1,55 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Service') }}
+            {{ __('Client Cars') }}
         </h2>
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
-        <div class="pb-4">
-            <label for="table-search" class="sr-only justify-end">Search</label>
-            <div class="relative mt-1">
-                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
+    <div x-data="{ showModal: false }">
+        <div class="flex justify-between pb-4">
+            <div class="pb-4">
+                <label for="table-search" class="sr-only justify-end">Search</label>
+                <div class="relative mt-1">
+                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
                 </div>
-                <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
+            </div>
+            <div class="pb-4">
+                <x-primary-button @click="showModal = true" id="defaultModalButton" type="button">Add Data</x-primary-button>
             </div>
         </div>
-        <div class="pb-4">
-            <x-primary-button>Add Item</x-primary-button>
-        </div>
+
+        <!-- Main modal -->
+        <x-default-modal>
+            <!-- Modal body -->
+            <form action="#">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                    <div>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Client Name</label>
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type client name" required="">
+                    </div>
+                    <div>
+                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
+                        <input type="text" name="type" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type of client car" required="">
+                    </div>
+                    <div>
+                        <label for="plate_number" class="block mb-2 text-sm font-medium text-gray-900">Plate Number</label>
+                        <input type="text" name="plate_number" id="plate_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Plat number of client car" required="">
+                    </div>
+                    <div>
+                        <label for="last_service" class="block mb-2 text-sm font-medium text-gray-900">Last Service Date</label>
+                        <input type="date" name="last_service" id="last_service" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+                    </div>
+                </div>
+            </form>
+        </x-default-modal>
     </div>
+    
     
     <!-- Table --> 
     <div class="relative overflow-x-auto shadow sm:rounded-lg">
@@ -35,22 +63,16 @@
                         Client
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Cars
+                        Car Type
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Service Type
+                        Plate Number
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Address
+                        Last Service Date
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Duration
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Additional Info
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Status
+                        Next Service Date
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
@@ -64,26 +86,20 @@
                             <span>1</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4">
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         Dimas
                     </td>
                     <td class="px-6 py-4">
                         Bumblebee
                     </td>
                     <td class="px-6 py-4">
-                        Oli
+                        DD 3030 XX
                     </td>
                     <td class="px-6 py-4">
-                        Gowa
+                        2024/05/30
                     </td>
                     <td class="px-6 py-4">
-                        0 days 1 Hours
-                    </td>
-                    <td class="px-6 py-4">
-                        Sick
-                    </td>
-                    <td class="px-6 py-4">
-                        Clear
+                        2025/05/30
                     </td>
                     <td class="px-6 py-4">
                         <x-secondary-button>
@@ -96,7 +112,7 @@
                 </tr>
             </tbody>
         </table>
-        
+
         <!-- Pagination -->
         <nav class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900">1-10</span> of <span class="font-semibold text-gray-900">1000</span></span>
@@ -125,5 +141,6 @@
             </ul>
         </nav>
     </div>
-
+    
 </x-app-layout>
+

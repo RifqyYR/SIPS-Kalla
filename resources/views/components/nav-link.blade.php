@@ -8,8 +8,8 @@ $classes = ($active ?? false)
 
 @php
 $classes = ($active ?? false)
-            ? 'flex items-center px-4 p-2 font-bold font-normal text-green-800 rounded-lg bg-gray-100 focus:outline-none transition duration-150 ease-in-out'
-            : 'flex items-center px-4 p-2 font-normal text-gray-900 hover:text-green-900 rounded-lg hover:bg-gray-100 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out';
+            ? 'flex items-center px-4 p-2 font-bold font-normal text-white rounded-lg bg-[#3B7A57] focus:outline-none transition duration-150 ease-in-out'
+            : 'flex items-center px-4 p-2 font-normal text-white hover:text-white rounded-lg hover:bg-[#3B7A57] focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out';
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>

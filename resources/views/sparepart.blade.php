@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Sparepart Table') }}
+            {{ __('Sparepart') }}
         </h2>
     </x-slot>
 
@@ -84,6 +84,8 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Pagination -->
         <nav class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900">1-10</span> of <span class="font-semibold text-gray-900">1000</span></span>
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">

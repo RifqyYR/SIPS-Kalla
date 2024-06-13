@@ -10,22 +10,34 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/readmore-js@3.0.0-beta-1/dist/readmore.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+        
     </head>
-    <body class="font-sans antialiased flex w-screen h-screen">
-        <div class="flex-col">
+    <body class="font-sans antialiased min-h-screen bg-gray-100">
             @include('layouts.sidebar')
-        </div>
-        <div class="flex flex-col flex-grow">
-            @include('layouts.navigation')
-            <div class="flex flex-col">
-                <!-- Page Content -->
-                <main class="flex flex-grow flex-col p-4 py-8">
-                    {{ $slot }}
-            </div>
-        </div>
+            <main class="w-[calc(100%-256px)] ml-64">
+                <div class="flex-row items-center pb-8">
+                    <div class="w-full">
+                        @include('layouts.navigation')
+                    </div>
+                    <div class="w-full p-12">
+                        {{ $slot }}
+                    </div>
+                </div>
+                @include('layouts.footer')
+            </main>
+
+
+
         {{-- <div class="min-h-screen bg-gray-100 flex flex-row">
             @include('layouts.navigation')
 

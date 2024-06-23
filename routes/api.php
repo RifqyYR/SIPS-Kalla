@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\SuggestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('v1')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('api.register');
     Route::post('/login', [AuthController::class, 'login'])->name('api.login');
     Route::get('/logout', [AuthController::class, 'logout'])->name('api.logout')->middleware('auth:sanctum');
+    
+    Route::middleware('auth:sanctum')->group(function () {
+        // Suggestion
+        Route::group(['prefix' => 'suggestion'], function() {
+            Route::post('/create', [SuggestionController::class, 'create'])->name('api.suggestion.create');
+            Route::get('/get-suggestion', [SuggestionController::class, 'getUserSuggestions'])->name('api.suggestion.get');
+        });
+    });
 });

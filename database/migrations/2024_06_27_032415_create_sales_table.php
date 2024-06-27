@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid()->unique();
             $table->string('img_url');
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->string('phone_number');
             $table->timestamps();
         });

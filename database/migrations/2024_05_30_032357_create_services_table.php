@@ -21,9 +21,9 @@ return new class extends Migration
             $table->enum('type', ['BOOK', 'VISIT']);
             $table->string('vehicle_km');
             $table->string('additional_info');
-            $table->string('address');
-            $table->double('lat');
-            $table->double('long');
+            $table->string('address')->nullable();
+            $table->double('lat')->nullable();
+            $table->double('long')->nullable();
             $table->string('service_type');
             $table->enum('status', ['WAITING', 'CONFIRMED', 'CANCELLED', 'DONE']);
             $table->timestamps();

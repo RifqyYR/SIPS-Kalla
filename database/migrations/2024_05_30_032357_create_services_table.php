@@ -13,19 +13,23 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clients_id');
-            $table->unsignedBigInteger('cars_id');
             $table->uuid()->unique();
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_car_id');
             $table->date('date');
             $table->time('time');
-            $table->enum('service_type', ['BOOK', 'VISIT']);
+            $table->enum('type', ['BOOK', 'VISIT']);
+            $table->string('vehicle_km');
+            $table->string('additional_info');
             $table->string('address');
-            $table->string('note');
-            $table->enum('status', ['WAITING', 'CONFIRMED', 'CANCELLED']);
+            $table->double('lat');
+            $table->double('long');
+            $table->string('service_type');
+            $table->enum('status', ['WAITING', 'CONFIRMED', 'CANCELLED', 'DONE']);
             $table->timestamps();
 
-            $table->foreign('clients_id')->references('id')->on('clients')->onDelete('cascade');
-            $table->foreign('cars_id')->references('id')->on('cars')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('client_car_id')->references('id')->on('client_cars')->onDelete('cascade');
         });
     }
 

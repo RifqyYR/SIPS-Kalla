@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spare_parts', function (Blueprint $table) {
+        Schema::create('person_in_charges', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
             $table->string('name');
-            $table->string('price');
-            $table->string('img_url');
+            $table->string('phone_number');
+            $table->enum('sector', ['BOOK_SERVICE', 'VISIT_SERVICE', 'PICK_UP', 'FOOD_ORDER', 'FREE_FOOD', 'ICE_CREAM', 'USED_CAR']);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spare_parts');
+        Schema::dropIfExists('person_in_charges');
     }
 };

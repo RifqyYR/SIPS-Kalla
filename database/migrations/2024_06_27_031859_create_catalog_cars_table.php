@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('catalog_cars', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clients_id');
             $table->uuid()->unique();
-            $table->string('type');
-            $table->string('plate_number');
-            $table->date('last_service');
-            $table->string('next_service');
+            $table->string('name');
+            $table->enum('type', ['NEW', 'USED']);
+            $table->longText('description');
             $table->timestamps();
-
-            $table->foreign('clients_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('catalog_cars');
     }
 };

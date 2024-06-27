@@ -13,11 +13,11 @@ class Service extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'clients_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 
-    public function car()
+    public function clientCar()
     {
-        return $this->belongsTo(Cars::class, 'cars_id', 'id');
+        return $this->belongsTo(ClientCars::class, 'car_id', 'id');
     }
 }

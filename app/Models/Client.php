@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,6 +24,11 @@ class Client extends Authenticatable
 
     public function cars()
     {
-        return $this->hasMany(Cars::class, 'clients_id', 'id');
+        return $this->hasMany(ClientCars::class, 'clients_id', 'id');
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'service_id', 'id');
     }
 }

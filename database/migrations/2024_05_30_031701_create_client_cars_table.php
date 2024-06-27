@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spare_parts', function (Blueprint $table) {
+        Schema::create('client_cars', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->string('name');
-            $table->string('price');
-            $table->string('img_url');
+            $table->unsignedBigInteger('client_id');
+            $table->string('car_type');
+            $table->string('plate_number');
+            $table->date('last_service_date');
+            $table->integer('last_service_km');
             $table->timestamps();
+
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spare_parts');
+        Schema::dropIfExists('cars');
     }
 };

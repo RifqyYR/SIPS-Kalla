@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Api\SuggestionController;
+use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +30,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/get-suggestion', [SuggestionController::class, 'getUserSuggestions'])->name('api.suggestion.get');
         });
     });
+
+    // Promos
+    Route::get('/promos', [GeneralController::class, 'promos'])->name('api.promos');
 });

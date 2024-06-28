@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ResponseResource;
-use App\Models\client;
 use App\Models\Client as ModelsClient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
@@ -44,32 +44,37 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|lowercase',
+            'username' => 'required',
             'password' => 'required|string|min:8',
         ]);
 
         try {
-            $user = ModelsClient::where('email',$request['email'])->first();
-            if(!$user || !Hash::check($request['password'],$user->password)){
+            $client = ModelsClient::where('phone_number',$request['username'])->first();
+            if(!$client || !Hash::check($request['password'],$client->password)){
                 return response()->json([
                     'message' => 'Kredensial tidak valid'
                 ],401);
             }
-            $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-            return response()->json([
-                'access_token' => $token,
-            ]);
+            $token = $client->createToken($client->name.'-AuthToken')->plainTextToken;
+
+            return response()->json(new ResponseResource('Login berhasil', [
+                'token' => $token,
+                'name' => $client->name,
+                'phone' => $client->phone_number,
+            ]), 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Gagal login: ' . $e->getMessage()]);
+            return response()->json(['message' => 'Login gagal: ' . $e->getMessage()]);
         }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $user = $request->bearerToken();
-
-        return response()->json([
-            'test' => $user
-        ]);
+        try {
+            Auth::user()->tokens()->delete();
+    
+            return response()->json(new ResponseResource('Logout berhasil', []), 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Logout gagal: ' . $e->getMessage()]);
+        }
     }
 }

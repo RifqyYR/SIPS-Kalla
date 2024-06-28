@@ -13,15 +13,14 @@ class GeneralController extends Controller
         try {
             $promos = Promo::all();
 
-            return response()->json(new ResponseResource('Berhasil mendapatkan data', [
-                'promos' => $promos->map(function ($promos) {
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', 
+                $promos->map(function ($promos) {
                     return [
                         'id' => $promos->id,
-                        'uuid' => $promos->uuid,
-                        'img_url' => asset('storage/sparepart/' . $promos->img_url)
+                        'imageUrl' => asset('storage/sparepart/' . $promos->img_url)
                     ];
                 })
-            ]), 200);
+            ), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
         }

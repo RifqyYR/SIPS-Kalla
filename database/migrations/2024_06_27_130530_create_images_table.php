@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->unsignedBigInteger('catalog_car_id');
+            $table->unsignedBigInteger('catalog_cars_id');
             $table->string('img_url');
             $table->timestamps();
 
-            $table->foreign('catalog_car_id')->references('id')->on('catalog_cars')->onDelete('cascade');
+            $table->foreign('catalog_cars_id')->references('id')->on('catalog_cars')->onDelete('cascade');
         });
     }
 

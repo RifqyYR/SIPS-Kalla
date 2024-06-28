@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CatalogCarController;
 use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Api\SuggestionController;
 use App\Models\Promo;
@@ -33,4 +34,8 @@ Route::prefix('v1')->group(function () {
 
     // Promos
     Route::get('/promos', [GeneralController::class, 'promos'])->name('api.promos');
+
+    // Used Cars
+    Route::get('/used-car', [CatalogCarController::class, 'getUsedCars'])->name('api.catalog-cars.used');
+    Route::get('/new-car', [CatalogCarController::class, 'getNewCars'])->name('api.catalog-cars.new');
 });

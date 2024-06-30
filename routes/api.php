@@ -46,6 +46,9 @@ Route::prefix('v1')->group(function () {
     // Promos
     Route::get('/promos', [GeneralController::class, 'promos'])->name('api.promos');
 
+    // Sales
+    Route::get('/sales', [GeneralController::class, 'sales'])->name('api.sales');
+
     // Catalog Car
     Route::get('/used-car', [CatalogCarController::class, 'getUsedCars'])->name('api.catalog-cars.used');
     Route::get('/new-car', [CatalogCarController::class, 'getNewCars'])->name('api.catalog-cars.new');

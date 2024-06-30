@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CatalogCarController;
+use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Api\SuggestionController;
 use App\Models\Promo;
@@ -30,6 +31,8 @@ Route::prefix('v1')->group(function () {
             Route::post('/create', [SuggestionController::class, 'create'])->name('api.suggestion.create');
             Route::get('/get-suggestion', [SuggestionController::class, 'getUserSuggestions'])->name('api.suggestion.get');
         });
+
+        Route::get('/client/vehicle', [ClientController::class, 'getClientCars'])->name('api.client.cars');
     });
 
     // Promos

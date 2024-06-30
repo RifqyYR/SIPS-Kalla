@@ -24,7 +24,7 @@ class Client extends Authenticatable
 
     public function cars()
     {
-        return $this->hasMany(ClientCars::class, 'client_id', 'id');
+        return $this->hasMany(ClientCars::class);
     }
 
     public function services()

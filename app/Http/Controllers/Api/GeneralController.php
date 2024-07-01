@@ -7,6 +7,7 @@ use App\Http\Resources\ResponseResource;
 use App\Models\PersonInCharge;
 use App\Models\Promo;
 use App\Models\Sales;
+use Illuminate\Http\Request;
 
 class GeneralController extends Controller
 {
@@ -58,6 +59,27 @@ class GeneralController extends Controller
             if (!$sales) return response()->json(new ResponseResource('Data tidak ditemukan', null), 404);
 
             return response()->json(new ResponseResource('Berhasil mendapatkan data', $sales), 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
+        }
+    }
+
+    public function leadsSales(Request $request)
+    {
+        $request->validate([
+            'sales_id' => 'required'
+        ]);
+
+        try {
+            $sales = Sales::where('id', $request->sales_id)->first();
+
+            if (!$sales) return response()->json(new ResponseResource('Data tidak ditemukan', null), 404);
+
+            $sales->update([
+                'leads' => $sales->leads + 1
+            ]);
+            
+            return response()->json(new ResponseResource('Berhasil menambah data', $sales), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
         }

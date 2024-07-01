@@ -48,7 +48,8 @@ Route::prefix('v1')->group(function () {
 
     // Sales
     Route::get('/sales', [GeneralController::class, 'sales'])->name('api.sales');
-    Route::get('/sales/{id}', [GeneralController::class, 'detailSales'])->name('api.detail-sales');
+    Route::post('/sales/leads', [GeneralController::class, 'leadsSales'])->name('api.sales.leads');
+    Route::get('/sales/{id}', [GeneralController::class, 'detailSales'])->name('api.sales.details');
 
     // PIC
     Route::get('/pic', [GeneralController::class, 'pic'])->name('api.pic');

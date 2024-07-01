@@ -74,6 +74,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ahmad Ali Husain',
             'description' => 'Toyota Yaris Cross adalah SUV mungil yang menawarkan perpaduan sempurna antara kepraktisan, gaya, dan performa. Diluncurkan di Indonesia pada tahun 2021, Yaris Cross langsung menarik perhatian dengan desainnya yang sporty dan modern, serta kabin yang lapang dan nyaman.',
             'phone_number' => '085667894012',
+            'leads' => 0,
         ]);
 
         DB::table('sales')->insert([
@@ -82,6 +83,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ahmad Wibowo',
             'description' => 'Toyota Yaris Cross adalah SUV mungil yang menawarkan perpaduan sempurna antara kepraktisan, gaya, dan performa. Diluncurkan di Indonesia pada tahun 2021, Yaris Cross langsung menarik perhatian dengan desainnya yang sporty dan modern, serta kabin yang lapang dan nyaman.',
             'phone_number' => '085667894012',
+            'leads' => 0,
         ]);
 
         DB::table('sales')->insert([
@@ -90,6 +92,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Dimas Permana',
             'description' => 'Toyota Yaris Cross adalah SUV mungil yang menawarkan perpaduan sempurna antara kepraktisan, gaya, dan performa. Diluncurkan di Indonesia pada tahun 2021, Yaris Cross langsung menarik perhatian dengan desainnya yang sporty dan modern, serta kabin yang lapang dan nyaman.',
             'phone_number' => '085667894012',
+            'leads' => 0,
         ]);
 
         DB::table('person_in_charges')->insert([

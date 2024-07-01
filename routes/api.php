@@ -48,6 +48,10 @@ Route::prefix('v1')->group(function () {
 
     // Sales
     Route::get('/sales', [GeneralController::class, 'sales'])->name('api.sales');
+    Route::get('/sales/{id}', [GeneralController::class, 'detailSales'])->name('api.detail-sales');
+
+    // PIC
+    Route::get('/pic', [GeneralController::class, 'pic'])->name('api.pic');
 
     // Catalog Car
     Route::get('/used-car', [CatalogCarController::class, 'getUsedCars'])->name('api.catalog-cars.used');

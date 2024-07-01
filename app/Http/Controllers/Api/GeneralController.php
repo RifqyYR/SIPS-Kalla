@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ResponseResource;
+use App\Models\PersonInCharge;
 use App\Models\Promo;
 use App\Models\Sales;
 
@@ -31,6 +32,30 @@ class GeneralController extends Controller
     {
         try {
             $sales = Sales::all();
+
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', $sales), 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
+        }
+    }
+
+    public function pic()
+    {
+        try {
+            $pic = PersonInCharge::all();
+
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', $pic), 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
+        }
+    }
+
+    public function detailSales(int $id)
+    {
+        try {
+            $sales = Sales::where('id', $id)->first();
+
+            if (!$sales) return response()->json(new ResponseResource('Data tidak ditemukan', null), 404);
 
             return response()->json(new ResponseResource('Berhasil mendapatkan data', $sales), 200);
         } catch (\Exception $e) {

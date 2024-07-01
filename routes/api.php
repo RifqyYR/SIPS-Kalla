@@ -55,5 +55,7 @@ Route::prefix('v1')->group(function () {
 
     // Catalog Car
     Route::get('/used-car', [CatalogCarController::class, 'getUsedCars'])->name('api.catalog-cars.used');
+    Route::get('/used-car/{id}', [CatalogCarController::class, 'detailUsedCar'])->name('api.catalog-cars.used-detail');
     Route::get('/new-car', [CatalogCarController::class, 'getNewCars'])->name('api.catalog-cars.new');
+    Route::get('/new-car/{id}', [CatalogCarController::class, 'detailNewCar'])->name('api.catalog-cars.new-detail');
 });

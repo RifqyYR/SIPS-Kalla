@@ -9,6 +9,9 @@ class CatalogCars extends Model
 {
     use HasFactory;
 
+    const TYPE_USED = 'USED';
+    const TYPE_NEW = 'NEW';
+
     protected $guarded = [];
 
     public function images()

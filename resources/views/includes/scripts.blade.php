@@ -1,0 +1,65 @@
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/readmore-js@3.0.0-beta-1/dist/readmore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script src="js/main.js"></script>
+@if (request()->routeIs('dashboard'))
+    <script src="js/chart.js"></script>
+@endif
+
+{{-- Search Function --}}
+<script>
+    $(document).ready(function() {
+        function updateSearchResults(data) {
+            $("#search-results").html("");
+            $.each(data.data.data, function(index, admin) {
+                $("#search-results").append(
+                    '<tr class="bg-white border-b hover:bg-gray-50">' +
+                    '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
+                    '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
+                    admin.name + "</td>" +
+                    '<td class="px-6 py-4">' + admin.email + "</td>" +
+                    `<td class="px-6 py-4 text-center"><x-secondary-button class="mr-3"><a href="#" class="font-medium text-blue-600">Edit</a></x-secondary-button><x-danger-button><a href="#" class="font-medium text-white">Delete</a></x-danger-button></td>` +
+                    "</tr>"
+                );
+            });
+            updatePaginationLinks(data);
+        }
+
+        function updatePaginationLinks(data) {
+            $("#pagination-links").html(
+                `<span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                Showing <span class="font-semibold text-gray-900">${data.firstItem}-${data.lastItem}</span> of
+                <span class="font-semibold text-gray-900">${data.total}</span>
+                </span>`
+            );
+
+            $("#pagination-links").append(data.links);
+        }
+
+        function fetchSearchResults(query) {
+            $.ajax({
+                url: "/admin-management/search",
+                type: "GET",
+                data: {
+                    query: query,
+                },
+                success: function(data) {
+                    updateSearchResults(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred:", status, error);
+                }
+            });
+        }
+
+        $("#table-search").on("keyup", function() {
+            var query = $(this).val();
+            fetchSearchResults(query);
+        });
+    });
+</script>

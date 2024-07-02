@@ -16,17 +16,17 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :href="route('sparepart')" :active="request()->routeIs('sparepart')">
+                    <x-nav-link :active="request()->routeIs('sparepart')">
                         {{ __('Suku Cadang') }}
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :href="route('client_cars')" :active="request()->routeIs('client_cars')">
+                    <x-nav-link :active="request()->routeIs('client_cars')">
                         {{ __('Customer') }}
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :href="route('service')" :active="request()->routeIs('service')">
+                    <x-nav-link :active="request()->routeIs('service')">
                         {{ __('Servis') }}
                     </x-nav-link>
                 </li>
@@ -46,7 +46,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :href="route('user_management')" :active="request()->routeIs('user_management')">
+                    <x-nav-link :href="route('admin-management.index')" :active="request()->routeIs('admin-management.index')">
                         {{ __('Manajemen Admin') }}
                     </x-nav-link>
                 </li>

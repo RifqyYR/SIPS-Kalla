@@ -9,8 +9,8 @@ class DashboardController extends Controller
     public function index()
     {
         $data = [
-            'labels' => ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'],
-            'data' => [25, 30, 15, 10, 20],
+            'labels' => ['Category A', 'Category B'],
+            'data' => [25, 30],
         ];
         return view('dashboard', compact('data'));
     }

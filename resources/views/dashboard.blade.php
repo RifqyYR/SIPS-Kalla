@@ -1,50 +1,105 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Beranda') }}
         </h2>
     </x-slot>
 
-    <div class="flex flex-col text-gray-900 gap-12">
-        <div class="flex flex-row w-full gap-20">
-            <x-card>
+    <div class="flex flex-col gap-2 mb-6">
+        <div class="flex flex-col gap-2 md:flex-row">
+            <x-card class="w-full md:w-1/3">
                 <x-slot name="title">
-                    {{ __('Users') }}
+                    {{ __('Jumlah Customer') }}
                 </x-slot>
                 <x-slot name="n_count">
                     {{ __('50') }}
                 </x-slot>
+                <x-slot name="icon">
+                    <img src="ic_user.svg" alt="icon customer" width="30">
+                </x-slot>
             </x-card>
-            <x-card>
+            <x-card class="w-full md:w-1/3">
                 <x-slot name="title">
-                    {{ __('Suggestions') }}
+                    {{ __('Jumlah Suku Cadang') }}
                 </x-slot>
                 <x-slot name="n_count">
-                    {{ __('50') }}
+                    {{ __('20') }}
+                </x-slot>
+                <x-slot name="icon">
+                    <img src="ic_spare-part.svg" alt="icon spare-parts" width="30">
+                </x-slot>
+            </x-card>
+            <x-card class="w-full md:w-1/3">
+                <x-slot name="title">
+                    {{ __('Jumlah Sales') }}
+                </x-slot>
+                <x-slot name="n_count">
+                    {{ __('9') }}
+                </x-slot>
+                <x-slot name="icon">
+                    <img src="ic_sales.svg" alt="icon sales" width="30">
                 </x-slot>
             </x-card>
         </div>
-        <div class="flex flex-row w-full gap-16">
-            <div id="pieChart1" class="w-full h-72 bg-white p-4 rounded-lg shadow"></div>
-            <div id="pieChart2" class="w-full h-72 bg-white p-4 rounded-lg shadow"></div>
-            <div id="pieChart3" class="w-full h-72 bg-white p-4 rounded-lg shadow"></div>
+        <div class="flex flex-col gap-2 md:flex-row">
+            <x-card class="w-full md:w-1/3">
+                <x-slot name="title">
+                    {{ __('Jumlah PIC') }}
+                </x-slot>
+                <x-slot name="n_count">
+                    {{ __('10') }}
+                </x-slot>
+                <x-slot name="icon">
+                    <img src="ic_pic.svg" alt="icon pic" width="30">
+                </x-slot>
+            </x-card>
+            <x-card class="w-full md:w-1/3">
+                <x-slot name="title">
+                    {{ __('Jumlah Promo') }}
+                </x-slot>
+                <x-slot name="n_count">
+                    {{ __('20') }}
+                </x-slot>
+                <x-slot name="icon">
+                    <img src="ic_promo.svg" alt="icon promo" width="30">
+                </x-slot>
+            </x-card>
+            <x-card class="w-full md:w-1/3">
+                <x-slot name="title">
+                    {{ __('Jumlah Admin') }}
+                </x-slot>
+                <x-slot name="n_count">
+                    {{ __('9') }}
+                </x-slot>
+                <x-slot name="icon">
+                    <img src="ic_admin.svg" alt="icon admin" width="30">
+                </x-slot>
+            </x-card>
         </div>
-        <div class="flex justify-center h-96 rounded-lg shadow bg-white">
-            <div id="highChart" class="w-full p-4"></div>
+    </div>
+
+    <div class="flex flex-col text-gray-900">
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex flex-col md:basis-3/5">
+                <div class="font-semibold text-xl mb-2">Grafik Servis Booking dan Kunjungan</div>
+                <div id="highChart" class="bg-white py-4"></div>
+            </div>
+            <div class="flex flex-col md:basis-2/5">
+                <div class="font-semibold text-xl mb-2">Grafik Katalog Mobil</div>
+                <div id="pieChart" class="bg-white py-4"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        const pieChart1 = Highcharts.chart('pieChart1', {
+        const pieChart = Highcharts.chart('pieChart', {
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
-                type: 'pie'
+                type: 'pie',
             },
-            title: {
-                text: 'Booking Services'
-            },
+            title: false,
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
             },
@@ -58,80 +113,8 @@
                     allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.2f} %'
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                name: {!! json_encode($data['labels']) !!},
-                colorByPoint: true,
-                data: {!! json_encode($data['data']) !!}
-            }]
-        });
-
-        const pieChart2 = Highcharts.chart('pieChart2', {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Status Services'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.2f} %'
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                name: {!! json_encode($data['labels']) !!},
-                colorByPoint: true,
-                data: {!! json_encode($data['data']) !!}
-            }]
-        });
-
-        const pieChart3 = Highcharts.chart('pieChart3', {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Cars Catalogue Type'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.2f} %'
+                        enabled: false,
+                        format: '{point.percentage:.2f} %',
                     },
                     showInLegend: true
                 }
@@ -154,10 +137,9 @@
                 text: ''
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-                    'Oct', 'Nov', 'Dec'
-                ]
+                categories: ['Apr', 'May', 'Jun', 'Jul']
             },
+            title: false,
             yAxis: {
                 title: {
                     text: 'Users'
@@ -173,12 +155,10 @@
             },
             series: [{
                 name: 'Active',
-                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9,
-                    9.6
-                ]
+                data: [7.0, 6.9, 9.5, 14.5]
             }, {
                 name: 'Trial',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                data: [3.9, 4.2, 5.7, 8.5]
             }]
         });
     </script>

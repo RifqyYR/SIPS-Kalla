@@ -43,7 +43,7 @@
                     <th scope="col" class="px-6 py-3">
                         EMAIL
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">
+                    <th scope="col" class="px-6 py-3">
                         Action
                     </th>
                 </tr>
@@ -60,11 +60,12 @@
                         <td class="px-6 py-4">
                             {{ $item->email }}
                         </td>
-                        <td class="px-6 py-4 text-center">
-                            <x-secondary-button class="mr-3">
-                                <a href="#" class="font-medium text-blue-600">Edit</a>
+                        <td class="px-6 py-4">
+                            <x-secondary-button class="mb-1 sm:mr-1">
+                                <a href="{{ route('admin-management.edit', $item->uuid) }}"
+                                    class="font-medium text-blue-600">Edit</a>
                             </x-secondary-button>
-                            <x-danger-button>
+                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
                                 <a href="#" class="font-medium text-white">Delete</a>
                             </x-danger-button>
                         </td>
@@ -72,7 +73,13 @@
                 @endforeach
             </tbody>
         </table>
-        <nav id="pagination-links" class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+        <form id="delete-form" action="" method="POST"
+            style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+        <nav id="pagination-links"
+            class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
             aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                 Showing <span

@@ -67,4 +67,52 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan data');
         }
     }
+
+    public function edit(string $uuid)
+    {
+        $admin = User::where('uuid', $uuid)->first();
+
+        if ($admin == null) return redirect()->back()->with('error', 'Gagal mendapatkan data');
+
+        return view('pages.admin-management.edit-admin_management', compact('admin'));
+    }
+
+    public function update(Request $request, string $uuid)
+    {
+        // Validate Input
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email'
+        ], [
+            'name.required' => 'Input nama harus diisi',
+            'email.required' => 'Input email harus diisi',
+            'email.email' => 'Masukkan email yang valid',
+        ]);
+
+        try {
+            $admin = User::where('uuid', $uuid)->first();
+
+            $admin->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            return redirect()->route('admin-management.index')->with('success', 'Berhasil mengedit data');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengedit data');
+        }
+    }
+
+    public function destroy(string $uuid)
+    {
+        try {
+            $admin = User::where('uuid', $uuid)->first();
+
+            $admin->delete();
+
+            return redirect()->route('admin-management.index')->with('success', 'Berhasil menghapus data');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus data');
+        }
+    }
 }

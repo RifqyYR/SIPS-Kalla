@@ -13,6 +13,8 @@
 {{-- Sweet Alert --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.all.min.js"></script>
 
+<script src="{{ url('js/main.js') }}"></script>
+
 @if (request()->routeIs('dashboard'))
     <script src="js/chart.js"></script>
 @endif
@@ -23,12 +25,14 @@
         Swal.fire({
             position: "center",
             icon: "success",
+            confirmButtonColor: '#01803D',
             title: '{{ session('success') }}',
         });
     @elseif (session()->has('error'))
         Swal.fire({
             position: "center",
             icon: "error",
+            confirmButtonColor: '#01803D',
             title: '{{ session('error') }}',
         });
     @endif
@@ -46,7 +50,13 @@
                     '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
                     admin.name + "</td>" +
                     '<td class="px-6 py-4">' + admin.email + "</td>" +
-                    `<td class="px-6 py-4 text-center"><x-secondary-button class="mr-3"><a href="#" class="font-medium text-blue-600">Edit</a></x-secondary-button><x-danger-button><a href="#" class="font-medium text-white">Delete</a></x-danger-button></td>` +
+                    `<td class="px-6 py-4">
+                        <x-secondary-button class="mb-1 sm:mr-1">
+                            <a href="/admin-management/edit/${admin.uuid}" class="font-medium text-blue-600">Edit</a>
+                        </x-secondary-button>
+                        <x-danger-button onclick="confirmDelete('${admin.uuid}')">
+                            <a href="#" class="font-medium text-white">Delete</a>
+                        </x-danger-button></td>` +
                     "</tr>"
                 );
             });

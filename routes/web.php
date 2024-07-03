@@ -28,8 +28,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [AdminController::class, 'create'])->name('admin-management.create');
         Route::post('/store', [AdminController::class, 'store'])->name('admin-management.store');
         Route::get('/edit/{uuid}', [AdminController::class, 'edit'])->name('admin-management.edit');
-        Route::post('/update', [AdminController::class, 'update'])->name('admin-management.update');
-        Route::get('/delete/{uuid}', [AdminController::class, 'destroy'])->name('admin-management.destroy');
+        Route::post('/update/{uuid}', [AdminController::class, 'update'])->name('admin-management.update');
+        Route::delete('/delete/{uuid}', [AdminController::class, 'destroy'])->name('admin-management.destroy');
     });
 
     // Profile

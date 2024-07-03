@@ -2,7 +2,7 @@
     <div class="relative">
         <div class=" py-5 px-3 h-screen">
             <div class="flex justify-center mb-10">
-                <img class="w-24" src="{{ url('logo.svg') }}" alt="Kalla Toyota">
+                <img width="90" src="{{ url('logo.svg') }}" alt="Logo Kalla Toyota">
             </div>
             <ul class="space-y-2">
                 <li>

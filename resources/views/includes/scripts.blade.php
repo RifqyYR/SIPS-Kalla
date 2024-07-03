@@ -1,15 +1,38 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
+{{-- HighCharts --}}
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+{{-- ReadmoreJS --}}
 <script src="https://cdn.jsdelivr.net/npm/readmore-js@3.0.0-beta-1/dist/readmore.min.js"></script>
+{{-- JQuery --}}
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+{{-- Alpine JS --}}
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-<script src="js/main.js"></script>
+{{-- Sweet Alert --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.all.min.js"></script>
+
 @if (request()->routeIs('dashboard'))
     <script src="js/chart.js"></script>
 @endif
+
+{{-- Alert For Success or Error --}}
+<script>
+    @if (session()->has('success'))
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: '{{ session('success') }}',
+        });
+    @elseif (session()->has('error'))
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: '{{ session('error') }}',
+        });
+    @endif
+</script>
 
 {{-- Search Function --}}
 <script>

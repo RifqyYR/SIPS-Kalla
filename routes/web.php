@@ -22,8 +22,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-data-pie', [DashboardController::class, 'getDataPie'])->name('dashboard.data-pie');
     
     // Admin Management
-    Route::get('/admin-management', [AdminController::class, 'index'])->name('admin-management.index');
-    Route::get('/admin-management/search', [AdminController::class, 'search'])->name('admin-management.search');
+    Route::group(['prefix' => 'admin-management'], function() {
+        Route::get('/', [AdminController::class, 'index'])->name('admin-management.index');
+        Route::get('/search', [AdminController::class, 'search'])->name('admin-management.search');
+        Route::get('/create', [AdminController::class, 'create'])->name('admin-management.create');
+        Route::post('/store', [AdminController::class, 'store'])->name('admin-management.store');
+        Route::get('/edit/{uuid}', [AdminController::class, 'edit'])->name('admin-management.edit');
+        Route::post('/update', [AdminController::class, 'update'])->name('admin-management.update');
+        Route::get('/delete/{uuid}', [AdminController::class, 'destroy'])->name('admin-management.destroy');
+    });
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

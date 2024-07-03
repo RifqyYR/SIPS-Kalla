@@ -23,7 +23,9 @@
             </div>
         </div>
         <div class="pb-4">
-            <x-primary-button>Tambah Item</x-primary-button>
+            <a href="{{ route('admin-management.create') }}">
+                <x-primary-button>Tambah Item</x-primary-button>
+            </a>
         </div>
     </div>
 

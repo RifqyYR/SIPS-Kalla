@@ -84,7 +84,7 @@
             <x-responsive-nav-link :active="request()->routeIs('promos')">
                 {{ __('Promo') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="request('admin-management.index')" :active="request()->routeIs('admin-management.index')">
+            <x-responsive-nav-link :href="request('admin-management.index')" :active="request()->routeIs('admin-management*')">
                 {{ __('Manajemen Admin') }}
             </x-responsive-nav-link>
         </div>

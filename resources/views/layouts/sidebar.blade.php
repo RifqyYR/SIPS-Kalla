@@ -2,7 +2,7 @@
     <div class="relative">
         <div class=" py-5 px-3 h-screen">
             <div class="flex justify-center mb-10">
-                <img class="w-24" src="logo.svg" alt="Kalla Toyota">
+                <img class="w-24" src="{{ url('logo.svg') }}" alt="Kalla Toyota">
             </div>
             <ul class="space-y-2">
                 <li>
@@ -46,7 +46,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :href="route('admin-management.index')" :active="request()->routeIs('admin-management.index')">
+                    <x-nav-link :href="route('admin-management.index')" :active="request()->routeIs('admin-management*')">
                         {{ __('Manajemen Admin') }}
                     </x-nav-link>
                 </li>

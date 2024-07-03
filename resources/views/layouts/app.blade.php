@@ -9,11 +9,14 @@
     <title>{{ config('app.name', 'HiCRO') }}</title>
 
     {{-- Favicon --}}
-    <link rel="shortcut icon" href="toyota.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url('toyota.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    {{-- SweetAlert --}}
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-gray-100">

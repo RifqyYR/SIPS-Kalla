@@ -20,7 +20,17 @@ function confirmDelete(uuid) {
                 var action = "/promo/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
+            } else if (window.location.href.indexOf("pic") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/pic/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
             }
         }
     });
 }
+
+// Filter input only number on phone number input
+document.getElementById("phone_number").addEventListener("input", function (e) {
+    e.target.value = e.target.value.replace(/\D/g, "");
+});

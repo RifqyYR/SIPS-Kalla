@@ -80,6 +80,31 @@
             updatePaginationLinks(data);
         }
 
+        function updateSearchResultsPIC(data) {
+            $("#search-results").html("");
+            $.each(data.data.data, function(index, admin) {
+                $("#search-results").append(
+                    '<tr class="bg-white border-b hover:bg-gray-50">' +
+                    '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
+                    '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
+                    admin.name + "</td>" +
+                    '<td class="px-6 py-4">' + admin.phone_number + "</td>" +
+                    '<td class="px-6 py-4">' + admin.sector + "</td>" +
+                    `<td class="px-6 py-4">
+                        <a href="/pic/edit/${admin.uuid}">
+                            <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                Edit
+                            </x-secondary-button>
+                        </a>
+                        <x-danger-button onclick="confirmDelete('${admin.uuid}')">
+                            <a href="#" class="font-medium text-white">Delete</a>
+                        </x-danger-button></td>` +
+                    "</tr>"
+                );
+            });
+            updatePaginationLinks(data);
+        }
+
         function updatePaginationLinks(data) {
             $("#pagination-links").html(
                 `<span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
@@ -92,19 +117,35 @@
         }
 
         function fetchSearchResults(query) {
-            $.ajax({
-                url: "/admin-management/search",
-                type: "GET",
-                data: {
-                    query: query,
-                },
-                success: function(data) {
-                    updateSearchResults(data);
-                },
-                error: function(xhr, status, error) {
-                    console.error("An error occurred:", status, error);
-                }
-            });
+            if (window.location.pathname == '/admin-management') {
+                $.ajax({
+                    url: "/admin-management/search",
+                    type: "GET",
+                    data: {
+                        query: query,
+                    },
+                    success: function(data) {
+                        updateSearchResults(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred:", status, error);
+                    }
+                });
+            } else if (window.location.pathname == '/pic') {
+                $.ajax({
+                    url: "/pic/search",
+                    type: "GET",
+                    data: {
+                        query: query,
+                    },
+                    success: function(data) {
+                        updateSearchResultsPIC(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred:", status, error);
+                    }
+                });
+            }
         }
 
         $("#table-search").on("keyup", function() {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersonInChargeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{uuid}', [PromoController::class, 'edit'])->name('promo.edit');
         Route::post('/update/{uuid}', [PromoController::class, 'update'])->name('promo.update');
         Route::delete('/delete/{uuid}', [PromoController::class, 'destroy'])->name('promo.destroy');
+    });
+
+    // PIC
+    Route::group(['prefix' => 'pic'], function() {
+        Route::get('/', [PersonInChargeController::class, 'index'])->name('pic.index');
+        Route::get('/search', [PersonInChargeController::class, 'search'])->name('pic.search');
+        Route::get('/create', [PersonInChargeController::class, 'create'])->name('pic.create');
+        Route::post('/store', [PersonInChargeController::class, 'store'])->name('pic.store');
+        Route::get('/edit/{uuid}', [PersonInChargeController::class, 'edit'])->name('pic.edit');
+        Route::post('/update/{uuid}', [PersonInChargeController::class, 'update'])->name('pic.update');
+        Route::delete('/delete/{uuid}', [PersonInChargeController::class, 'destroy'])->name('pic.destroy');
     });
 
     // Profile

@@ -20,10 +20,8 @@ class AdminController extends Controller
     {
         $query = $request->input('query');
 
-        // Search by name and email
-        $results = User::where('name', 'LIKE', "%{$query}%")
-                        ->orWhere('email', 'LIKE', "%{$query}%")
-                        ->paginate(10);
+        // Search by name
+        $results = User::where('name', 'LIKE', "%{$query}%")->paginate(10);
 
         $results->appends(['query' => $query]);
 

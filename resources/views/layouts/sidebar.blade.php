@@ -36,7 +36,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :active="request()->routeIs('pic')">
+                    <x-nav-link :href="route('pic.index')" :active="request()->routeIs('pic*')">
                         {{ __('PIC') }}
                     </x-nav-link>
                 </li>

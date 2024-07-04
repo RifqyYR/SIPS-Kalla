@@ -19,6 +19,21 @@
     <script src="js/chart.js"></script>
 @endif
 
+<script>
+    document.getElementById('imgInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgPreview = document.getElementById('imgPreview');
+                imgPreview.src = e.target.result;
+                imgPreview.classList.remove('hidden');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
 {{-- Alert For Success or Error --}}
 <script>
     @if (session()->has('success'))
@@ -51,9 +66,11 @@
                     admin.name + "</td>" +
                     '<td class="px-6 py-4">' + admin.email + "</td>" +
                     `<td class="px-6 py-4">
-                        <x-secondary-button class="mb-1 sm:mr-1">
-                            <a href="/admin-management/edit/${admin.uuid}" class="font-medium text-blue-600">Edit</a>
-                        </x-secondary-button>
+                        <a href="/admin-management/edit/${admin.uuid}">
+                            <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                Edit
+                            </x-secondary-button>
+                        </a>
                         <x-danger-button onclick="confirmDelete('${admin.uuid}')">
                             <a href="#" class="font-medium text-white">Delete</a>
                         </x-danger-button></td>` +

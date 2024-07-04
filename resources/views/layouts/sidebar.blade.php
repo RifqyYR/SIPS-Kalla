@@ -41,7 +41,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :active="request()->routeIs('promo')">
+                    <x-nav-link :href="route('promo.index')" :active="request()->routeIs('promo*')">
                         {{ __('Promo') }}
                     </x-nav-link>
                 </li>

@@ -81,10 +81,10 @@
             <x-responsive-nav-link :active="request()->routeIs('pic')">
                 {{ __('PIC') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('promos')">
+            <x-responsive-nav-link :href="route('promo.index')" :active="request()->routeIs('promo*')">
                 {{ __('Promo') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="request('admin-management.index')" :active="request()->routeIs('admin-management*')">
+            <x-responsive-nav-link :href="route('admin-management.index')" :active="request()->routeIs('admin-management*')">
                 {{ __('Manajemen Admin') }}
             </x-responsive-nav-link>
         </div>

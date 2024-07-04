@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{uuid}', [AdminController::class, 'edit'])->name('admin-management.edit');
         Route::post('/update/{uuid}', [AdminController::class, 'update'])->name('admin-management.update');
         Route::delete('/delete/{uuid}', [AdminController::class, 'destroy'])->name('admin-management.destroy');
+    });
+
+    // Promo
+    Route::group(['prefix' => 'promo'], function() {
+        Route::get('/', [PromoController::class, 'index'])->name('promo.index');
+        Route::get('/search', [PromoController::class, 'search'])->name('promo.search');
+        Route::get('/create', [PromoController::class, 'create'])->name('promo.create');
+        Route::post('/store', [PromoController::class, 'store'])->name('promo.store');
+        Route::get('/edit/{uuid}', [PromoController::class, 'edit'])->name('promo.edit');
+        Route::post('/update/{uuid}', [PromoController::class, 'update'])->name('promo.update');
+        Route::delete('/delete/{uuid}', [PromoController::class, 'destroy'])->name('promo.destroy');
     });
 
     // Profile

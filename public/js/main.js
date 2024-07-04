@@ -10,10 +10,17 @@ function confirmDelete(uuid) {
         cancelButtonText: "Batal",
     }).then((result) => {
         if (result.isConfirmed) {
-            var form = document.getElementById("delete-form");
-            var action = "/admin-management/delete/UUID_PLACEHOLDER";
-            form.action = action.replace("UUID_PLACEHOLDER", uuid);
-            form.submit();
+            if (window.location.href.indexOf("admin-management") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/admin-management/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
+            } else if (window.location.href.indexOf("promo") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/promo/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
+            }
         }
     });
 }

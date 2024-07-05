@@ -1,53 +1,32 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Client Cars') }}
+            {{ __('Customer') }}
         </h2>
     </x-slot>
 
     <!-- Button -->
-    <div x-data="{ showModal: false }">
-        <div class="flex justify-between pb-4">
-            <div class="pb-4">
-                <label for="table-search" class="sr-only justify-end">Search</label>
-                <div class="relative mt-1">
-                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
+    <div class="flex justify-between pb-4">
+        <div class="pb-4">
+            <label for="table-search" class="sr-only justify-end">Search</label>
+            <div class="relative mt-1">
+                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
                 </div>
-            </div>
-            <div class="pb-4">
-                <x-primary-button @click="showModal = true" id="defaultModalButton" type="button">Add Data</x-primary-button>
+                <input type="text" id="table-search"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Cari item">
             </div>
         </div>
-
-        <!-- Main modal -->
-        <x-default-modal>
-            <!-- Modal body -->
-            <form action="#">
-                <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                    <div>
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Client Name</label>
-                        <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type client name" required="">
-                    </div>
-                    <div>
-                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
-                        <input type="text" name="type" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Type of client car" required="">
-                    </div>
-                    <div>
-                        <label for="plate_number" class="block mb-2 text-sm font-medium text-gray-900">Plate Number</label>
-                        <input type="text" name="plate_number" id="plate_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Plat number of client car" required="">
-                    </div>
-                    <div>
-                        <label for="last_service" class="block mb-2 text-sm font-medium text-gray-900">Last Service Date</label>
-                        <input type="date" name="last_service" id="last_service" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
-                    </div>
-                </div>
-            </form>
-        </x-default-modal>
+        <div class="pb-4">
+            <a href="{{ route('customer.create') }}">
+                <x-primary-button>Tambah Item</x-primary-button>
+            </a>
+        </div>
     </div>
     
     
@@ -60,84 +39,106 @@
                         No
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Client
+                        Klien
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Car Type
+                        Email
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Plate Number
+                        Nomor Telepon
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Last Service Date
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Next Service Date
+                        Alamat
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="bg-white border-b hover:bg-gray-50">
-                    <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <span>1</span>
-                        </div>
-                    </td>
-                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Dimas
-                    </td>
-                    <td class="px-6 py-4">
-                        Bumblebee
-                    </td>
-                    <td class="px-6 py-4">
-                        DD 3030 XX
-                    </td>
-                    <td class="px-6 py-4">
-                        2024/05/30
-                    </td>
-                    <td class="px-6 py-4">
-                        2025/05/30
-                    </td>
-                    <td class="px-6 py-4">
-                        <x-secondary-button>
-                            <a href="#" class="font-medium text-blue-600">Edit</a>
-                        </x-secondary-button>
-                        <x-danger-button>
-                            <a href="#" class="font-medium text-white">Delete</a>
-                        </x-danger-button>
-                    </td>
-                </tr>
+            <tbody id="search-results">
+                @foreach ($clients as $item)
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td class="w-4 p-4">
+                            <div class="flex items-center">
+                                <span>{{ $loop->index + 1 }}</span>
+                            </div>
+                        </td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            {{ $item->name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $item->email }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $item->phone_number }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $item->address }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('customer.edit', $item->uuid) }}">
+                                <x-secondary-button
+                                    class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                    Edit
+                                </x-secondary-button>
+                            </a>
+                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                <a href="#" class="font-medium text-white">Delete</a>
+                            </x-danger-button>
+                        </td>
+                    </tr>             
+                @endforeach
             </tbody>
         </table>
 
+        <form id="delete-form" action="" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+
         <!-- Pagination -->
-        <nav class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-            <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900">1-10</span> of <span class="font-semibold text-gray-900">1000</span></span>
+        <nav id="pagination-links"
+            class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+            aria-label="Table navigation">
+            <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                Showing <span
+                    class="font-semibold text-gray-900">{{ $clients->firstItem() }}-{{ $clients->lastItem() }}</span> of
+                <span class="font-semibold text-gray-900">{{ $clients->total() }}</span>
+            </span>
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                </li>
-                <li>
-                    <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">3</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
-                </li>
+                {{-- Previous Page Link --}}
+                @if ($clients->onFirstPage())
+                    <li>
+                        <span
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg cursor-default">Previous</span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $clients->previousPageUrl() }}"
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                    </li>
+                @endif
+
+                {{-- Pagination Elements --}}
+                @foreach ($clients->getUrlRange(1, $clients->lastPage()) as $page => $url)
+                    <li>
+                        <a href="{{ $url }}"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $clients->currentPage() ? 'text-blue-600 bg-blue-50' : '' }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($clients->hasMorePages())
+                    <li>
+                        <a href="{{ $clients->nextPageUrl() }}"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
+                    </li>
+                @else
+                    <li>
+                        <span
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg cursor-default">Next</span>
+                    </li>
+                @endif
             </ul>
         </nav>
     </div>

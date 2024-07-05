@@ -2,7 +2,9 @@
     <div class="relative">
         <div class=" py-5 px-3 h-screen">
             <div class="flex justify-center mb-10">
-                <img width="90" src="{{ url('logo.svg') }}" alt="Logo Kalla Toyota">
+                <a href="{{ route('dashboard') }}">
+                    <img width="90" src="{{ url('logo.svg') }}" alt="Logo Kalla Toyota">
+                </a>
             </div>
             <ul class="space-y-2">
                 <li>
@@ -21,7 +23,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :active="request()->routeIs('client_cars')">
+                    <x-nav-link :href="route('customer.index')" :active="request()->routeIs('customer*')">
                         {{ __('Customer') }}
                     </x-nav-link>
                 </li>

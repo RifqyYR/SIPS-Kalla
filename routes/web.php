@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonInChargeController;
 use App\Http\Controllers\ProfileController;
@@ -23,7 +24,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/get-data-pie', [DashboardController::class, 'getDataPie'])->name('dashboard.data-pie');
-    
+
     // Admin Management
     Route::group(['prefix' => 'admin-management'], function() {
         Route::get('/', [AdminController::class, 'index'])->name('admin-management.index');
@@ -73,6 +74,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Customer
+    Route::group(['prefix' => 'customer'], function() {
+        Route::get('/', [CustomerController::class, 'index'])->name('customer.index');
+        Route::get('/search', [CustomerController::class, 'search'])->name('customer.search');
+        Route::get('/create', [CustomerController::class, 'create'])->name('customer.create');
+        Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
+        Route::get('/edit/{uuid}', [CustomerController::class, 'edit'])->name('customer.edit');
+        Route::post('/update/{uuid}', [CustomerController::class, 'update'])->name('customer.update');
+        Route::delete('/delete/{uuid}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';

@@ -131,6 +131,32 @@
             updatePaginationLinks(data);
         }
 
+        function updateSearchResultsCustomer(data) {
+            $("#search-results").html("");
+            $.each(data.data.data, function(index, item) {
+                $("#search-results").append(
+                    '<tr class="bg-white border-b hover:bg-gray-50">' +
+                    '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
+                    '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
+                    item.name + "</td>" +
+                    '<td class="px-6 py-4">' + item.email + "</td>" +
+                    '<td class="px-6 py-4">' + item.phone_number + "</td>" +
+                    '<td class="px-6 py-4">' + item.address + "</td>" +
+                    `<td class="px-6 py-4">
+                        <a href="/pic/edit/${item.uuid}">
+                            <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                Edit
+                            </x-secondary-button>
+                        </a>
+                        <x-danger-button onclick="confirmDelete('${item.uuid}')">
+                            <a href="#" class="font-medium text-white">Delete</a>
+                        </x-danger-button></td>` +
+                    "</tr>"
+                );
+            });
+            updatePaginationLinks(data);
+        }
+
         function updatePaginationLinks(data) {
             $("#pagination-links").html(
                 `<span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
@@ -180,6 +206,20 @@
                     },
                     success: function(data) {
                         updateSearchResultsSales(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred:", status, error);
+                    }
+                });
+            } else if (window.location.pathname == '/customer') {
+                $.ajax({
+                    url: "/customer/search",
+                    type: "GET",
+                    data: {
+                        query: query,
+                    },
+                    success: function(data) {
+                        updateSearchResultsCustomer(data);
                     },
                     error: function(xhr, status, error) {
                         console.error("An error occurred:", status, error);

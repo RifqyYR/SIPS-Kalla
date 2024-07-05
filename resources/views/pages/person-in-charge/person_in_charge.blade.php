@@ -53,7 +53,7 @@
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Phone Number
+                        Nomor Telepon
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Bagian

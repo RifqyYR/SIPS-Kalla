@@ -82,21 +82,47 @@
 
         function updateSearchResultsPIC(data) {
             $("#search-results").html("");
-            $.each(data.data.data, function(index, admin) {
+            $.each(data.data.data, function(index, item) {
                 $("#search-results").append(
                     '<tr class="bg-white border-b hover:bg-gray-50">' +
                     '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
                     '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
-                    admin.name + "</td>" +
-                    '<td class="px-6 py-4">' + admin.phone_number + "</td>" +
-                    '<td class="px-6 py-4">' + admin.sector + "</td>" +
+                    item.name + "</td>" +
+                    '<td class="px-6 py-4">' + item.phone_number + "</td>" +
+                    '<td class="px-6 py-4">' + item.sector + "</td>" +
                     `<td class="px-6 py-4">
-                        <a href="/pic/edit/${admin.uuid}">
+                        <a href="/pic/edit/${item.uuid}">
                             <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
                                 Edit
                             </x-secondary-button>
                         </a>
-                        <x-danger-button onclick="confirmDelete('${admin.uuid}')">
+                        <x-danger-button onclick="confirmDelete('${item.uuid}')">
+                            <a href="#" class="font-medium text-white">Delete</a>
+                        </x-danger-button></td>` +
+                    "</tr>"
+                );
+            });
+            updatePaginationLinks(data);
+        }
+
+        function updateSearchResultsSales(data) {
+            $("#search-results").html("");
+            $.each(data.data.data, function(index, item) {
+                $("#search-results").append(
+                    '<tr class="bg-white border-b hover:bg-gray-50">' +
+                    '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
+                    '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
+                    `<a class="hover:text-blue-600" href="/sales/edit/${item.uuid}">` +
+                    item.name + "</a>" + "</td>" +
+                    '<td class="px-6 py-4">' + item.phone_number + "</td>" +
+                    '<td class="px-6 py-4">' + item.leads + "</td>" +
+                    `<td class="px-6 py-4">
+                        <a href="/sales/edit/${item.uuid}">
+                            <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                Edit
+                            </x-secondary-button>
+                        </a>
+                        <x-danger-button onclick="confirmDelete('${item.uuid}')">
                             <a href="#" class="font-medium text-white">Delete</a>
                         </x-danger-button></td>` +
                     "</tr>"
@@ -140,6 +166,20 @@
                     },
                     success: function(data) {
                         updateSearchResultsPIC(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred:", status, error);
+                    }
+                });
+            } else if (window.location.pathname == '/sales') {
+                $.ajax({
+                    url: "/sales/search",
+                    type: "GET",
+                    data: {
+                        query: query,
+                    },
+                    success: function(data) {
+                        updateSearchResultsSales(data);
                     },
                     error: function(xhr, status, error) {
                         console.error("An error occurred:", status, error);

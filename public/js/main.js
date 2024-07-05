@@ -25,6 +25,11 @@ function confirmDelete(uuid) {
                 var action = "/pic/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
+            } else if (window.location.href.indexOf("sales") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/sales/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
             }
         }
     });

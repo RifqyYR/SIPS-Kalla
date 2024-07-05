@@ -75,10 +75,10 @@
             <x-responsive-nav-link :active="request()->routeIs('services')">
                 {{ __('Servis') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('sales')">
+            <x-responsive-nav-link :href="route('sales.index')" :active="request()->routeIs('sales*')">
                 {{ __('Sales') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('pic')">
+            <x-responsive-nav-link :href="route('pic.index')" :active="request()->routeIs('pic*')">
                 {{ __('PIC') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('promo.index')" :active="request()->routeIs('promo*')">

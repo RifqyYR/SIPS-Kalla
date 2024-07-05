@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonInChargeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
+use App\Http\Controllers\SalesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,6 +55,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{uuid}', [PersonInChargeController::class, 'edit'])->name('pic.edit');
         Route::post('/update/{uuid}', [PersonInChargeController::class, 'update'])->name('pic.update');
         Route::delete('/delete/{uuid}', [PersonInChargeController::class, 'destroy'])->name('pic.destroy');
+    });
+
+    // Sales
+    Route::group(['prefix' => 'sales'], function() {
+        Route::get('/', [SalesController::class, 'index'])->name('sales.index');
+        Route::get('/search', [SalesController::class, 'search'])->name('sales.search');
+        Route::get('/create', [SalesController::class, 'create'])->name('sales.create');
+        Route::post('/store', [SalesController::class, 'store'])->name('sales.store');
+        Route::get('/{uuid}', [SalesController::class, 'detail'])->name('sales.detail');
+        Route::get('/edit/{uuid}', [SalesController::class, 'edit'])->name('sales.edit');
+        Route::post('/update/{uuid}', [SalesController::class, 'update'])->name('sales.update');
+        Route::delete('/delete/{uuid}', [SalesController::class, 'destroy'])->name('sales.destroy');
     });
 
     // Profile

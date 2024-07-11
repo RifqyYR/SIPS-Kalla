@@ -7,6 +7,7 @@ use App\Http\Resources\ResponseResource;
 use App\Models\PersonInCharge;
 use App\Models\Promo;
 use App\Models\Sales;
+use App\Models\SparePart;
 use Illuminate\Http\Request;
 
 class GeneralController extends Controller
@@ -80,6 +81,17 @@ class GeneralController extends Controller
             ]);
             
             return response()->json(new ResponseResource('Berhasil menambah data', $sales), 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
+        }
+    }
+
+    public function sparepart()
+    {
+        try {
+            $sparepart = SparePart::all();
+
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', $sparepart), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
         }

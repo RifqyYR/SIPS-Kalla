@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-data-pie', [DashboardController::class, 'getDataPie'])->name('dashboard.data-pie');
 
     // Admin Management
-    Route::group(['prefix' => 'admin-management'], function() {
+    Route::group(['prefix' => 'admin-management'], function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin-management.index');
         Route::get('/search', [AdminController::class, 'search'])->name('admin-management.search');
         Route::get('/create', [AdminController::class, 'create'])->name('admin-management.create');
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Promo
-    Route::group(['prefix' => 'promo'], function() {
+    Route::group(['prefix' => 'promo'], function () {
         Route::get('/', [PromoController::class, 'index'])->name('promo.index');
         Route::get('/search', [PromoController::class, 'search'])->name('promo.search');
         Route::get('/create', [PromoController::class, 'create'])->name('promo.create');
@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // PIC
-    Route::group(['prefix' => 'pic'], function() {
+    Route::group(['prefix' => 'pic'], function () {
         Route::get('/', [PersonInChargeController::class, 'index'])->name('pic.index');
         Route::get('/search', [PersonInChargeController::class, 'search'])->name('pic.search');
         Route::get('/create', [PersonInChargeController::class, 'create'])->name('pic.create');
@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Sales
-    Route::group(['prefix' => 'sales'], function() {
+    Route::group(['prefix' => 'sales'], function () {
         Route::get('/', [SalesController::class, 'index'])->name('sales.index');
         Route::get('/search', [SalesController::class, 'search'])->name('sales.search');
         Route::get('/create', [SalesController::class, 'create'])->name('sales.create');
@@ -76,7 +76,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Customer
-    Route::group(['prefix' => 'customer'], function() {
+    Route::group(['prefix' => 'customer'], function () {
         Route::get('/', [CustomerController::class, 'index'])->name('customer.index');
         Route::get('/search', [CustomerController::class, 'search'])->name('customer.search');
         Route::get('/create', [CustomerController::class, 'create'])->name('customer.create');
@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{uuid}', [CustomerController::class, 'edit'])->name('customer.edit');
         Route::post('/update/{uuid}', [CustomerController::class, 'update'])->name('customer.update');
         Route::delete('/delete/{uuid}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+        Route::get('/{uuid}', [CustomerController::class, 'detail'])->name('customer.detail');
     });
 });
 

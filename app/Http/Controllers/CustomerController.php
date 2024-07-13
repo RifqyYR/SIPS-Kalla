@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\ClientCars;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,12 +44,12 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        // Validate Input
-        $request->validate([
+        // Validate Input Customer
+        $request_customer = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:clients,email',
             'phone_number' => 'required|unique:clients,phone_number',
-            'address' => 'required'
+            'address' => 'required',
         ], [
             'name.required' => 'Input nama harus diisi',
             'email.required' => 'Input email harus diisi',
@@ -57,19 +60,43 @@ class CustomerController extends Controller
             'address.required' => 'Field alamat harus diisi',
         ]);
 
+        $request_cars = $request->validate([
+            'car_type.*' => 'required',
+            'plate_number.*' => 'required',
+            'last_service_km.*' => 'required|integer|min:0'
+        ], [
+            'car_type.*.required' => 'Field tipe mobil harus diisi',
+            'plate_number.*.required' => 'Field plat kendaraan harus diisi',
+            'last_service_km.*.required' => 'Field jarak tempuh kendaraan harus diisi',
+            'last_service_km.*.integer' => 'Field jarak tempuh harus berupa angka',
+            'last_service_km.*.min' => 'Field jarak tempuh tidak boleh kurang dari 0',
+        ]);
+    
         try {
-            Client::create([
-                'uuid' => Uuid::uuid4(),
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make(env('DEFAULT_PASSWORD')),
-                'phone_number' => $request->phone_number,
-                'address' => $request->address
-            ]);
+            DB::transaction(function () use ($request) {
+                $client = Client::create([
+                    'uuid' => Uuid::uuid4(),
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->phone_number),
+                    'phone_number' => $request->phone_number,
+                    'address' => $request->address,
+                ]);
+    
+                for ($i = 0; $i < count($request->car_type); $i++) {
+                    ClientCars::create([
+                        'uuid' => Uuid::uuid4(),
+                        'client_id' => $client->id,
+                        'car_type' => $request->car_type[$i],
+                        'plate_number' => $request->plate_number[$i],
+                        'last_service_km' => $request->last_service_km[$i]
+                    ]);
+                }
+            });
 
             return redirect()->route('customer.index')->with('success', 'Berhasil menambahkan data');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan data');
+            return redirect()->back()->with('error', 'Gagal menambahkan data' . $e->getMessage());
         }
     }
 
@@ -125,5 +152,12 @@ class CustomerController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus data');
         }
+    }
+
+    public function detail(string $uuid)
+    {
+        $clients = Client::where('uuid', $uuid)->first();
+
+        return view('pages.customer.detail-customer', compact('clients'));
     }
 }

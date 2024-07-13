@@ -36,6 +36,16 @@
                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
             </div>
 
+            <div class="mt-4">
+                <x-input-label for="car_count" :value="__('Jumlah Mobil')" />
+                <x-text-input id="car_count" class="block mt-1 w-fit" type="number" name="car_count" :value="old('car_count')" required min="1" />
+                <x-input-error :messages="$errors->get('car_count')" class="mt-2" />
+            </div>
+
+            <div id="car_fields_container">
+                <!-- Placeholder for car fields -->
+            </div>
+
             <div class="flex items-center justify-center mt-20 gap-4">
                 <a href="{{ route('customer.index') }}">
                     <x-secondary-button>

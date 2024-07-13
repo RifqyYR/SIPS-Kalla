@@ -64,7 +64,7 @@
                             </div>
                         </td>
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ $item->name }}
+                            <a href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
                         </td>
                         <td class="px-6 py-4">
                             {{ $item->email }}

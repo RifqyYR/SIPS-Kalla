@@ -234,3 +234,50 @@
         });
     });
 </script>
+
+{{-- Customer Cars --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carCountInput = document.getElementById('car_count');
+        const carFieldsContainer = document.getElementById('car_fields_container');
+
+        carCountInput.addEventListener('change', function () {
+            const carCount = parseInt(this.value);
+            generateCarFields(carCount);
+        });
+
+        function generateCarFields(carCount) {
+            carFieldsContainer.innerHTML = ''; // Clear any existing fields
+
+            for (let i = 0; i < carCount; i++) {
+                const carFieldset = document.createElement('div');
+                carFieldset.classList.add('mt-4');
+                carFieldset.innerHTML = `
+                    <h3 class="font-semibold text-lg text-gray-800 leading-tight mt-6">Mobil ${i + 1}</h3>
+
+                    <div class="mt-4">
+                        <x-input-label :value="'Tipe Mobil ${i + 1}'" />
+                        <x-text-input id="car_type_${i}" class="block mt-1 w-full" type="text" name="car_type[]" :value="old('car_type.${i}')"
+                            required autofocus autocomplete="car_type_${i}" />
+                        <x-input-error :messages="$errors->get('car_type.${i}')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-input-label :value="'Plat Kendaraan ${i + 1}'" />
+                        <x-text-input id="plate_number_${i}" class="block mt-1 w-full" type="text" name="plate_number[]" :value="old('plate_number.${i}')"
+                            required autofocus autocomplete="plate_number_${i}" />
+                        <x-input-error :messages="$errors->get('plate_number.${i}')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-input-label :value="'Jarak Tempuh (Km) ${i + 1}'" />
+                        <x-text-input id="last_service_km_${i}" class="block mt-1 w-full" type="number" name="last_service_km[]" :value="old('last_service_km.${i}')"
+                            required autofocus autocomplete="last_service_km_${i}" min="0" />
+                        <x-input-error :messages="$errors->get('last_service_km.${i}')" class="mt-2" />
+                    </div>
+                `;
+                carFieldsContainer.appendChild(carFieldset);
+            }
+        }
+    });
+</script>

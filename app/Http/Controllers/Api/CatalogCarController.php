@@ -22,7 +22,8 @@ class CatalogCarController extends Controller
                             return asset('storage/catalog_cars/' . $image->img_url);
                         }),
                         'carName' => $usedCars->name,
-                        'descriptionHTML' => $usedCars->description,
+                        'startingPrice' => $usedCars->price,
+                        'description' => $usedCars->description,
                     ];
                 })
             ]), 200);
@@ -47,7 +48,8 @@ class CatalogCarController extends Controller
                             return asset('storage/catalog_cars/' . $image->img_url);
                         }),
                         'carName' => $usedCars->name,
-                        'descriptionHTML' => $usedCars->description,
+                        'startingPrice' => $usedCars->price,
+                        'description' => $usedCars->description,
                     ];
                 })
             ]), 200);

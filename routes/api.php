@@ -53,6 +53,9 @@ Route::prefix('v1')->group(function () {
 
     // PIC
     Route::get('/pic', [GeneralController::class, 'pic'])->name('api.pic');
+    
+    // Spare Part
+    Route::get('/sparepart', [GeneralController::class, 'sparepart'])->name('api.sparepart');
 
     // Catalog Car
     Route::get('/used-car', [CatalogCarController::class, 'getUsedCars'])->name('api.catalog-cars.used');

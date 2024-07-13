@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->string('name');
+            $table->string('price');
             $table->enum('type', ['NEW', 'USED']);
             $table->longText('description');
             $table->timestamps();

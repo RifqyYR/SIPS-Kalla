@@ -57,6 +57,7 @@ class DatabaseSeeder extends Seeder
         DB::table('catalog_cars')->insert([
             'uuid' => Uuid::uuid4(),
             'name' => 'Toyota Veloz 2024',
+            'price' => 'Rp. 300.000.000',
             'type' => 'NEW',
             'description' => '<p>Toyota Veloz 2024 adalah 7 Seater MPV yang tersedia dalam daftar harga Rp&nbsp;304,4 Juta di Indonesia. It is available in 4 variants, 1 engine, and 2 transmissions option: Manual dan CVT in the Indonesia. Mobil ini memiliki ground clearance 205 mm dengan dimensi sebagai berikut: 4475 mm L x 1750 mm W x 1700 mm H. Lebih dari 99 pengguna telah memberikan penilaian untuk Veloz berdasarkan fitur, jarak tempuh, kenyamanan tempat duduk dan kinerja mesin. Pesaing terdekat Toyota Veloz adalah Xpander, Ertiga, Avanza dan Livina . Cicilan bulanan terendah dimulai dari Rp&nbsp;14,44 Juta (selama 60 bulan).</p>',
         ]);
@@ -64,6 +65,7 @@ class DatabaseSeeder extends Seeder
         DB::table('catalog_cars')->insert([
             'uuid' => Uuid::uuid4(),
             'name' => 'Toyota Fortuner 2020',
+            'price' => 'Rp. 500.000.000',
             'type' => 'USED',
             'description' => '<p>Toyota Fortuner 2024 adalah 7 Seater MPV yang tersedia dalam daftar harga Rp&nbsp;304,4 Juta di Indonesia. It is available in 4 variants, 1 engine, and 2 transmissions option: Manual dan CVT in the Indonesia. Mobil ini memiliki ground clearance 205 mm dengan dimensi sebagai berikut: 4475 mm L x 1750 mm W x 1700 mm H. Lebih dari 99 pengguna telah memberikan penilaian untuk Fortuner berdasarkan fitur, jarak tempuh, kenyamanan tempat duduk dan kinerja mesin. Pesaing terdekat Toyota Fortuner adalah Xpander, Ertiga, Avanza dan Livina . Cicilan bulanan terendah dimulai dari Rp&nbsp;14,44 Juta (selama 60 bulan).</p>',
         ]);

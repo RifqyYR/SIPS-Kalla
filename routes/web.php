@@ -85,6 +85,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{uuid}', [CustomerController::class, 'update'])->name('customer.update');
         Route::delete('/delete/{uuid}', [CustomerController::class, 'destroy'])->name('customer.destroy');
         Route::get('/{uuid}', [CustomerController::class, 'detail'])->name('customer.detail');
+        Route::get('/car/create{uuid}', [CustomerController::class, 'createCar'])->name('car.create');
+        Route::post('/car/store/{uuid}', [CustomerController::class, 'storeCar'])->name('car.store');
+        Route::delete('/car/delete/{uuid}', [CustomerController::class, 'destroyCar'])->name('car.destroy');
+        Route::get('/car/edit/{uuid}', [CustomerController::class, 'editCar'])->name('car.edit');
+        Route::post('/car/update/{uuid}', [CustomerController::class, 'updateCar'])->name('car.update');
     });
 });
 

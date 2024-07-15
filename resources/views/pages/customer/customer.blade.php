@@ -29,7 +29,6 @@
         </div>
     </div>
     
-    
     <!-- Table --> 
     <div class="relative overflow-x-auto shadow sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -83,7 +82,7 @@
                                 </x-secondary-button>
                             </a>
                             <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                                <a href="#" class="font-medium text-white">Delete</a>
+                                <a href="#" class="font-medium text-white">Hapus</a>
                             </x-danger-button>
                         </td>
                     </tr>             

@@ -55,10 +55,12 @@ function formatIndonesianDate($date) {
     <div class="flex justify-between">
         <h1 class="font-semibold text-xl text-gray-900 pb-4">Kendaraan Customer</h1>
         <div>
-            <x-primary-button>Tambah Item</x-primary-button>
+            <a href="{{ route('car.create', $clients->uuid) }}">
+                <x-primary-button>Tambah Item</x-primary-button>
+            </a>
         </div>
     </div>
-    
+
     <div class="grid grid-cols-2 gap-4">
             @foreach ($clients->cars as $item)
             <div class="w-full bg-white rounded-lg shadow h-fit">
@@ -69,7 +71,7 @@ function formatIndonesianDate($date) {
                         <div class="flex flex-col ml-2 ">
                             <span class="font-semibold text-lg">{{ $item->car_type }}</span>
                             <span class="text-sm">Plat kendaraan: {{ $item->plate_number }}</span>
-                            <span class="text-sm">Tanggal service terakhir: {{ formatIndonesianDate($item->last_service_date) }}</span>
+                            <span class="text-sm">Tanggal service terakhir: {{ $item->last_service_date != null ? formatIndonesianDate($item->last_service_date) : "Tanggal servis terakhir belum diisi" }}</span>
                             <span class="text-sm">Jarak tempuh: {{ $item->last_service_km }} Km</span>
                         </div>
                     </div>
@@ -81,11 +83,11 @@ function formatIndonesianDate($date) {
                                 </button>
                             </x-slot>
                             <x-slot name='content'>
-                                <x-dropdown-link>
+                                <x-dropdown-link href="{{ route('car.edit', $item->uuid) }}">
                                     Edit
                                 </x-dropdown-link>
-                                <x-dropdown-link>
-                                    <span>Hapus</span>
+                                <x-dropdown-link onclick="confirmDelete('{{ $item->uuid }}')">
+                                    Hapus
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
@@ -94,5 +96,11 @@ function formatIndonesianDate($date) {
             </div>
             @endforeach
     </div>
+
+    <form id="delete-form" action="" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
 
 </x-app-layout>

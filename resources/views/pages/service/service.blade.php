@@ -1,3 +1,33 @@
+@php
+    function status($service_status){
+        if ($service_status == 'WAITING') {
+            $status = 'Menunggu';
+            $class_status = 'bg-yellow-500 p-2 rounded-lg text-white';
+            return [$status, $class_status];
+        } else if ($service_status == 'CONFIRMED') {
+            $status = 'Dikonfirmasi';
+            $class_status = 'bg-green-500 p-2 rounded-lg text-white';
+            return [$status, $class_status];
+        } else if ($service_status == 'CANCELLED') {
+            $status = 'Ditolak';
+            $class_status = 'bg-red-500 p-2 rounded-lg text-white';
+            return [$status, $class_status];
+        } else {
+            $status = 'Selesai';
+            $class_status = 'bg-blue-500 p-2 rounded-lg text-white';
+            return [$status, $class_status];
+        }
+    }
+
+    function convertSector(string $sector) {
+        if ($sector == \App\Models\Service::STATUS_WAITING) return 'Menunggu';
+        elseif ($sector == \App\Models\Service::STATUS_CONFIRMED) return 'Dikonfirmasi';
+        elseif ($sector == \App\Models\Service::STATUS_CANCELLED) return 'Batal';
+        elseif ($sector == \App\Models\Service::STATUS_DONE) return 'Selesai';
+    }
+    
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -18,9 +48,6 @@
                 <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
             </div>
         </div>
-        <div class="pb-4">
-            <x-primary-button>Add Item</x-primary-button>
-        </div>
     </div>
     
     <!-- Table --> 
@@ -28,100 +55,95 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
-                        No
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Client
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Cars
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Service Type
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Address
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Duration
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Additional Info
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Status
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
+                    <th scope="col" class="px-6 py-3">No</th>
+                    <th scope="col" class="px-6 py-3">Nama Customer</th>
+                    <th scope="col" class="px-6 py-3">Tipe Servis</th>
+                    <th scope="col" class="px-6 py-3">Tangal</th>
+                    <th scope="col" class="px-6 py-3">Waktu</th>
+                    <th scope="col" class="px-6 py-3">Status</th>
+                    <th scope="col" class="px-6 py-3">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="bg-white border-b hover:bg-gray-50">
-                    <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <span>1</span>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        Dimas
-                    </td>
-                    <td class="px-6 py-4">
-                        Bumblebee
-                    </td>
-                    <td class="px-6 py-4">
-                        Oli
-                    </td>
-                    <td class="px-6 py-4">
-                        Gowa
-                    </td>
-                    <td class="px-6 py-4">
-                        0 days 1 Hours
-                    </td>
-                    <td class="px-6 py-4">
-                        Sick
-                    </td>
-                    <td class="px-6 py-4">
-                        Clear
-                    </td>
-                    <td class="px-6 py-4">
-                        <x-secondary-button>
-                            <a href="#" class="font-medium text-blue-600">Edit</a>
-                        </x-secondary-button>
-                        <x-danger-button>
-                            <a href="#" class="font-medium text-white">Delete</a>
-                        </x-danger-button>
-                    </td>
-                </tr>
-            </tbody>
+            @foreach ($service as $item)
+                <tbody>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td class="w-4 p-4">
+                            <div class="flex items-center">
+                                <span>{{ $loop->index + 1 }}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">{{ $item->client->name }}</td>
+                        <td class="px-6 py-4 capitalize">{{ $item->type == 'BOOK'? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
+                        <td class="px-6 py-4">{{ $item->date }}</td>
+                        <td class="px-6 py-4">{{ $item->time }}</td>
+                        <td class="px-6 py-4">
+                            <span class="{{ status($item->status)[1] }}">
+                                {{ status($item->status)[0] }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('service.edit', $item->uuid) }}">
+                                <x-secondary-button class="font-medium text-blue-600">
+                                    Edit
+                                </x-secondary-button>
+                            </a>
+                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                <a href="#" class="font-medium text-white">Hapus</a>
+                            </x-danger-button>
+                        </td>
+                    </tr>
+                </tbody>
+            @endforeach
         </table>
+
+        <form id="delete-form" action="" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
         
         <!-- Pagination -->
-        <nav class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-            <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900">1-10</span> of <span class="font-semibold text-gray-900">1000</span></span>
+        <nav id="pagination-links"
+            class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+            aria-label="Table navigation">
+            <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                Showing <span
+                    class="font-semibold text-gray-900">{{ $service->firstItem() }}-{{ $service->lastItem() }}</span> of
+                <span class="font-semibold text-gray-900">{{ $service->total() }}</span>
+            </span>
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                </li>
-                <li>
-                    <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">3</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
-                </li>
+                {{-- Previous Page Link --}}
+                @if ($service->onFirstPage())
+                    <li>
+                        <span
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg cursor-default">Previous</span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $service->previousPageUrl() }}"
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                    </li>
+                @endif
+
+                {{-- Pagination Elements --}}
+                @foreach ($service->getUrlRange(1, $service->lastPage()) as $page => $url)
+                    <li>
+                        <a href="{{ $url }}"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $service->currentPage() ? 'text-blue-600 bg-blue-50' : '' }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($service->hasMorePages())
+                    <li>
+                        <a href="{{ $service->nextPageUrl() }}"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
+                    </li>
+                @else
+                    <li>
+                        <span
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg cursor-default">Next</span>
+                    </li>
+                @endif
             </ul>
         </nav>
     </div>

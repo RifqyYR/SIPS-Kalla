@@ -7,6 +7,7 @@ use App\Http\Controllers\PersonInChargeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +91,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('/car/delete/{uuid}', [CustomerController::class, 'destroyCar'])->name('car.destroy');
         Route::get('/car/edit/{uuid}', [CustomerController::class, 'editCar'])->name('car.edit');
         Route::post('/car/update/{uuid}', [CustomerController::class, 'updateCar'])->name('car.update');
+    });
+
+    // Service
+    Route::group(['prefix' => 'service'], function(){
+        Route::get('/', [ServiceController::class, 'index'])->name('service.index');
+        Route::get('/search', [ServiceController::class, 'search'])->name('service.search');
+        Route::get('/edit/{uuid}', [ServiceController::class, 'edit'])->name('service.edit');
+        Route::post('/update/{uuid}', [ServiceController::class, 'update'])->name('service.update');
+        Route::delete('/delete/{uuid}', [ServiceController::class, 'destroy'])->name('service.delete');
     });
 });
 

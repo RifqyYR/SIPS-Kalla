@@ -1,14 +1,14 @@
 @php
-  function convertSector(string $sector) {
-    if ($sector == \App\Models\PersonInCharge::SECTOR_BOOK_SERVICE) return 'Booking Service';
-    elseif ($sector == \App\Models\PersonInCharge::SECTOR_VISIT_SERVICE) return 'Servis Kunjungan';
-    elseif ($sector == \App\Models\PersonInCharge::SECTOR_PICK_UP) return 'Antar Jemput';
-    elseif ($sector == \App\Models\PersonInCharge::SECTOR_FOOD_ORDER) return 'Pesan Makanan';
-    elseif ($sector == \App\Models\PersonInCharge::SECTOR_FREE_FOOD) return 'Makanan Gratis';
-    elseif ($sector == \App\Models\PersonInCharge::SECTOR_ICE_CREAM) return 'Es Krim Gratis';
-    elseif ($sector == \App\Models\PersonInCharge::SECTOR_USED_CAR) return 'Mobil Bekas';
-    else return 'Tidak Terdaftar';
-  }
+    function convertSector(string $sector) {
+        if ($sector == \App\Models\PersonInCharge::SECTOR_BOOK_SERVICE) return 'Servis Reservasi';
+        elseif ($sector == \App\Models\PersonInCharge::SECTOR_VISIT_SERVICE) return 'Servis Kunjungan';
+        elseif ($sector == \App\Models\PersonInCharge::SECTOR_PICK_UP) return 'Antar Jemput';
+        elseif ($sector == \App\Models\PersonInCharge::SECTOR_FOOD_ORDER) return 'Pesan Makanan';
+        elseif ($sector == \App\Models\PersonInCharge::SECTOR_FREE_FOOD) return 'Makanan Gratis';
+        elseif ($sector == \App\Models\PersonInCharge::SECTOR_ICE_CREAM) return 'Es Krim Gratis';
+        elseif ($sector == \App\Models\PersonInCharge::SECTOR_USED_CAR) return 'Mobil Bekas';
+        else return 'Tidak Terdaftar';
+    }
 @endphp
 <x-app-layout>
     <x-slot name="header">

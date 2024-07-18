@@ -43,7 +43,7 @@
                     </x-secondary-button>
                 </a>
                 <x-primary-button>
-                    {{ __('Edit') }}
+                    {{ __('Simpan') }}
                 </x-primary-button>
             </div>
         </div>

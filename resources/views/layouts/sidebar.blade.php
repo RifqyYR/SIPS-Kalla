@@ -28,7 +28,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :active="request()->routeIs('service')">
+                    <x-nav-link :href="route('service.index')" :active="request()->routeIs('service*')">
                         {{ __('Servis') }}
                     </x-nav-link>
                 </li>

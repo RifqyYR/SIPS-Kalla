@@ -49,7 +49,7 @@ class CustomerController extends Controller
         $request_customer = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:clients,email',
-            'phone_number' => 'required|unique:clients,phone_number',
+            'phone_number' => 'required|unique:clients,phone_number|digits_between:10,15',
             'address' => 'required',
         ], [
             'name.required' => 'Input nama harus diisi',
@@ -58,6 +58,7 @@ class CustomerController extends Controller
             'email.unique' => 'Email ini sudah digunakan',
             'phone_number.required' => 'Field nomor telepon harus diisi',
             'phone_number.unique' => 'Nomor telepon ini sudah digunakan',
+            'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
             'address.required' => 'Field alamat harus diisi',
         ]);
 
@@ -116,13 +117,14 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone_number' => 'required',
+            'phone_number' => 'required|digits_between:10,15',
             'address' => 'required'
         ], [
             'name.required' => 'Input nama harus diisi',
             'email.required' => 'Input email harus diisi',
             'email.email' => 'Masukkan email yang valid',
             'phone_number.required' => 'Field nomor telepon harus diisi',
+            'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
             'address.required' => 'Field alamat harus diisi',
         ]);
 

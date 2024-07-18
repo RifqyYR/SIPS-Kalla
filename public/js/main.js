@@ -58,6 +58,11 @@ function confirmDelete(uuid) {
                 var action = "/customer/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
+            } else if (window.location.href.indexOf("service") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/service/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
             }
         }
     });

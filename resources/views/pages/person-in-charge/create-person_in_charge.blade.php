@@ -26,7 +26,7 @@
                 <x-input-label for="sector" :value="__('Bidang')" />
                 <select id="sector" name="sector"
                     class="mt-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#01803D] focus:border-[#01803D] block w-full p-2.5">
-                    <option value="{{ \App\Models\PersonInCharge::SECTOR_BOOK_SERVICE }}" selected>Booking Service</option>
+                    <option value="{{ \App\Models\PersonInCharge::SECTOR_BOOK_SERVICE }}" selected>Servis Reservasi</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_VISIT_SERVICE }}">Servis Kunjungan</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_PICK_UP }}">Antar Jemput</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_FOOD_ORDER }}">Pesan Makanan</option>

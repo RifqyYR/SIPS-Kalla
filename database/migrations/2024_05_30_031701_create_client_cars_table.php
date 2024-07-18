@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid()->unique();
             $table->unsignedBigInteger('client_id');
             $table->string('car_type');
-            $table->string('plate_number');
+            $table->string('plate_number')->unique();
             $table->date('last_service_date')->nullable();
             $table->integer('last_service_km');
             $table->timestamps();

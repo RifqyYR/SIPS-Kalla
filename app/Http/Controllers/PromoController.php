@@ -21,15 +21,30 @@ class PromoController extends Controller
         return view('pages.promo.create-promo');
     }
 
+    private function ensureDirectoryHasPermissions($directory, $permissions = 0755)
+    {
+        if (is_dir($directory)) {
+            $currentPermissions = substr(sprintf('%o', fileperms($directory)), -4);
+            if ($currentPermissions !== sprintf('%o', $permissions)) {
+                chmod($directory, $permissions);
+            }
+        } else {
+            mkdir($directory, $permissions, true);
+        }
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'img' => 'required|file'
         ]);
 
-        try {
+        try {   
+            $promoDirectory = storage_path('app/public/promo');
+
+            $this->ensureDirectoryHasPermissions($promoDirectory);
+
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
-            $request->file('img')->storeAs('public/promo/', $filename);
 
             Promo::create([
                 'uuid' => Uuid::uuid4(),

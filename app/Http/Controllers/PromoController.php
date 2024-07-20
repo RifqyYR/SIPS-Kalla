@@ -75,8 +75,11 @@ class PromoController extends Controller
         try {
             $promo = Promo::where('uuid', $uuid)->first();
 
+            $promoDirectory = storage_path('app/public/promo');
+
+            $this->ensureDirectoryHasPermissions($promoDirectory);
+
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
-            $request->file('img')->storeAs('public/promo/', $filename);
 
             if (Storage::exists('/public/promo/' . $promo->img_url)) {
                 Storage::delete('/public/promo/' . $promo->img_url);

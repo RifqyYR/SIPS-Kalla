@@ -45,6 +45,8 @@ class PromoController extends Controller
             $this->ensureDirectoryHasPermissions($promoDirectory);
 
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
+            
+            $request->file('img')->storeAs('public/promo/', $filename);
 
             Promo::create([
                 'uuid' => Uuid::uuid4(),
@@ -80,6 +82,8 @@ class PromoController extends Controller
             $this->ensureDirectoryHasPermissions($promoDirectory);
 
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
+
+            $request->file('img')->storeAs('public/promo/', $filename);
 
             if (Storage::exists('/public/promo/' . $promo->img_url)) {
                 Storage::delete('/public/promo/' . $promo->img_url);

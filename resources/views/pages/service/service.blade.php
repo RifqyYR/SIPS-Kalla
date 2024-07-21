@@ -40,13 +40,9 @@
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-<<<<<<< HEAD
-                
-=======
                 <input type="text" id="table-search"
                     class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
->>>>>>> d59a661ec2f0edd7a8bfe1abf92f8709b822b912
             </div>
         </div>
     </div>

@@ -1,14 +1,15 @@
 @php
-    function status($service_status){
+    function status($service_status)
+    {
         if ($service_status == 'WAITING') {
             $status = 'Menunggu';
             $class_status = 'bg-yellow-500 p-2 rounded-lg text-white';
             return [$status, $class_status];
-        } else if ($service_status == 'CONFIRMED') {
+        } elseif ($service_status == 'CONFIRMED') {
             $status = 'Dikonfirmasi';
             $class_status = 'bg-green-500 p-2 rounded-lg text-white';
             return [$status, $class_status];
-        } else if ($service_status == 'CANCELLED') {
+        } elseif ($service_status == 'CANCELLED') {
             $status = 'Ditolak';
             $class_status = 'bg-red-500 p-2 rounded-lg text-white';
             return [$status, $class_status];
@@ -18,14 +19,6 @@
             return [$status, $class_status];
         }
     }
-
-    function convertSector(string $sector) {
-        if ($sector == \App\Models\Service::STATUS_WAITING) return 'Menunggu';
-        elseif ($sector == \App\Models\Service::STATUS_CONFIRMED) return 'Dikonfirmasi';
-        elseif ($sector == \App\Models\Service::STATUS_CANCELLED) return 'Batal';
-        elseif ($sector == \App\Models\Service::STATUS_DONE) return 'Selesai';
-    }
-    
 @endphp
 
 <x-app-layout>
@@ -41,16 +34,20 @@
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
+                <input type="text" id="table-search"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Search for items">
             </div>
         </div>
     </div>
-    
-    <!-- Table --> 
+
+    <!-- Table -->
     <div class="relative overflow-x-auto shadow sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -64,16 +61,17 @@
                     <th scope="col" class="px-6 py-3">Aksi</th>
                 </tr>
             </thead>
-            @foreach ($service as $item)
-                <tbody>
+            <tbody id="search-results">
+                @foreach ($service as $item)
                     <tr class="bg-white border-b hover:bg-gray-50">
                         <td class="w-4 p-4">
-                            <div class="flex items-center">
+                            <div class="flex justify-center">
                                 <span>{{ $loop->index + 1 }}</span>
                             </div>
                         </td>
-                        <td class="px-6 py-4">{{ $item->client->name }}</td>
-                        <td class="px-6 py-4 capitalize">{{ $item->type == 'BOOK'? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name }}</td>
+                        <td class="px-6 py-4 capitalize">
+                            {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
                         <td class="px-6 py-4">{{ $item->date }}</td>
                         <td class="px-6 py-4">{{ $item->time }}</td>
                         <td class="px-6 py-4">
@@ -81,7 +79,7 @@
                                 {{ status($item->status)[0] }}
                             </span>
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 text-nowrap">
                             <a href="{{ route('service.edit', $item->uuid) }}">
                                 <x-secondary-button class="font-medium text-blue-600">
                                     Edit
@@ -92,22 +90,23 @@
                             </x-danger-button>
                         </td>
                     </tr>
-                </tbody>
-            @endforeach
+                @endforeach
+            </tbody>
         </table>
 
         <form id="delete-form" action="" method="POST" style="display: none;">
             @csrf
             @method('DELETE')
         </form>
-        
+
         <!-- Pagination -->
         <nav id="pagination-links"
             class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
             aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                 Showing <span
-                    class="font-semibold text-gray-900">{{ $service->firstItem() }}-{{ $service->lastItem() }}</span> of
+                    class="font-semibold text-gray-900">{{ $service->firstItem() }}-{{ $service->lastItem() }}</span>
+                of
                 <span class="font-semibold text-gray-900">{{ $service->total() }}</span>
             </span>
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">

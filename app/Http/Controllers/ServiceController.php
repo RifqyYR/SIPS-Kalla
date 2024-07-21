@@ -18,7 +18,9 @@ class ServiceController extends Controller
         $query = $request->input('query');
 
         // Search by name
-        $results = Service::where('name', 'LIKE', "%{$query}%")->paginate(10);
+        $results = Service::whereHas('client', function ($q) use ($query) {
+            $q->where('name', 'LIKE', "%{$query}%");
+        })->with('client')->paginate(10);
 
         $results->appends(['query' => $query]);
 

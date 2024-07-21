@@ -20,16 +20,21 @@
 @endif
 
 <script>
-    document.getElementById('imgInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgPreview = document.getElementById('imgPreview');
-                imgPreview.src = e.target.result;
-                imgPreview.classList.remove('hidden');
-            }
-            reader.readAsDataURL(file);
+    document.addEventListener("DOMContentLoaded", function() {
+        var imgInput = document.getElementById('imgInput');
+        if (imgInput) {
+            imgInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgPreview = document.getElementById('imgPreview');
+                        imgPreview.src = e.target.result;
+                        imgPreview.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
         }
     });
 </script>
@@ -158,32 +163,55 @@
         }
 
         function updateSearchResultsService(data) {
+            function serviceStatus(serviceStatus) {
+                if (serviceStatus === 'WAITING') {
+                    status = 'Menunggu';
+                    classStatus = 'bg-yellow-500 p-2 rounded-lg text-white';
+                    return [status, classStatus];
+                } else if (serviceStatus === 'CONFIRMED') {
+                    status = 'Dikonfirmasi';
+                    classStatus = 'bg-green-500 p-2 rounded-lg text-white';
+                    return [status, classStatus];
+                } else if (serviceStatus === 'CANCELLED') {
+                    status = 'Ditolak';
+                    classStatus = 'bg-red-500 p-2 rounded-lg text-white';
+                    return [status, classStatus];
+                } else {
+                    status = 'Selesai';
+                    classStatus = 'bg-blue-500 p-2 rounded-lg text-white';
+                    return [status, classStatus];
+                }
+            }
             $("#search-results").html("");
             $.each(data.data.data, function(index, item) {
-                console.log(data);
                 $("#search-results").append(
                     '<tr class="bg-white border-b hover:bg-gray-50">' +
-                    '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
-                    '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
+                    '<td class="w-4 p-4 text-center"><div class="flex justify-center"><span>' + (
+                        index + 1) + "</span></div></td>" +
+                    '<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
                     item.client.name + "</td>" +
-                    '<td class="px-6 py-4">' + item.type + "</td>" +
+                    '<td class="px-6 py-4">' + (item.type === 'BOOK' ? 'Servis Reservasi' :
+                        'Servis Kunjungan') + "</td>" +
                     '<td class="px-6 py-4">' + item.date + "</td>" +
                     '<td class="px-6 py-4">' + item.time + "</td>" +
-                    `<td class="px-6 py-4">
-                        <a href="/pic/edit/${item.uuid}">
-                            <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                    '<td class="px-6 py-4"><span class="' + serviceStatus(item.status)[1] + '">' +
+                    serviceStatus(item.status)[0] +
+                    "</span></td>" +
+                    `<td class="px-6 py-4 text-nowrap">
+                        <a href="/service/edit/${item.uuid}">
+                            <x-secondary-button class="font-medium text-blue-600">
                                 Edit
                             </x-secondary-button>
                         </a>
                         <x-danger-button onclick="confirmDelete('${item.uuid}')">
-                            <a href="#" class="font-medium text-white">Delete</a>
+                            <a href="#" class="font-medium text-white">Hapus</a>
                         </x-danger-button></td>` +
                     "</tr>"
                 );
             });
             updatePaginationLinks(data);
         }
-        
+
         function updatePaginationLinks(data) {
             $("#pagination-links").html(
                 `<span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
@@ -278,14 +306,16 @@
 
 {{-- Customer Cars in create-customer page --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const carCountInput = document.getElementById('car_count');
         const carFieldsContainer = document.getElementById('car_fields_container');
 
-        carCountInput.addEventListener('change', function () {
-            const carCount = parseInt(this.value);
-            generateCarFields(carCount);
-        });
+        if (carCountInput) {
+            carCountInput.addEventListener('change', function() {
+                const carCount = parseInt(this.value);
+                generateCarFields(carCount);
+            });
+        }
 
         function generateCarFields(carCount) {
             carFieldsContainer.innerHTML = ''; // Clear any existing fields
@@ -325,14 +355,16 @@
 
 {{-- Customer Cars in create-car page --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const carCountInput = document.getElementById('car_count_create');
         const carFieldsContainer = document.getElementById('car_fields_container');
 
-        carCountInput.addEventListener('change', function () {
-            const carCount = parseInt(this.value);
-            generateCarFields(carCount);
-        });
+        if (carCountInput) {
+            carCountInput.addEventListener('change', function() {
+                const carCount = parseInt(this.value);
+                generateCarFields(carCount);
+            });
+        }
 
         function generateCarFields(carCount) {
             carFieldsContainer.innerHTML = ''; // Clear any existing fields
@@ -379,7 +411,14 @@
 </script>
 
 <script>
-    document.querySelector('[data-modal-toggle="update-modal"]').addEventListener('click', function () {
-        window.dispatchEvent(new CustomEvent('open-modal', { detail: 'update-modal' }));
+    document.addEventListener("DOMContentLoaded", function() {
+        var modalToggleElement = document.querySelector('[data-modal-toggle="update-modal"]');
+        if (modalToggleElement) {
+            modalToggleElement.addEventListener('click', function() {
+                window.dispatchEvent(new CustomEvent('open-modal', {
+                    detail: 'update-modal'
+                }));
+            });
+        }
     });
 </script>

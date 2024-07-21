@@ -7,12 +7,13 @@ function isCustomerDetailPage(url) {
         // Check if the second segment is "customer" (case-sensitive)
         if (pathSegments[3] === "customer") {
             // Check if the third segment matches the expected customer ID format
-            const customerIdRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/; // Regex for UUID format
+            const customerIdRegex =
+                /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/; // Regex for UUID format
             return customerIdRegex.test(pathSegments[4]);
         }
     }
     return false;
-} 
+}
 
 function confirmDelete(uuid) {
     Swal.fire({
@@ -53,7 +54,10 @@ function confirmDelete(uuid) {
                 var action = "/sales/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
-            } else if (window.location.href.indexOf("customer") > -1 && !isCustomerDetailPage(window.location.href)) {
+            } else if (
+                window.location.href.indexOf("customer") > -1 &&
+                !isCustomerDetailPage(window.location.href)
+            ) {
                 var form = document.getElementById("delete-form");
                 var action = "/customer/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
@@ -68,7 +72,12 @@ function confirmDelete(uuid) {
     });
 }
 
-// Filter input only number on phone number input
-document.getElementById("phone_number").addEventListener("input", function (e) {
-    e.target.value = e.target.value.replace(/\D/g, "");
+document.addEventListener("DOMContentLoaded", function () {
+    // Filter input only number on phone number input
+    var phoneNumberInput = document.getElementById("phone_number");
+    if (phoneNumberInput) {
+        phoneNumberInput.addEventListener("input", function (e) {
+            e.target.value = e.target.value.replace(/\D/g, "");
+        });
+    }
 });

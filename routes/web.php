@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SparePartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -94,12 +95,18 @@ Route::middleware('auth')->group(function () {
     });
 
     // Service
-    Route::group(['prefix' => 'service'], function(){
+    Route::group(['prefix' => 'service'], function () {
         Route::get('/', [ServiceController::class, 'index'])->name('service.index');
         Route::get('/search', [ServiceController::class, 'search'])->name('service.search');
         Route::get('/edit/{uuid}', [ServiceController::class, 'edit'])->name('service.edit');
         Route::post('/update/{uuid}', [ServiceController::class, 'update'])->name('service.update');
         Route::delete('/delete/{uuid}', [ServiceController::class, 'destroy'])->name('service.delete');
+    });
+
+    // Spare part
+    Route::group(['prefix' => 'sparepart'], function () {
+        Route::get('/', [SparePartController::class, 'index'])->name('sparepart.index');
+        Route::get('/detail/{uuid}', [SparePartController::class, 'detail'])->name('sparepart.detail');
     });
 });
 

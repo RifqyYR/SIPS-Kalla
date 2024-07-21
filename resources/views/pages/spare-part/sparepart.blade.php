@@ -15,103 +15,67 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
+                <input type="text" id="table-search" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari item">
             </div>
         </div>
         <div class="pb-4">
-            <x-primary-button>Add Item</x-primary-button>
+            <x-primary-button>Tambah Item</x-primary-button>
         </div>
     </div>
     
-    <!-- Table --> 
-    <div class="relative overflow-x-auto shadow sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        No
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Image
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Name of Sparepart
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Price
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Stock
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Usage Time
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-white border-b hover:bg-gray-50">
-                    <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <span>1</span>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <img src="https://www.shutterstock.com/image-illustration/car-parts-auto-spare-isolated-600nw-2283939101.jpg" class="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch">
-                    </td>
-                    <td class="px-6 py-4">
-                        Bumblebee
-                    </td>
-                    <td class="px-6 py-4">
-                        DD 3030 XX
-                    </td>
-                    <td class="px-6 py-4">
-                        2024/05/30
-                    </td>
-                    <td class="px-6 py-4">
-                        2025/05/30
-                    </td>
-                    <td class="px-6 py-4">
-                        <x-secondary-button>
-                            <a href="#" class="font-medium text-blue-600">Edit</a>
-                        </x-secondary-button>
-                        <x-danger-button>
-                            <a href="#" class="font-medium text-white">Delete</a>
-                        </x-danger-button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- Pagination -->
-        <nav class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-            <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900">1-10</span> of <span class="font-semibold text-gray-900">1000</span></span>
-            <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                </li>
-                <li>
-                    <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">3</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="grid grid-cols-4 justify-between mb-6">
+        @foreach ($sparepart as $item)
+            <a href="{{ route('sparepart.detail', $item->uuid) }}">
+                <x-card-sparepart>
+                    <x-slot name="image">
+                        <img src="{{ asset('storage/sparepart/' . $item->img_url) }}" alt="{{ $item->name }}" class="rounded-md max-w-full h-60">
+                    </x-slot>
+                    <x-slot name="title">{{ $item->name }}</x-slot>
+                    <x-slot name="price">Rp. {{ number_format($item->price, 0, ',', '.') }}</x-slot>
+                    <x-slot name="icon">
+                        <svg id="fi_2311524" enable-background="new 0 0 32 32" height="26" viewBox="0 0 32 32" width="26" xmlns="http://www.w3.org/2000/svg"><path id="XMLID_294_" d="m13 16c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path><path id="XMLID_295_" d="m13 26c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path><path id="XMLID_297_" d="m13 6c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path></svg>
+                    </x-slot>
+                </x-card-sparepart>
+            </a>
+        @endforeach
     </div>
+    <nav id="pagination-links"
+        class="flex items-center flex-column flex-wrap md:flex-row justify-center pt-4">
+        <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+            {{-- Previous Page Link --}}
+            @if ($sparepart->onFirstPage())
+                <li>
+                    <span
+                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg cursor-default">Previous</span>
+                </li>
+            @else
+                <li>
+                    <a href="{{ $sparepart->previousPageUrl() }}"
+                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                </li>
+            @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($sparepart->getUrlRange(1, $sparepart->lastPage()) as $page => $url)
+                <li>
+                    <a href="{{ $url }}"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $sparepart->currentPage() ? 'text-blue-600 bg-blue-50' : '' }}">{{ $page }}</a>
+                </li>
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($sparepart->hasMorePages())
+                <li>
+                    <a href="{{ $sparepart->nextPageUrl() }}"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
+                </li>
+            @else
+                <li>
+                    <span
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg cursor-default">Next</span>
+                </li>
+            @endif
+        </ul>
+    </nav>
 
 </x-app-layout>

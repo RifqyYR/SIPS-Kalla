@@ -18,7 +18,7 @@
                     </x-nav-link>
                 </li>
                 <li>
-                    <x-nav-link :active="request()->routeIs('sparepart')">
+                    <x-nav-link :href="route('sparepart.index')" :active="request()->routeIs('sparepart*')">
                         {{ __('Suku Cadang') }}
                     </x-nav-link>
                 </li>

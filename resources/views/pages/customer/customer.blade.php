@@ -6,8 +6,8 @@
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
-        <div class="pb-4">
+    <div class="flex flex-col sm:flex-row justify-between pb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div class="sm:pb-4">
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -18,18 +18,18 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
-        <div class="pb-4">
+        <div class="pb-4 sm:pb-4">
             <a href="{{ route('customer.create') }}">
                 <x-primary-button>Tambah Item</x-primary-button>
             </a>
         </div>
     </div>
-    
-    <!-- Table --> 
+
+    <!-- Table -->
     <div class="relative overflow-x-auto shadow sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -38,7 +38,7 @@
                         No
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Klien
+                        Nama
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Email
@@ -57,13 +57,12 @@
             <tbody id="search-results">
                 @foreach ($clients as $item)
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <span>{{ $loop->index + 1 }}</span>
-                            </div>
+                        <td class="w-4 p-4 text-center">
+                            <span>{{ $loop->index + 1 }}</span>
                         </td>
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            <a href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
+                            <a class="hover:text-blue-600"
+                                href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
                         </td>
                         <td class="px-6 py-4">
                             {{ $item->email }}
@@ -85,7 +84,7 @@
                                 <a href="#" class="font-medium text-white">Hapus</a>
                             </x-danger-button>
                         </td>
-                    </tr>             
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -101,7 +100,8 @@
             aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                 Showing <span
-                    class="font-semibold text-gray-900">{{ $clients->firstItem() }}-{{ $clients->lastItem() }}</span> of
+                    class="font-semibold text-gray-900">{{ $clients->firstItem() }}-{{ $clients->lastItem() }}</span>
+                of
                 <span class="font-semibold text-gray-900">{{ $clients->total() }}</span>
             </span>
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
@@ -141,6 +141,5 @@
             </ul>
         </nav>
     </div>
-    
-</x-app-layout>
 
+</x-app-layout>

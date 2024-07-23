@@ -171,12 +171,13 @@
                     '<tr class="bg-white border-b hover:bg-gray-50">' +
                     '<td class="w-4 p-4 text-center"><span>' + (index + 1) + "</span></td>" +
                     '<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
-                    item.name + "</td>" +
+                    `<a class="hover:text-blue-600" href="/customer/edit/${item.uuid}">` +
+                    item.name + "</a>" + "</td>" +
                     '<td class="px-6 py-4">' + item.email + "</td>" +
                     '<td class="px-6 py-4">' + item.phone_number + "</td>" +
                     '<td class="px-6 py-4">' + item.address + "</td>" +
                     `<td class="px-6 py-4">
-                        <a href="/pic/edit/${item.uuid}">
+                        <a href="/customer/edit/${item.uuid}">
                             <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
                                 Edit
                             </x-secondary-button>

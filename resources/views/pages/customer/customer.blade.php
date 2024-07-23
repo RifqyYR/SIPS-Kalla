@@ -55,37 +55,43 @@
                 </tr>
             </thead>
             <tbody id="search-results">
-                @foreach ($clients as $item)
+                @if (count($clients) !== 0)
+                    @foreach ($clients as $item)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="w-4 p-4 text-center">
+                                <span>{{ $loop->index + 1 }}</span>
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                <a class="hover:text-blue-600"
+                                    href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->email }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->phone_number }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->address }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('customer.edit', $item->uuid) }}">
+                                    <x-secondary-button
+                                        class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                        Edit
+                                    </x-secondary-button>
+                                </a>
+                                <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                    <a href="#" class="font-medium text-white">Hapus</a>
+                                </x-danger-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="w-4 p-4 text-center">
-                            <span>{{ $loop->index + 1 }}</span>
-                        </td>
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            <a class="hover:text-blue-600"
-                                href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->email }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->phone_number }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->address }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{{ route('customer.edit', $item->uuid) }}">
-                                <x-secondary-button
-                                    class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
-                                    Edit
-                                </x-secondary-button>
-                            </a>
-                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                                <a href="#" class="font-medium text-white">Hapus</a>
-                            </x-danger-button>
-                        </td>
+                        <td colspan="6" class="px-6 py-4 font-medium text-gray-900 text-center">Belum ada data</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
 

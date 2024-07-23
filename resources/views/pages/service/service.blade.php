@@ -62,35 +62,42 @@
                 </tr>
             </thead>
             <tbody id="search-results">
-                @foreach ($service as $item)
+                @if (count($service) !== 0)
+                    @foreach ($service as $item)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="w-4 p-4">
+                                <div class="flex justify-center">
+                                    <span>{{ $loop->index + 1 }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name }}
+                            </td>
+                            <td class="px-6 py-4 capitalize">
+                                {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
+                            <td class="px-6 py-4">{{ $item->date }}</td>
+                            <td class="px-6 py-4">{{ $item->time }}</td>
+                            <td class="px-6 py-4">
+                                <span class="{{ status($item->status)[1] }}">
+                                    {{ status($item->status)[0] }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-nowrap">
+                                <a href="{{ route('service.edit', $item->uuid) }}">
+                                    <x-secondary-button class="font-medium text-blue-600">
+                                        Edit
+                                    </x-secondary-button>
+                                </a>
+                                <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                    <a href="#" class="font-medium text-white">Hapus</a>
+                                </x-danger-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="w-4 p-4">
-                            <div class="flex justify-center">
-                                <span>{{ $loop->index + 1 }}</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name }}</td>
-                        <td class="px-6 py-4 capitalize">
-                            {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
-                        <td class="px-6 py-4">{{ $item->date }}</td>
-                        <td class="px-6 py-4">{{ $item->time }}</td>
-                        <td class="px-6 py-4">
-                            <span class="{{ status($item->status)[1] }}">
-                                {{ status($item->status)[0] }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-nowrap">
-                            <a href="{{ route('service.edit', $item->uuid) }}">
-                                <x-secondary-button class="font-medium text-blue-600">
-                                    Edit
-                                </x-secondary-button>
-                            </a>
-                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                                <a href="#" class="font-medium text-white">Hapus</a>
-                            </x-danger-button>
-                        </td>
+                        <td colspan="7" class="px-6 py-4 font-medium text-gray-900 text-center">Belum ada data</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
 

@@ -32,8 +32,8 @@
             <div class="mt-4">
                 <x-input-label for="img" :value="__('Upload gambar sales')" class="mb-2" />
                 <div class="flex items-center">
-                    <x-file-upload-input id="imgInput" type="file" accept=".png,.jpg,.jpeg" name="img"
-                        required />
+                    <x-image-preview id="imgPreview" />
+                    <x-file-upload-input id="imgInput" :image="true" type="file" accept=".png,.jpg,.jpeg" name="img" />
                 </div>
                 <x-input-error :messages="$errors->get('img')" class="mt-2" />
             </div>

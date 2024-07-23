@@ -16,6 +16,18 @@ class SalesController extends Controller
         return view('pages.sales.sales', compact('sales'));
     }
 
+    private function ensureDirectoryHasPermissions($directory, $permissions = 0755)
+    {
+        if (is_dir($directory)) {
+            $currentPermissions = substr(sprintf('%o', fileperms($directory)), -4);
+            if ($currentPermissions !== sprintf('%o', $permissions)) {
+                chmod($directory, $permissions);
+            }
+        } else {
+            mkdir($directory, $permissions, true);
+        }
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -54,6 +66,10 @@ class SalesController extends Controller
         ]);
 
         try {
+            $salesDirectory = storage_path('app/public/sales');
+
+            $this->ensureDirectoryHasPermissions($salesDirectory);
+            
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
             
             Sales::create([
@@ -86,6 +102,10 @@ class SalesController extends Controller
     {
         try {
             $sales = Sales::where('uuid', $uuid)->first();
+
+            $salesDirectory = storage_path('app/public/sales');
+
+            $this->ensureDirectoryHasPermissions($salesDirectory);
 
             if ($request->file() == []) {
                 $sales->update([

@@ -13,6 +13,38 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
+    private function validateClientAndCars(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:clients,email',
+            'phone_number' => 'required|unique:clients,phone_number|digits_between:10,15',
+            'address' => 'required',
+        ], [
+            'name.required' => 'Input nama harus diisi',
+            'email.required' => 'Input email harus diisi',
+            'email.email' => 'Masukkan email yang valid',
+            'email.unique' => 'Email ini sudah digunakan',
+            'phone_number.required' => 'Field nomor telepon harus diisi',
+            'phone_number.unique' => 'Nomor telepon ini sudah digunakan',
+            'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
+            'address.required' => 'Field alamat harus diisi',
+        ]);
+
+        $request->validate([
+            'car_type.*' => 'required',
+            'plate_number.*' => 'required|unique:client_cars,plate_number',
+            'last_service_km.*' => 'required|integer|min:0'
+        ], [
+            'car_type.*.required' => 'Field tipe mobil harus diisi',
+            'plate_number.*.required' => 'Field plat kendaraan harus diisi',
+            'plate_number.*.unique' => 'Plat kendaraan sudah terdaftar',
+            'last_service_km.*.required' => 'Field jarak tempuh kendaraan harus diisi',
+            'last_service_km.*.integer' => 'Field jarak tempuh harus berupa angka',
+            'last_service_km.*.min' => 'Field jarak tempuh tidak boleh kurang dari 0',
+        ]);
+    }
+
     public function index()
     {
         $clients = Client::paginate(10);
@@ -45,37 +77,10 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        // Validate Input Customer
-        $request_customer = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:clients,email',
-            'phone_number' => 'required|unique:clients,phone_number|digits_between:10,15',
-            'address' => 'required',
-        ], [
-            'name.required' => 'Input nama harus diisi',
-            'email.required' => 'Input email harus diisi',
-            'email.email' => 'Masukkan email yang valid',
-            'email.unique' => 'Email ini sudah digunakan',
-            'phone_number.required' => 'Field nomor telepon harus diisi',
-            'phone_number.unique' => 'Nomor telepon ini sudah digunakan',
-            'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
-            'address.required' => 'Field alamat harus diisi',
-        ]);
-
-        $request_cars = $request->validate([
-            'car_type.*' => 'required',
-            'plate_number.*' => 'required',
-            'last_service_km.*' => 'required|integer|min:0'
-        ], [
-            'car_type.*.required' => 'Field tipe mobil harus diisi',
-            'plate_number.*.required' => 'Field plat kendaraan harus diisi',
-            'last_service_km.*.required' => 'Field jarak tempuh kendaraan harus diisi',
-            'last_service_km.*.integer' => 'Field jarak tempuh harus berupa angka',
-            'last_service_km.*.min' => 'Field jarak tempuh tidak boleh kurang dari 0',
-        ]);
-
         try {
             DB::transaction(function () use ($request) {
+                $this->validateClientAndCars($request);
+
                 $client = Client::create([
                     'uuid' => Uuid::uuid4(),
                     'name' => $request->name,
@@ -98,7 +103,7 @@ class CustomerController extends Controller
 
             return redirect()->route('customer.index')->with('success', 'Berhasil menambahkan data');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan data' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan data: ' . $e->getMessage());
         }
     }
 
@@ -113,22 +118,22 @@ class CustomerController extends Controller
 
     public function update(Request $request, string $uuid)
     {
-        // Validate Input
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required|digits_between:10,15',
-            'address' => 'required'
-        ], [
-            'name.required' => 'Input nama harus diisi',
-            'email.required' => 'Input email harus diisi',
-            'email.email' => 'Masukkan email yang valid',
-            'phone_number.required' => 'Field nomor telepon harus diisi',
-            'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
-            'address.required' => 'Field alamat harus diisi',
-        ]);
-
         try {
+            // Validate Input
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone_number' => 'required|digits_between:10,15',
+                'address' => 'required'
+            ], [
+                'name.required' => 'Input nama harus diisi',
+                'email.required' => 'Input email harus diisi',
+                'email.email' => 'Masukkan email yang valid',
+                'phone_number.required' => 'Field nomor telepon harus diisi',
+                'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
+                'address.required' => 'Field alamat harus diisi',
+            ]);
+
             $client = Client::where('uuid', $uuid)->first();
 
             $client->update([
@@ -140,7 +145,7 @@ class CustomerController extends Controller
 
             return redirect()->route('customer.index')->with('success', 'Berhasil mengedit data');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal mengedit data');
+            return redirect()->back()->with('error', 'Gagal mengedit data: ' . $e->getMessage());
         }
     }
 
@@ -173,12 +178,13 @@ class CustomerController extends Controller
     {
         $request->validate([
             'car_type.*' => 'required',
-            'plate_number.*' => 'required',
+            'plate_number.*' => 'required|unique:client_cars,plate_number',
             'last_service_date.*' => 'required|date',
             'last_service_km.*' => 'required|integer|min:0'
         ], [
             'car_type.*.required' => 'Field tipe mobil harus diisi',
             'plate_number.*.required' => 'Field plat kendaraan harus diisi',
+            'plate_number.*.unique' => 'Plat kendaraan sudah terdaftar',
             'last_service_date.*.required' => 'Field waktu service terakhir harus diisi',
             'last_service_km.*.required' => 'Field jarak tempuh kendaraan harus diisi',
             'last_service_km.*.integer' => 'Field jarak tempuh harus berupa angka',
@@ -200,7 +206,7 @@ class CustomerController extends Controller
                 }
             });
 
-            return redirect()->route('customer.index')->with('success', 'Berhasil menambahkan data');
+            return redirect()->route('customer.detail', $client->uuid)->with('success', 'Berhasil menambahkan data');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan data' . $e->getMessage());
         }
@@ -229,22 +235,22 @@ class CustomerController extends Controller
 
     public function updateCar(Request $request, string $uuid)
     {
-        // Validate Input
-        $request->validate([
-            'car_type' => 'required',
-            'plate_number' => 'required',
-            'last_service_date' => 'required|date',
-            'last_service_km' => 'required|integer|min:0'
-        ], [
-            'car_type.required' => 'Field tipe mobil harus diisi',
-            'plate_number.required' => 'Field plat kendaraan harus diisi',
-            'last_service_date.required' => 'Field jadwal service terakhir harus diisi',
-            'last_service_km.required' => 'Field jarak tempuh kendaraan harus diisi',
-            'last_service_km.integer' => 'Field jarak tempuh harus berupa angka',
-            'last_service_km.min' => 'Field jarak tempuh tidak boleh kurang dari 0',
-        ]);
-
         try {
+            // Validate Input
+            $request->validate([
+                'car_type' => 'required',
+                'plate_number' => 'required',
+                'last_service_date' => 'required|date',
+                'last_service_km' => 'required|integer|min:0'
+            ], [
+                'car_type.required' => 'Field tipe mobil harus diisi',
+                'plate_number.required' => 'Field plat kendaraan harus diisi',
+                'last_service_date.required' => 'Field jadwal service terakhir harus diisi',
+                'last_service_km.required' => 'Field jarak tempuh kendaraan harus diisi',
+                'last_service_km.integer' => 'Field jarak tempuh harus berupa angka',
+                'last_service_km.min' => 'Field jarak tempuh tidak boleh kurang dari 0',
+            ]);
+            
             $car = ClientCars::where('uuid', $uuid)->first();
 
             $car->update([

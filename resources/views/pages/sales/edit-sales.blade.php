@@ -32,7 +32,7 @@
             <div class="mt-4">
                 <x-input-label for="img" :value="__('Upload gambar sales')" class="mb-2" />
                 <div class="flex items-center">
-                    <x-image-preview id="imgPreview" src="{{ asset('storage/sales/' . $sales->img_url) }}" alt="Selected Image" />
+                    <x-image-preview id="imgPreview" :image="false" src="{{ asset('storage/sales/' . $sales->img_url) }}" />
                     <x-file-upload-input id="imgInput" type="file" accept=".png,.jpg,.jpeg" name="img" />
                 </div>
                 <x-input-error :messages="$errors->get('img')" class="mt-2" />

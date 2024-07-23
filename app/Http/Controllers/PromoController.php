@@ -46,12 +46,12 @@ class PromoController extends Controller
 
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
             
-            $request->file('img')->storeAs('public/promo/', $filename);
-
             Promo::create([
                 'uuid' => Uuid::uuid4(),
                 'img_url' => $filename
             ]);
+
+            $request->file('img')->storeAs('public/promo/', $filename);
 
             return redirect()->route('promo.index')->with('success', 'Berhasil menambahkan data');
         } catch (\Exception $e) {
@@ -83,8 +83,6 @@ class PromoController extends Controller
 
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
 
-            $request->file('img')->storeAs('public/promo/', $filename);
-
             if (Storage::exists('/public/promo/' . $promo->img_url)) {
                 Storage::delete('/public/promo/' . $promo->img_url);
             }
@@ -92,6 +90,8 @@ class PromoController extends Controller
             $promo->update([
                 'img_url' => $filename
             ]);
+
+            $request->file('img')->storeAs('public/promo/', $filename);
 
             return redirect()->route('promo.index')->with('success', 'Berhasil mengedit data');
         } catch (\Exception $e) {

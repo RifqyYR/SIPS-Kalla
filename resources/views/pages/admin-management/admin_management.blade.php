@@ -6,8 +6,8 @@
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
-        <div class="pb-4">
+    <div class="flex flex-col sm:flex-row justify-between pb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div class="sm:pb-4">
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -18,11 +18,11 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
-        <div class="pb-4">
+        <div class="pb-4 sm:pb-4">
             <a href="{{ route('admin-management.create') }}">
                 <x-primary-button>Tambah Item</x-primary-button>
             </a>
@@ -38,7 +38,7 @@
                         NO
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        NAME
+                        NAMA
                     </th>
                     <th scope="col" class="px-6 py-3">
                         EMAIL

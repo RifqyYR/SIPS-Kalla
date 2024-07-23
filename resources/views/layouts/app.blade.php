@@ -17,6 +17,7 @@
 
     {{-- SweetAlert --}}
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.min.css" rel="stylesheet">
+
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-gray-100">

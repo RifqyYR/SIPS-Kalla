@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Sparepart') }}
+            {{ __('Katalog Mobil') }}
         </h2>
     </x-slot>
 
@@ -19,44 +19,20 @@
             </div>
         </div>
         <div class="pb-4">
-            <a href="{{ route('sparepart.create') }}">
+            <a href="#">
                 <x-primary-button>Tambah Item</x-primary-button>
             </a>
         </div>
     </div>
     
-    <div class="grid grid-cols-4 justify-between mb-6">
-        @foreach ($sparepart as $item)
-            <x-card-sparepart>
-                <x-slot name="image">
-                    <a href="{{ route('sparepart.detail', $item->uuid) }}">
-                        <img src="{{ asset('storage/sparepart/' . $item->img_url) }}" alt="{{ $item->name }}" class="rounded-md max-w-full h-60">
-                    </a>
-                </x-slot>
-                <x-slot name="title">
-                    <a href="{{ route('sparepart.detail', $item->uuid) }}">
-                        {{ $item->name }}
-                    </a>
-                </x-slot>
-                <x-slot name="price">Rp. {{ number_format($item->price, 0, ',', '.') }}</x-slot>
-                <x-slot name="icon">
-                    <x-dropdown>
-                        <x-slot name="trigger">
-                            <button class="focus:outline-none transition ease-in-out duration-150">
-                                <svg class="w-4 h-4" id="fi_2311524" enable-background="new 0 0 32 32" height="512" viewBox="0 0 32 32" width="512" xmlns="http://www.w3.org/2000/svg"><path id="XMLID_294_" d="m13 16c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path><path id="XMLID_295_" d="m13 26c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path><path id="XMLID_297_" d="m13 6c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path></svg>
-                            </button>
-                        </x-slot>
-                        <x-slot name='content'>
-                            <x-dropdown-link href="{{ route('sparepart.edit', $item->uuid) }}">
-                                Edit
-                            </x-dropdown-link>
-                            <x-dropdown-link onclick="confirmDelete('{{ $item->uuid }}')">
-                                Hapus
-                            </x-dropdown-link>
-                        </x-slot>
-                    </x-dropdown>
-                </x-slot>
-            </x-card-sparepart>
+    @dd($catalog->catalog_car)
+    <div class="grid grid-cols-3 mb-6 gap-12">
+        @foreach ($catalog as $item)
+            <x-card-catalog>
+                <x-slot name="type">{{ $item->type }}</x-slot>
+                <x-slot name="img">{{ $item->img }}</x-slot>
+            </x-card-catalog>
+            
         @endforeach
 
         <form id="delete-form" action="" method="POST" style="display: none;">
@@ -65,34 +41,35 @@
         </form>
         
     </div>
+
     <nav id="pagination-links"
         class="flex items-center flex-column flex-wrap md:flex-row justify-center pt-4">
         <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
             {{-- Previous Page Link --}}
-            @if ($sparepart->onFirstPage())
+            @if ($catalog->onFirstPage())
                 <li>
                     <span
                         class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg cursor-default">Previous</span>
                 </li>
             @else
                 <li>
-                    <a href="{{ $sparepart->previousPageUrl() }}"
+                    <a href="{{ $catalog->previousPageUrl() }}"
                         class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
                 </li>
             @endif
 
             {{-- Pagination Elements --}}
-            @foreach ($sparepart->getUrlRange(1, $sparepart->lastPage()) as $page => $url)
+            @foreach ($catalog->getUrlRange(1, $catalog->lastPage()) as $page => $url)
                 <li>
                     <a href="{{ $url }}"
-                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $sparepart->currentPage() ? 'text-blue-600 bg-blue-50' : '' }}">{{ $page }}</a>
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $catalog->currentPage() ? 'text-blue-600 bg-blue-50' : '' }}">{{ $page }}</a>
                 </li>
             @endforeach
 
             {{-- Next Page Link --}}
-            @if ($sparepart->hasMorePages())
+            @if ($catalog->hasMorePages())
                 <li>
-                    <a href="{{ $sparepart->nextPageUrl() }}"
+                    <a href="{{ $catalog->nextPageUrl() }}"
                         class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
                 </li>
             @else

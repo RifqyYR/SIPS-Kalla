@@ -54,6 +54,11 @@ function confirmDelete(uuid) {
                 var action = "/sales/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
+            } else if (window.location.href.indexOf("sparepart") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/sparepart/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
             } else if (
                 window.location.href.indexOf("customer") > -1 &&
                 !isCustomerDetailPage(window.location.href)
@@ -81,3 +86,40 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// Tiny
+window.addEventListener('DOMContentLoaded', () => {
+    tinymce.init({
+        selector: 'textarea#description',
+        plugins: [
+            'advlist', 'autolink', 'link', 'lists', 'charmap', 'anchor', 
+            'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 
+            'insertdatetime', 'table', 'help'
+        ],
+        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link | code | help',
+        menubar: 'file edit view insert format tools table help',
+        content_css: 'css/content.css'
+    });
+});
+
+// Format Rupiah
+function formatRupiah(element, prefix) {
+    let number = element.value.replace(/[^,\d]/g, '').toString();
+    let split = number.split(',');
+    let sisa = split[0].length % 3;
+    let rupiah = split[0].substr(0, sisa);
+    let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+
+    rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+    element.value = prefix ? (prefix + rupiah) : rupiah;
+
+    // Update hidden input
+    let numericValue = split[0].replace(/\./g, '') + (split[1] ? '.' + split[1] : '');
+    document.getElementById('price_numeric').value = numericValue;
+}

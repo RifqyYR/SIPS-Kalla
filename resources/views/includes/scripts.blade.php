@@ -15,6 +15,12 @@
 
 <script src="{{ url('js/main.js') }}"></script>
 
+{{-- Tiny --}}
+<script
+    src='https://cdn.tiny.cloud/1/nkcy8kxo7secouephqwt1isj4domj7gknbhbixlfrf4fq26m/tinymce/7/tinymce.min.js'
+    referrerpolicy="origin">
+</script>
+
 @if (request()->routeIs('dashboard'))
     <script src="js/chart.js"></script>
 @endif
@@ -420,5 +426,13 @@
                 }));
             });
         }
+    });
+</script>
+
+{{-- Format Rupiah --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var priceInput = document.getElementById('price');
+        formatRupiah(priceInput, 'Rp. ');
     });
 </script>

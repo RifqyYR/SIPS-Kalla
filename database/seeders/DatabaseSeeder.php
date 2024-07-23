@@ -147,11 +147,6 @@ class DatabaseSeeder extends Seeder
             'sector' => 'ICE_CREAM',
         ]);
 
-        DB::table('promos')->insert([
-            'uuid' => Uuid::uuid4(),
-            'img_url' => 'promo.jpg',
-        ]);
-
         DB::table('client_cars')->insert([
             'uuid' => Uuid::uuid4(),
             'car_type' => 'Toyota Veloz 2023',

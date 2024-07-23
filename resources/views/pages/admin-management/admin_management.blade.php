@@ -38,7 +38,7 @@
                         NO
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        NAME
+                        NAMA
                     </th>
                     <th scope="col" class="px-6 py-3">
                         EMAIL

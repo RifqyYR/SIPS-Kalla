@@ -60,7 +60,7 @@
                         NO
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Name
+                        Nama
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Nomor Telepon

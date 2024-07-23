@@ -106,33 +106,6 @@ class DatabaseSeeder extends Seeder
             'description' => '<p>Toyota Fortuner 2024 adalah 7 Seater MPV yang tersedia dalam daftar harga Rp&nbsp;304,4 Juta di Indonesia. It is available in 4 variants, 1 engine, and 2 transmissions option: Manual dan CVT in the Indonesia. Mobil ini memiliki ground clearance 205 mm dengan dimensi sebagai berikut: 4475 mm L x 1750 mm W x 1700 mm H. Lebih dari 99 pengguna telah memberikan penilaian untuk Fortuner berdasarkan fitur, jarak tempuh, kenyamanan tempat duduk dan kinerja mesin. Pesaing terdekat Toyota Fortuner adalah Xpander, Ertiga, Avanza dan Livina . Cicilan bulanan terendah dimulai dari Rp&nbsp;14,44 Juta (selama 60 bulan).</p>',
         ]);
 
-        DB::table('sales')->insert([
-            'uuid' => Uuid::uuid4(),
-            'img_url' => 'default-avatar.png',
-            'name' => 'Ahmad Ali Husain',
-            'description' => 'Toyota Yaris Cross adalah SUV mungil yang menawarkan perpaduan sempurna antara kepraktisan, gaya, dan performa. Diluncurkan di Indonesia pada tahun 2021, Yaris Cross langsung menarik perhatian dengan desainnya yang sporty dan modern, serta kabin yang lapang dan nyaman.',
-            'phone_number' => '085667894012',
-            'leads' => 0,
-        ]);
-
-        DB::table('sales')->insert([
-            'uuid' => Uuid::uuid4(),
-            'img_url' => 'default-avatar.png',
-            'name' => 'Ahmad Wibowo',
-            'description' => 'Toyota Yaris Cross adalah SUV mungil yang menawarkan perpaduan sempurna antara kepraktisan, gaya, dan performa. Diluncurkan di Indonesia pada tahun 2021, Yaris Cross langsung menarik perhatian dengan desainnya yang sporty dan modern, serta kabin yang lapang dan nyaman.',
-            'phone_number' => '085667894012',
-            'leads' => 0,
-        ]);
-
-        DB::table('sales')->insert([
-            'uuid' => Uuid::uuid4(),
-            'img_url' => 'default-avatar.png',
-            'name' => 'Dimas Permana',
-            'description' => 'Toyota Yaris Cross adalah SUV mungil yang menawarkan perpaduan sempurna antara kepraktisan, gaya, dan performa. Diluncurkan di Indonesia pada tahun 2021, Yaris Cross langsung menarik perhatian dengan desainnya yang sporty dan modern, serta kabin yang lapang dan nyaman.',
-            'phone_number' => '085667894012',
-            'leads' => 0,
-        ]);
-
         DB::table('person_in_charges')->insert([
             'uuid' => Uuid::uuid4(),
             'name' => 'David',

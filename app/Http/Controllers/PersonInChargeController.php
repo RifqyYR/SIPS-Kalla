@@ -43,12 +43,11 @@ class PersonInChargeController extends Controller
         // Validate Input
         $request->validate([
             'name' => 'required',
-            'phone_number' => 'required|unique:person_in_charges,phone_number',
+            'phone_number' => 'required',
             'sector' => 'required'
         ], [
             'name.required' => 'Field nama harus diisi',
             'phone_number.required' => 'Field nomor telepon harus diisi',
-            'phone_number.unique' => 'Nomor telepon ini sudah digunakan',
             'sector.required' => 'Field bidang harus diisi',
         ]);
 

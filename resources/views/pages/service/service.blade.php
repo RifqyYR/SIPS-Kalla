@@ -70,7 +70,7 @@
                                     <span>{{ $loop->index + 1 }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name }}
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name === null ? 'Tidak ada data' : $item->client->name }}
                             </td>
                             <td class="px-6 py-4 capitalize">
                                 {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>

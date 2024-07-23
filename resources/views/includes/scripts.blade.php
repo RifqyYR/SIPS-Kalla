@@ -218,7 +218,7 @@
                     '<td class="w-4 p-4 text-center"><div class="flex justify-center"><span>' + (
                         index + 1) + "</span></div></td>" +
                     '<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">' +
-                    item.client.name + "</td>" +
+                    (item.client === null ? 'Tidak ada data' : item.client.name) + "</td>" +
                     '<td class="px-6 py-4">' + (item.type === 'BOOK' ? 'Servis Reservasi' :
                         'Servis Kunjungan') + "</td>" +
                     '<td class="px-6 py-4">' + item.date + "</td>" +

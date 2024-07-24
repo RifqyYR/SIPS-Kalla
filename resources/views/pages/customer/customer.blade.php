@@ -6,8 +6,8 @@
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
-        <div class="pb-4">
+    <div class="flex flex-col sm:flex-row justify-between pb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div class="sm:pb-4">
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -18,16 +18,20 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
-        <div class="pb-4">
+        <div class="pb-4 sm:pb-4">
             <a href="{{ route('customer.create') }}">
                 <x-primary-button>Tambah Item</x-primary-button>
             </a>
         </div>
     </div>
+
+    <!-- Table -->
+    <div class="relative overflow-x-auto shadow sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
     
     <!-- Table --> 
     <div class="relative overflow-x-auto shadow sm:rounded-lg p-4 bg-white">
@@ -38,7 +42,7 @@
                         No
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Klien
+                        Nama
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Email
@@ -55,38 +59,43 @@
                 </tr>
             </thead>
             <tbody id="search-results">
-                @foreach ($clients as $item)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
+                @if (count($clients) !== 0)
+                    @foreach ($clients as $item)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="w-4 p-4 text-center">
                                 <span>{{ $loop->index + 1 }}</span>
-                            </div>
-                        </td>
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            <a href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->email }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->phone_number }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->address }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{{ route('customer.edit', $item->uuid) }}">
-                                <x-secondary-button
-                                    class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
-                                    Edit
-                                </x-secondary-button>
-                            </a>
-                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                                <a href="#" class="font-medium text-white">Hapus</a>
-                            </x-danger-button>
-                        </td>
-                    </tr>             
-                @endforeach
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                <a class="hover:text-blue-600"
+                                    href="{{ route('customer.detail', $item->uuid) }}">{{ $item->name }}</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->email }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->phone_number }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->address }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('customer.edit', $item->uuid) }}">
+                                    <x-secondary-button
+                                        class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                        Edit
+                                    </x-secondary-button>
+                                </a>
+                                <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                    <a href="#" class="font-medium text-white">Hapus</a>
+                                </x-danger-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td colspan="6" class="px-6 py-4 font-medium text-gray-900 text-center">Belum ada data</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 
@@ -101,7 +110,8 @@
             aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                 Showing <span
-                    class="font-semibold text-gray-900">{{ $clients->firstItem() }}-{{ $clients->lastItem() }}</span> of
+                    class="font-semibold text-gray-900">{{ $clients->firstItem() }}-{{ $clients->lastItem() }}</span>
+                of
                 <span class="font-semibold text-gray-900">{{ $clients->total() }}</span>
             </span>
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
@@ -141,6 +151,5 @@
             </ul>
         </nav>
     </div>
-    
-</x-app-layout>
 
+</x-app-layout>

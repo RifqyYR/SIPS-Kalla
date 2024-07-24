@@ -23,7 +23,7 @@
                         NO
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        IMAGE
+                        Gambar
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
@@ -31,26 +31,33 @@
                 </tr>
             </thead>
             <tbody id="search-results">
-                @foreach ($promos as $item)
+                @if (count($promos) !== 0)
+                    @foreach ($promos as $item)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="w-4 p-4 text-center">
+                                <span>{{ $loop->index + 1 }}</span>
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                <img src="{{ asset('storage/promo/' . $item->img_url) }}" alt="" class="w-28">
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('promo.edit', $item->uuid) }}">
+                                    <x-secondary-button
+                                        class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                        Edit
+                                    </x-secondary-button>
+                                </a>
+                                <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                    <a href="#" class="font-medium text-white">Delete</a>
+                                </x-danger-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="w-4 p-4 text-center">
-                            <span>{{ $loop->index + 1 }}</span>
-                        </td>
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            <img src="{{ asset('storage/promo/' . $item->img_url) }}" alt="" class="w-28">
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{{ route('promo.edit', $item->uuid) }}">
-                                <x-secondary-button class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
-                                    Edit
-                                </x-secondary-button>
-                            </a>
-                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                                <a href="#" class="font-medium text-white">Delete</a>
-                            </x-danger-button>
-                        </td>
+                        <td colspan="3" class="px-6 py-4 font-medium text-gray-900 text-center">Belum ada data</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
         <form id="delete-form" action="" method="POST" style="display: none;">

@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex items-center justify-center mt-20 gap-4">
-                <a href="{{ route('customer.index') }}">
+                <a href="{{ url()->previous() }}">
                     <x-secondary-button>
                         {{ __('Kembali') }}
                     </x-secondary-button>

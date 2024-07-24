@@ -29,8 +29,8 @@
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
-        <div class="pb-4">
+    <div class="flex flex-col sm:flex-row justify-between pb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div class="sm:pb-4">
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -41,7 +41,7 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
@@ -62,35 +62,42 @@
                 </tr>
             </thead>
             <tbody id="search-results">
-                @foreach ($service as $item)
+                @if (count($service) !== 0)
+                    @foreach ($service as $item)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="w-4 p-4">
+                                <div class="flex justify-center">
+                                    <span>{{ $loop->index + 1 }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name === null ? 'Tidak ada data' : $item->client->name }}
+                            </td>
+                            <td class="px-6 py-4 capitalize">
+                                {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
+                            <td class="px-6 py-4">{{ $item->date }}</td>
+                            <td class="px-6 py-4">{{ $item->time }}</td>
+                            <td class="px-6 py-4">
+                                <span class="{{ status($item->status)[1] }}">
+                                    {{ status($item->status)[0] }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-nowrap">
+                                <a href="{{ route('service.edit', $item->uuid) }}">
+                                    <x-secondary-button class="font-medium text-blue-600">
+                                        Edit
+                                    </x-secondary-button>
+                                </a>
+                                <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                    <a href="#" class="font-medium text-white">Hapus</a>
+                                </x-danger-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="w-4 p-4">
-                            <div class="flex justify-center">
-                                <span>{{ $loop->index + 1 }}</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client->name }}</td>
-                        <td class="px-6 py-4 capitalize">
-                            {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
-                        <td class="px-6 py-4">{{ $item->date }}</td>
-                        <td class="px-6 py-4">{{ $item->time }}</td>
-                        <td class="px-6 py-4">
-                            <span class="{{ status($item->status)[1] }}">
-                                {{ status($item->status)[0] }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-nowrap">
-                            <a href="{{ route('service.edit', $item->uuid) }}">
-                                <x-secondary-button class="font-medium text-blue-600">
-                                    Edit
-                                </x-secondary-button>
-                            </a>
-                            <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                                <a href="#" class="font-medium text-white">Hapus</a>
-                            </x-danger-button>
-                        </td>
+                        <td colspan="7" class="px-6 py-4 font-medium text-gray-900 text-center">Belum ada data</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
 

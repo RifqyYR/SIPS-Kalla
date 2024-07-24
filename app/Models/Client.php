@@ -22,6 +22,14 @@ class Client extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected static function booted()
+    {
+        static::deleting(function ($client) {
+            $client->cars()->delete();
+            $client->services()->delete();
+        });
+    }
+
     public function cars()
     {
         return $this->hasMany(ClientCars::class);

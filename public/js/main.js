@@ -87,39 +87,52 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Tiny
-window.addEventListener('DOMContentLoaded', () => {
-    tinymce.init({
-        selector: 'textarea#description',
-        plugins: [
-            'advlist', 'autolink', 'link', 'lists', 'charmap', 'anchor', 
-            'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 
-            'insertdatetime', 'table', 'help'
-        ],
-        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist outdent indent | link | code | help',
-        menubar: 'file edit view insert format tools table help',
-        content_css: 'css/content.css'
-    });
-});
-
 // Format Rupiah
 function formatRupiah(element, prefix) {
-    let number = element.value.replace(/[^,\d]/g, '').toString();
-    let split = number.split(',');
-    let sisa = split[0].length % 3;
-    let rupiah = split[0].substr(0, sisa);
-    let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    if (element) {
+        let number = element.value.replace(/[^,\d]/g, "").toString();
+        let split = number.split(",");
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-    if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
+        if (ribuan) {
+            let separator = sisa ? "." : "";
+            rupiah += separator + ribuan.join(".");
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + "," + split[1] : rupiah;
+        element.value = prefix ? prefix + rupiah : rupiah;
+
+        // Update hidden input
+        let numericValue =
+            split[0].replace(/\./g, "") + (split[1] ? "." + split[1] : "");
+        var priceInput = document.getElementById("price_numeric");
+        if (priceInput) {
+            priceInput.value = numericValue;
+        }
     }
-
-    rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-    element.value = prefix ? (prefix + rupiah) : rupiah;
-
-    // Update hidden input
-    let numericValue = split[0].replace(/\./g, '') + (split[1] ? '.' + split[1] : '');
-    document.getElementById('price_numeric').value = numericValue;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Format Rupiah
+    var priceInput = document.getElementById("price");
+    formatRupiah(priceInput, "Rp. ");
+
+    // preview image
+    var imgInput = document.getElementById("imgInput");
+    if (imgInput) {
+        imgInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgPreview = document.getElementById("imgPreview");
+                    imgPreview.src = e.target.result;
+                    imgPreview.classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});

@@ -25,14 +25,12 @@
         </div>
     </div>
     
-    @dd($catalog->catalog_car)
     <div class="grid grid-cols-3 mb-6 gap-12">
         @foreach ($catalog as $item)
             <x-card-catalog>
                 <x-slot name="type">{{ $item->type }}</x-slot>
                 <x-slot name="img">{{ $item->img }}</x-slot>
             </x-card-catalog>
-            
         @endforeach
 
         <form id="delete-form" action="" method="POST" style="display: none;">

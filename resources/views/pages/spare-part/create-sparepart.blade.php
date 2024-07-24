@@ -10,15 +10,16 @@
         <div class="container bg-white p-6 rounded">
             <div>
                 <x-input-label for="name" :value="__('Nama Suku Cadang')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                    :value="old('name')" required autofocus autocomplete="name" />
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                    required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <div class="mt-4">
-                <x-input-label for="price" :value="__('Harga Suku Cadang')"/>
-                <input id="price" class="block mt-1 w-full border-gray-300 focus:border-[#01803D] focus:ring-[#01803D] rounded-md shadow-sm" type="text" 
-                    onkeyup="formatRupiah(this, 'Rp. ')" autocomplete="off">
+                <x-input-label for="price" :value="__('Harga Suku Cadang')" />
+                <input id="price"
+                    class="block mt-1 w-full border-gray-300 focus:border-[#01803D] focus:ring-[#01803D] rounded-md shadow-sm"
+                    type="text" onkeyup="formatRupiah(this, 'Rp. ')" autocomplete="off">
                 <input id="price_numeric" type="hidden" name="price" value="{{ old('price') }}" required autofocus>
                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
             </div>
@@ -26,12 +27,12 @@
             <div class="mt-4">
                 <x-input-label for="img" :value="__('Upload Gambar Suku Cadang')" class="mb-2" />
                 <div class="flex items-center">
-                    <x-file-upload-input id="imgInput" type="file" accept=".png,.jpg,.jpeg" name="img" />
                     <x-image-preview id="imgPreview" />
+                    <x-file-upload-input id="imgInput" type="file" accept=".png,.jpg,.jpeg" name="img" />
                 </div>
                 <x-input-error :messages="$errors->get('img')" class="mt-2" />
             </div>
-            
+
             <div class="mt-4">
                 <x-input-label for="description" :value="__('Deskripsi')" />
                 <textarea id="description" name="description" class="block mt-1 w-full" placeholder="Masukkan deskripsi suku cadang">{{ old('description') }}</textarea>

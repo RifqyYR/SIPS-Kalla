@@ -35,7 +35,18 @@ class GeneralController extends Controller
         try {
             $sales = Sales::all();
 
-            return response()->json(new ResponseResource('Berhasil mendapatkan data', $sales), 200);
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', 
+                $sales->map(function ($sales) {
+                    return [
+                        'id' => $sales->id,
+                        'imageUrl' => asset('storage/sales/' . $sales->img_url),
+                        'name' => $sales->name,
+                        'description' => $sales->description,
+                        'phone_number' => $sales->phone_number,
+                        'leads' => $sales->sales,
+                    ];
+                })
+            ), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
         }

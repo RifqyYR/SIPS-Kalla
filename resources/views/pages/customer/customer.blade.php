@@ -28,9 +28,9 @@
             </a>
         </div>
     </div>
-
-    <!-- Table -->
-    <div class="relative overflow-x-auto shadow sm:rounded-lg">
+    
+    <!-- Table --> 
+    <div class="relative overflow-x-auto shadow sm:rounded-lg bg-white">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>

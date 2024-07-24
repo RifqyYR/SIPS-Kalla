@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CatalogCarController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonInChargeController;
@@ -106,7 +107,25 @@ Route::middleware('auth')->group(function () {
     // Spare part
     Route::group(['prefix' => 'sparepart'], function () {
         Route::get('/', [SparePartController::class, 'index'])->name('sparepart.index');
+        Route::get('/search', [SparePartController::class, 'search'])->name('sparepart.search');
+        Route::get('/create', [SparePartController::class, 'create'])->name('sparepart.create');
+        Route::post('/store', [SparePartController::class, 'store'])->name('sparepart.store');
         Route::get('/detail/{uuid}', [SparePartController::class, 'detail'])->name('sparepart.detail');
+        Route::get('/edit/{uuid}', [SparePartController::class, 'edit'])->name('sparepart.edit');
+        Route::post('/update/{uuid}', [SparePartController::class, 'update'])->name('sparepart.update');
+        Route::delete('/delete/{uuid}', [SparePartController::class, 'destroy'])->name('sparepart.destroy');
+    });
+
+    // Car Catalog
+    Route::group(['prefix' => 'car-catalog'], function () {
+        Route::get('/', [CatalogCarController::class, 'index'])->name('catalog.index');
+        Route::get('/search', [CatalogCarController::class, 'search'])->name('catalog.search');
+        Route::get('/create', [CatalogCarController::class, 'create'])->name('catalog.create');
+        Route::post('/store', [CatalogCarController::class, 'store'])->name('catalog.store');
+        Route::get('/detail/{uuid}', [CatalogCarController::class, 'detail'])->name('catalog.detail');
+        Route::get('/edit/{uuid}', [CatalogCarController::class, 'edit'])->name('catalog.edit');
+        Route::post('/update/{uuid}', [CatalogCarController::class, 'update'])->name('catalog.update');
+        Route::delete('/delete/{uuid}', [CatalogCarController::class, 'destroy'])->name('catalog.destroy');
     });
 });
 

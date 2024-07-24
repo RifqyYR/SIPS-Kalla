@@ -54,6 +54,11 @@ function confirmDelete(uuid) {
                 var action = "/sales/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
+            } else if (window.location.href.indexOf("sparepart") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/sparepart/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
             } else if (
                 window.location.href.indexOf("customer") > -1 &&
                 !isCustomerDetailPage(window.location.href)
@@ -78,6 +83,56 @@ document.addEventListener("DOMContentLoaded", function () {
     if (phoneNumberInput) {
         phoneNumberInput.addEventListener("input", function (e) {
             e.target.value = e.target.value.replace(/\D/g, "");
+        });
+    }
+});
+
+// Format Rupiah
+function formatRupiah(element, prefix) {
+    if (element) {
+        let number = element.value.replace(/[^,\d]/g, "").toString();
+        let split = number.split(",");
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            let separator = sisa ? "." : "";
+            rupiah += separator + ribuan.join(".");
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + "," + split[1] : rupiah;
+        element.value = prefix ? prefix + rupiah : rupiah;
+
+        // Update hidden input
+        let numericValue =
+            split[0].replace(/\./g, "") + (split[1] ? "." + split[1] : "");
+        var priceInput = document.getElementById("price_numeric");
+        if (priceInput) {
+            priceInput.value = numericValue;
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Format Rupiah
+    var priceInput = document.getElementById("price");
+    formatRupiah(priceInput, "Rp. ");
+
+    // preview image
+    var imgInput = document.getElementById("imgInput");
+    if (imgInput) {
+        imgInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgPreview = document.getElementById("imgPreview");
+                    imgPreview.src = e.target.result;
+                    imgPreview.classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+            }
         });
     }
 });

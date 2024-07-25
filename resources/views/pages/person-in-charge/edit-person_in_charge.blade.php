@@ -30,9 +30,10 @@
                   <option value="{{ \App\Models\PersonInCharge::SECTOR_VISIT_SERVICE }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_VISIT_SERVICE ? 'selected' : '' }}>Servis Kunjungan</option>
                   <option value="{{ \App\Models\PersonInCharge::SECTOR_PICK_UP }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_PICK_UP ? 'selected' : '' }}>Antar Jemput</option>
                   <option value="{{ \App\Models\PersonInCharge::SECTOR_FOOD_ORDER }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_FOOD_ORDER ? 'selected' : '' }}>Pesan Makanan</option>
-                  <option value="{{ \App\Models\PersonInCharge::SECTOR_FREE_FOOD }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_FREE_FOOD ? 'selected' : '' }}>Minuman Gratis</option>
+                  <option value="{{ \App\Models\PersonInCharge::SECTOR_FREE_DRINK }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_FREE_DRINK ? 'selected' : '' }}>Minuman Gratis</option>
                   <option value="{{ \App\Models\PersonInCharge::SECTOR_ICE_CREAM }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_ICE_CREAM ? 'selected' : '' }}>Es Krim Gratis</option>
                   <option value="{{ \App\Models\PersonInCharge::SECTOR_USED_CAR }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_USED_CAR ? 'selected' : '' }}>Mobil Bekas</option>
+                  <option value="{{ \App\Models\PersonInCharge::SECTOR_SPAREPART }}" {{ $pic->sector == \App\Models\PersonInCharge::SECTOR_SPAREPART ? 'selected' : '' }}>Sparepart</option>
               </select>
           </div>
 

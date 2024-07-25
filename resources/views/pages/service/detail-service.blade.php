@@ -102,15 +102,15 @@ function formatIndonesianDate($date) {
         </div>
     </div>
 
-    @dd($service)
-
     @if ($service->type === 'VISIT')
         <div class="pb-6">
             <h1 class="font-semibold text-xl text-gray-900 pb-4">Lokasi</h1>
         </div>
         <div class="w-full bg-white rounded-lg shadow">
-            <div id="map"></div>
+            <div id="map" style="height: 25rem"></div>
         </div>
+        
+        <x-maps lat="{{ $service->lat }}" long="{{ $service->long }}" />
     @endif
-    
+
 </x-app-layout>

@@ -33,6 +33,13 @@ class ServiceController extends Controller
         ]);
     }
 
+    public function detail(string $uuid)
+    {
+        $service = Service::where('uuid', $uuid)->first();
+
+        return view('pages.service.detail-service', compact('service'));
+    }
+
     public function edit(string $uuid)
     {
         $service = Service::where('uuid', $uuid)->first();

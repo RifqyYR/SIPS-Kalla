@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CatalogCars;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,14 +13,14 @@ class CatalogCarController extends Controller
 {
     public function index()
     {
-        $catalog = Image::paginate(6);
+        $catalog = CatalogCars::paginate(6);
 
         return view('pages.car-catalog.car_catalog', compact('catalog'));
     }
 
     public function create()
     {
-        return view('pages.spare-part.create-sparepart');
+        return view('pages.car-catalog.create-car_catalog');
     }
 
     public function store(Request $request)
@@ -27,29 +28,40 @@ class CatalogCarController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required',
+            'type' => 'required',
             'img' => 'required',
             'description' => 'required'
         ], [
             'name.required' => 'Field nama harus diisi',
-            'phone_number.required' => 'Field nomor telepon harus diisi',
+            'price.required' => 'Field harga harus diisi',
+            'type.required' => 'Field jenis mobil harus diisi',
             'img.required' => 'Field gambar harus diisi',
             'description.required' => 'Field deksripsi harus diisi',
         ]);
 
         try {
-            $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
-
-            SparePart::create([
+            $catalog = CatalogCars::create([
                 'uuid' => Uuid::uuid4(),
                 'name' => $request->name,
                 'price' => doubleval($request->price),
-                'img_url' => $filename,
                 'description' => $request->description,
             ]);
 
-            $request->file('img')->storeAs('public/sparepart/', $filename);
+            DB::transaction(function () use ($request, $catalog) {
+                foreach ($request->file('img') as $item) {
+                    $filename = hash('sha256', time() . '-' . $item->getClientOriginalName()) . '.' . $item->extension();
 
-            return redirect()->route('sparepart.index')->with('success', 'Berhasil menambahkan data');
+                    Image::create([
+                        'uuid' => Uuid::uuid4(),
+                        'catalog_cars_id' => $catalog->id,
+                        'img_url' => $filename,
+                    ]);
+
+                    $item->storeAs('public/catalog_cars/', $filename);
+                }
+            });
+
+            return redirect()->route('catalog.index')->with('success', 'Berhasil menambahkan data');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan data' . $e->getMessage());
         }
@@ -57,63 +69,100 @@ class CatalogCarController extends Controller
 
     public function detail(string $uuid)
     {
-        $sparepart = SparePart::where('uuid', $uuid)->first();
+        $catalog = CatalogCars::where('uuid', $uuid)->first();
 
-        return view('pages.spare-part.detail-sparepart', compact('sparepart'));
+        return view('pages.car-catalog.detail-car_catalog', compact('catalog'));
     }
 
     public function edit(string $uuid)
     {
-        $sparepart = SparePart::where('uuid', $uuid)->first();
+        $catalog = CatalogCars::where('uuid', $uuid)->first();
 
-        if ($sparepart == null) return redirect()->back()->with('error', 'Gagal mendapatkan data');
+        if ($catalog == null) return redirect()->back()->with('error', 'Gagal mendapatkan data');
 
-        return view('pages.spare-part.edit-sparepart', compact('sparepart'));
+        return view('pages.car-catalog.edit-car_catalog', compact('catalog'));
     }
 
     public function update(Request $request, string $uuid)
     {
         try {
-            $sparepart = SparePart::where('uuid', $uuid)->first();
-
+            $catalog = CatalogCars::where('uuid', $uuid)->first();
             if ($request->file() == []) {
-                $sparepart->update([
+                $catalog->update([
                     'name' => $request->name,
-                    'price' => $request->price,
+                    'price' => doubleval($request->price),
+                    'type' => $request->type,
                     'description' => $request->description,
                 ]);
 
-                return redirect()->route('sparepart.index')->with('success', 'Berhasil mengedit data');
+                return redirect()->route('catalog.index')->with('success', 'Berhasil mengedit data');
             }
+            
+            
+            DB::transaction(function () use ($request, $catalog) {
+                if (Storage::exists('/public/catalog_cars/' . $request->file('img'))) {
+                    Storage::delete('/public/catalog_cars/' . $request->file('img'));
+                }
+                foreach ($request->file('img') as $item) {
+                    $filename = hash('sha256', time() . '-' . $item->getClientOriginalName()) . '.' . $item->extension();
+                    $catalog->update([
+                        'name' => $request->name,
+                        'price' => $request->price,
+                        'description' => $request->description,
+                    ]);
 
-            $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
 
-            $sparepart->update([
-                'name' => $request->name,
-                'price' => $request->price,
-                'img_url' => $filename,
-                'description' => $request->description,
-            ]);
+                    $image = $item->delete();
 
-            if (Storage::exists('/public/sparepart/' . $sparepart->img_url)) {
-                Storage::delete('/public/sparepart/' . $sparepart->img_url);
-            }
-            $request->file('img')->storeAs('public/sparepart/', $filename);
 
-            return redirect()->route('sparepart.index')->with('success', 'Berhasil mengedit data');
+                    $img = Image::where('catalog_id', $catalog->id)->first();
+                    $img->update([
+                        'img_url' => $filename,
+                    ]);
+
+                    $item->storeAs('public/catalog_cars/', $filename);
+                }
+            });
+
+            // DB::transaction(function () use ($request, $catalog) {
+            //     $catalog->update([
+            //         'name' => $request->name,
+            //         'price' => $request->price,
+            //         'description' => $request->description,
+            //     ]);
+
+            //     foreach ($request->file('img') as $item) {
+            //         $filename = hash('sha256', time() . '-' . $item->getClientOriginalName()) . '.' . $item->extension();
+            //         $storagePath = 'public/catalog_cars/' . $filename;
+
+            //         $item->storeAs('public/catalog_cars', $filename);
+
+            //         $img = Image::where('catalog_cars_id', $catalog->id)->first();
+
+            //         if ($img && Storage::exists('public/catalog_cars/' . $img->img_url)) {
+            //             Storage::delete('public/catalog_cars/' . $img->img_url);
+            //         }
+
+            //         $img->update([
+            //             'img_url' => $filename,
+            //         ]);
+            //     }
+            // });
+
+            return redirect()->route('catalog.index')->with('success', 'Berhasil mengedit data');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal mengedit data');
+            return redirect()->back()->with('error', 'Gagal mengedit data' . $e->getMessage());
         }
     }
 
     public function destroy(string $uuid)
     {
         try {
-            $sparepart = SparePart::where('uuid', $uuid)->first();
+            $catalog = CatalogCars::where('uuid', $uuid)->first();
 
-            $sparepart->delete();
+            $catalog->delete();
 
-            return redirect()->route('sparepart.index')->with('success', 'Berhasil menghapus data');
+            return redirect()->route('catalog.index')->with('success', 'Berhasil menghapus data');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus data');
         }

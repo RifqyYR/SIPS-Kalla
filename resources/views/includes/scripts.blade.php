@@ -12,6 +12,10 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 {{-- Sweet Alert --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.all.min.js"></script>
+{{-- XZOOM --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xzoom/1.0.15/xzoom.min.js"
+    integrity="sha512-kKt0oznSOD4MQo2nWJDWggE968N4Bvwn1VRr0RfMx1ozdC2FLCVLJDuHoeMfbWZU/F50yANpekr6dNTVfaLKdA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="{{ url('js/main.js') }}"></script>
 
@@ -114,7 +118,7 @@
                     <div class="mt-4">
                         <x-input-label :value="'Jadwal Service Terakhir ${i + 1}'" />
                         <x-text-input id="last_service_date_${i}" class="block mt-1 w-fit" type="date" name="last_service_date[]" :value="old('last_service_date.${i}')"
-                            required autofocus autocomplete="last_service_date_${i}" min='${currentDate}' />
+                            required autofocus autocomplete="last_service_date_${i}" max='${currentDate}' />
                         <x-input-error :messages="$errors->get('last_service_date.${i}')" class="mt-2" />
                     </div>
 

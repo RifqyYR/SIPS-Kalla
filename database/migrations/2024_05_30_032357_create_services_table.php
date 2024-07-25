@@ -20,7 +20,7 @@ return new class extends Migration
             $table->time('time');
             $table->enum('type', ['BOOK', 'VISIT']);
             $table->string('vehicle_km');
-            $table->string('additional_info');
+            $table->string('additional_info')->nullable();
             $table->string('address')->nullable();
             $table->double('lat')->nullable();
             $table->double('long')->nullable();

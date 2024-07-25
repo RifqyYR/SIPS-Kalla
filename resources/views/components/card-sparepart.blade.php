@@ -1,4 +1,4 @@
-<div class="w-fit p-2 shadow rounded-sm border bg-white">
+<div class="w-fit p-2 px-4 shadow rounded-sm border bg-white mb-4">
     <div class="w-60 h-60 rounded-sm mb-4">
         {{ $image }}
     </div>

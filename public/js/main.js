@@ -59,6 +59,11 @@ function confirmDelete(uuid) {
                 var action = "/sparepart/delete/UUID_PLACEHOLDER";
                 form.action = action.replace("UUID_PLACEHOLDER", uuid);
                 form.submit();
+            } else if (window.location.href.indexOf("car-catalog") > -1) {
+                var form = document.getElementById("delete-form");
+                var action = "/car-catalog/delete/UUID_PLACEHOLDER";
+                form.action = action.replace("UUID_PLACEHOLDER", uuid);
+                form.submit();
             } else if (
                 window.location.href.indexOf("customer") > -1 &&
                 !isCustomerDetailPage(window.location.href)

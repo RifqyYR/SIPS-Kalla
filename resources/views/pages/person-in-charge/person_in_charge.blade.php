@@ -9,10 +9,12 @@
             return 'Antar Jemput';
         } elseif ($sector == \App\Models\PersonInCharge::SECTOR_FOOD_ORDER) {
             return 'Pesan Makanan';
-        } elseif ($sector == \App\Models\PersonInCharge::SECTOR_FREE_FOOD) {
+        } elseif ($sector == \App\Models\PersonInCharge::SECTOR_FREE_DRINK) {
             return 'Minuman Gratis';
         } elseif ($sector == \App\Models\PersonInCharge::SECTOR_ICE_CREAM) {
             return 'Es Krim Gratis';
+        } elseif ($sector == \App\Models\PersonInCharge::SECTOR_SPAREPART) {
+            return 'Sparepart';
         } elseif ($sector == \App\Models\PersonInCharge::SECTOR_USED_CAR) {
             return 'Mobil Bekas';
         } else {

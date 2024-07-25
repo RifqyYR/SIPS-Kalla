@@ -18,6 +18,15 @@
     {{-- SweetAlert --}}
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.min.css" rel="stylesheet">
 
+    {{-- XZOOM --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xzoom/1.0.15/xzoom.min.css" integrity="sha512-Y58ai8uVim58rsa9pEXJK/fyyFHkbZp6yluEAxAC0iTKyuhAkvUQlkXRRCEyZdLDTnc3cSVF9f/EhB+fThhTNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {{-- lEAFLETJS --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-gray-100">

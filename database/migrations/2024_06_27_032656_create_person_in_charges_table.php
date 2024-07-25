@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid()->unique();
             $table->string('name');
             $table->string('phone_number');
-            $table->enum('sector', ['BOOK_SERVICE', 'VISIT_SERVICE', 'PICK_UP', 'FOOD_ORDER', 'FREE_FOOD', 'ICE_CREAM', 'USED_CAR']);
+            $table->enum('sector', ['BOOK_SERVICE', 'VISIT_SERVICE', 'PICK_UP', 'FOOD_ORDER', 'FREE_DRINK', 'ICE_CREAM', 'USED_CAR', 'SPAREPART']);
             $table->timestamps();
         });
     }

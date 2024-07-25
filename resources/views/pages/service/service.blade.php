@@ -70,8 +70,13 @@
                                     <span>{{ $loop->index + 1 }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $item->client === null ? 'Tidak ada data' : $item->client->name }}
-                            </td>
+                            @if ($item->client === null)
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Tidak ada data</td>
+                            @else
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    <a href="{{ route('service.detail', $item->uuid) }}">{{ $item->client->name }}</a>
+                                </td>
+                            @endif
                             <td class="px-6 py-4 capitalize">
                                 {{ $item->type == 'BOOK' ? 'Servis Reservasi' : 'Servis Kunjungan' }}</td>
                             <td class="px-6 py-4">{{ $item->date }}</td>

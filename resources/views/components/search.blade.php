@@ -38,9 +38,11 @@
                 if (sector === 'BOOK_SERVICE') return 'Servis Reservasi';
                 else if (sector === 'VISIT_SERVICE') return 'Servis Kunjungan';
                 else if (sector === 'PICK_UP') return 'Antar Jemput';
-                else if (sector === 'FREE_FOOD') return 'Pesan Makanan';
+                else if (sector === 'FREE_DRINK') return 'Minuman Gratis';
+                else if (sector === 'FOOD_ORDER') return 'Pesan Makanan';
                 else if (sector === 'ICE_CREAM') return 'Es Krim Gratis';
                 else if (sector === 'USED_CAR') return 'Mobil Bekas';
+                else if (sector === 'SPAREPART') return 'Sparepart';
                 else return 'Tidak Terdaftar';
             }
 

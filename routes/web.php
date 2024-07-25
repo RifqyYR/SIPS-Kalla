@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'service'], function () {
         Route::get('/', [ServiceController::class, 'index'])->name('service.index');
         Route::get('/search', [ServiceController::class, 'search'])->name('service.search');
+        Route::get('/detail/{uuid}', [ServiceController::class, 'detail'])->name('service.detail');
         Route::get('/edit/{uuid}', [ServiceController::class, 'edit'])->name('service.edit');
         Route::post('/update/{uuid}', [ServiceController::class, 'update'])->name('service.update');
         Route::delete('/delete/{uuid}', [ServiceController::class, 'destroy'])->name('service.delete');

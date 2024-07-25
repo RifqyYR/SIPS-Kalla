@@ -1,3 +1,18 @@
+@php
+    function status($type)
+    {
+        if ($type == 'NEW') {
+            $status = 'Baru';
+            $class_status = 'bg-blue-500 rounded-xl px-3 py-1 text-white border border-blue-500';
+            return [$status, $class_status];
+        } else {
+            $status = 'Bekas';
+            $class_status = 'bg-gray-500 rounded-xl px-3 py-1 text-white border border-gray-500';
+            return [$status, $class_status];
+        }
+    }
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -19,20 +34,49 @@
             </div>
         </div>
         <div class="pb-4">
-            <a href="#">
+            <a href="{{ route('catalog.create') }}">
                 <x-primary-button>Tambah Item</x-primary-button>
             </a>
         </div>
     </div>
     
-    @dd($catalog->catalog_car)
     <div class="grid grid-cols-3 mb-6 gap-12">
         @foreach ($catalog as $item)
             <x-card-catalog>
-                <x-slot name="type">{{ $item->type }}</x-slot>
-                <x-slot name="img">{{ $item->img }}</x-slot>
+                <x-slot name="type">
+                    <span class="{{ status($item->type)[1] }}">
+                        {{ status($item->type)[0] }}
+                    </span>
+                </x-slot>
+                <x-slot name="icon">
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <button class="focus:outline-none transition ease-in-out duration-150">
+                                <svg class="w-4 h-4" id="fi_2311524" enable-background="new 0 0 32 32" height="512" viewBox="0 0 32 32" width="512" xmlns="http://www.w3.org/2000/svg"><path id="XMLID_294_" d="m13 16c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path><path id="XMLID_295_" d="m13 26c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path><path id="XMLID_297_" d="m13 6c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path></svg>
+                            </button>
+                        </x-slot>
+                        <x-slot name='content'>
+                            <x-dropdown-link href="{{ route('catalog.edit', $item->uuid) }}">
+                                Edit
+                            </x-dropdown-link>
+                            <x-dropdown-link onclick="confirmDelete('{{ $item->uuid }}')">
+                                Hapus
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                </x-slot>
+                <x-slot name="img">
+                    <img class="max-w-xs rounded-sm" src="{{ asset('storage/catalog_cars/' . $item->images[0]->img_url) }}" alt="{{ $item->name }}">
+                </x-slot>
+                <x-slot name="name">{{ $item->name }}</x-slot>
+                <x-slot name="detail">
+                    <a href="{{ route('catalog.detail', $item->uuid) }}">
+                        <div class="px-2 bg-[#01803D] text-center rounded-lg mb-4">
+                            <span class="font-semibold text-lg text-white">Detail</span>
+                        </div>
+                    </a>
+                </x-slot>
             </x-card-catalog>
-            
         @endforeach
 
         <form id="delete-form" action="" method="POST" style="display: none;">

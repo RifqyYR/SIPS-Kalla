@@ -28,14 +28,10 @@
             </a>
         </div>
     </div>
-
-    <!-- Table -->
-    <div class="relative overflow-x-auto shadow sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
     
     <!-- Table --> 
-    <div class="relative overflow-x-auto shadow sm:rounded-lg p-4 bg-white">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg">
+    <div class="relative overflow-x-auto shadow sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">

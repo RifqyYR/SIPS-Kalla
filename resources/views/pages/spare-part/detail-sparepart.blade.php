@@ -11,11 +11,13 @@
         </div>
         <div class="basis-full md:basis-2/3 flex flex-col">
             <div class="p-4">
-                <div class="font-bold text-4xl mb-4">
-                    {{ $sparepart->name }}
-                </div>
-                <div class="font-semibold text-2xl">
-                    Rp. {{ number_format($sparepart->price, 0, ',', '.') }}
+                <div class="flex gap-6">
+                    <div class="font-bold text-4xl">
+                        {{ $sparepart->name }}
+                    </div>
+                    <div class="font-semibold text-2xl mt-2">
+                        (Rp. {{ number_format($sparepart->price, 0, ',', '.') }})
+                    </div>
                 </div>
                 <hr class="mb-6  border border-gray-100">
                 <div class="mt-1 grid">

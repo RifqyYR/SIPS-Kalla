@@ -16,17 +16,21 @@
             </div>
 
             <div class="mt-4">
-                <x-input-label for="price" :value="__('Harga Suku Cadang')"/>
-                <input id="price" class="block mt-1 w-full border-gray-300 focus:border-[#01803D] focus:ring-[#01803D] rounded-md shadow-sm" type="text" 
-                    onkeyup="formatRupiah(this, 'Rp. ')" autocomplete="off" value="{{ $sparepart->price }}" onload="formatRupiah(this, 'Rp. ')">
-                <input id="price_numeric" type="hidden" name="price" value="{{ $sparepart->price }}" required autofocus>
+                <x-input-label for="price" :value="__('Harga Suku Cadang')" />
+                <input id="price"
+                    class="block mt-1 w-full border-gray-300 focus:border-[#01803D] focus:ring-[#01803D] rounded-md shadow-sm"
+                    type="text" onkeyup="formatRupiah(this, 'Rp. ')" autocomplete="off"
+                    value="{{ $sparepart->price }}" onload="formatRupiah(this, 'Rp. ')">
+                <input id="price_numeric" type="hidden" name="price" value="{{ $sparepart->price }}" required
+                    autofocus>
                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
             </div>
 
             <div class="mt-4">
                 <x-input-label for="img" :value="__('Upload Gambar Suku Cadang')" class="mb-2" />
                 <div class="flex items-center">
-                    <x-image-preview id="imgPreview" src="{{ asset('storage/sparepart/' . $sparepart->img_url) }}" alt="Selected Image" />
+                    <x-image-preview id="imgPreview" src="{{ asset('storage/sparepart/' . $sparepart->img_url) }}"
+                        alt="Selected Image" />
                     <x-file-upload-input id="imgInput" type="file" accept=".png,.jpg,.jpeg" name="img" />
                 </div>
                 <x-input-error :messages="$errors->get('img')" class="mt-2" />

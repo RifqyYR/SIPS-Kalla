@@ -29,83 +29,90 @@
         </div>
     </div>
 
-  <!-- Table -->
-  <div class="relative overflow-x-auto shadow sm:rounded-lg p-4 bg-white">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-              <tr>
-                  <th scope="col" class="px-6 py-3 text-center">
-                      NO
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Name
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Nomor Telepon
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Leads
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Aksi
-                  </th>
-              </tr>
-          </thead>
-          <tbody id="search-results">
-              @foreach ($sales as $item)
-                  <tr class="bg-white border-b hover:bg-gray-50">
-                      <td class="w-4 p-4 text-center">
-                          <span>{{ $loop->index + 1 }}</span>
-                      </td>
-                      <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                          <a class="hover:text-blue-600" href="{{ route('sales.detail', $item->uuid) }}">{{ $item->name }}</a>
-                      </td>
-                      <td class="px-6 py-4">
-                          {{ $item->phone_number }}
-                      </td>
-                      <td class="px-6 py-4">
-                          {{ $item->leads }}
-                      </td>
-                      <td class="px-6 py-4">
-                          <a href="{{ route('sales.edit', $item->uuid) }}">
-                              <x-secondary-button
-                                  class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
-                                  Edit
-                              </x-secondary-button>
-                          </a>
-                          <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
-                              <a href="#" class="font-medium text-white">Delete</a>
-                          </x-danger-button>
-                      </td>
-                  </tr>
-              @endforeach
-          </tbody>
-      </table>
-      <form id="delete-form" action="" method="POST" style="display: none;">
-          @csrf
-          @method('DELETE')
-      </form>
-      <nav id="pagination-links"
-          class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
-          aria-label="Table navigation">
-          <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-              Showing <span
-                  class="font-semibold text-gray-900">{{ $sales->firstItem() }}-{{ $sales->lastItem() }}</span> of
-              <span class="font-semibold text-gray-900">{{ $sales->total() }}</span>
-          </span>
-          <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-              {{-- Previous Page Link --}}
-              @if ($sales->onFirstPage())
-                  <li>
-                      <span
-                          class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg cursor-default">Previous</span>
-                  </li>
-              @else
-                  <li>
-                      <a href="{{ $sales->previousPageUrl() }}"
-                          class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
-                  </li>
-              @endif
+    <!-- Table -->
+    <div class="relative overflow-x-auto shadow sm:rounded-lg bg-white">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        NO
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nomor Telepon
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Leads
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Aksi
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="search-results">
+                @if (count($sales) !== 0)
+                    @foreach ($sales as $item)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="w-4 p-4 text-center">
+                                <span>{{ $loop->index + 1 }}</span>
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                <a class="hover:text-blue-600"
+                                    href="{{ route('sales.detail', $item->uuid) }}">{{ $item->name }}</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->phone_number }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->leads }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('sales.edit', $item->uuid) }}">
+                                    <x-secondary-button
+                                        class="mb-1 font-medium text-blue-600 sm:font-medium sm:text-blue-600 sm:mr-1">
+                                        Edit
+                                    </x-secondary-button>
+                                </a>
+                                <x-danger-button onclick="confirmDelete('{{ $item->uuid }}')">
+                                    <a href="#" class="font-medium text-white">Delete</a>
+                                </x-danger-button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td colspan="5" class="px-6 py-4 font-medium text-gray-900 text-center">Belum ada data</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+        <form id="delete-form" action="" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+        <nav id="pagination-links"
+            class="p-2 pb-4 flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+            aria-label="Table navigation">
+            <span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                Showing <span
+                    class="font-semibold text-gray-900">{{ $sales->firstItem() }}-{{ $sales->lastItem() }}</span> of
+                <span class="font-semibold text-gray-900">{{ $sales->total() }}</span>
+            </span>
+            <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                {{-- Previous Page Link --}}
+                @if ($sales->onFirstPage())
+                    <li>
+                        <span
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg cursor-default">Previous</span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $sales->previousPageUrl() }}"
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                    </li>
+                @endif
 
                 {{-- Pagination Elements --}}
                 @foreach ($sales->getUrlRange(1, $sales->lastPage()) as $page => $url)

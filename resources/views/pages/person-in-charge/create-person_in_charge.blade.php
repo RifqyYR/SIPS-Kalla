@@ -30,7 +30,7 @@
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_VISIT_SERVICE }}">Servis Kunjungan</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_PICK_UP }}">Antar Jemput</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_FOOD_ORDER }}">Pesan Makanan</option>
-                    <option value="{{ \App\Models\PersonInCharge::SECTOR_FREE_FOOD }}">Makanan Gratis</option>
+                    <option value="{{ \App\Models\PersonInCharge::SECTOR_FREE_FOOD }}">Minuman Gratis</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_ICE_CREAM }}">Es Krim Gratis</option>
                     <option value="{{ \App\Models\PersonInCharge::SECTOR_USED_CAR }}">Mobil Bekas</option>
                 </select>

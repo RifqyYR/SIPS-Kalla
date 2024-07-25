@@ -48,7 +48,7 @@
     </div>
 
     <!-- Table -->
-    <div class="relative overflow-x-auto shadow sm:rounded-lg p-4 bg-white">
+    <div class="relative overflow-x-auto shadow sm:rounded-lg bg-gray-50">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>

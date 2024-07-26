@@ -106,6 +106,10 @@ class PromoController extends Controller
 
             $promo->delete();
 
+            if (Storage::exists('/public/promo/' . $promo->img_url)) {
+                Storage::delete('/public/promo/' . $promo->img_url);
+            }
+
             return redirect()->route('promo.index')->with('success', 'Berhasil menghapus data');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus data');

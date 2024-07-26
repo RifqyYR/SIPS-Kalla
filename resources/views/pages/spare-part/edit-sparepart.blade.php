@@ -29,7 +29,7 @@
             <div class="mt-4">
                 <x-input-label for="img" :value="__('Upload Gambar Suku Cadang')" class="mb-2" />
                 <div class="flex items-center">
-                    <x-image-preview id="imgPreview" src="{{ asset('storage/sparepart/' . $sparepart->img_url) }}"
+                    <x-image-preview id="imgPreview" :image="false" src="{{ asset('storage/sparepart/' . $sparepart->img_url) }}"
                         alt="Selected Image" />
                     <x-file-upload-input id="imgInput" type="file" accept=".png,.jpg,.jpeg" name="img" />
                 </div>

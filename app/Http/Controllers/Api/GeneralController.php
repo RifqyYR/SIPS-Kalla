@@ -21,7 +21,7 @@ class GeneralController extends Controller
                 $promos->map(function ($promos) {
                     return [
                         'id' => $promos->id,
-                        'imageUrl' => asset('storage/sparepart/' . $promos->img_url)
+                        'imageUrl' => asset('storage/promo/' . $promos->img_url)
                     ];
                 })
             ), 200);

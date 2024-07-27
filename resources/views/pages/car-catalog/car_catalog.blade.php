@@ -45,7 +45,7 @@
     </div>
 
     @if (count($catalog) !== 0)
-        <div class="grid grid-cols-3 mb-6 gap-12">
+        <div id="search-results" class="grid grid-cols-3 mb-6 gap-12">
             @foreach ($catalog as $item)
                 <x-card-catalog>
                     <x-slot name="type">

@@ -35,6 +35,6 @@ class PasswordController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect ke halaman login dengan pesan status
-        return redirect()->route('login')->with('status', 'Your password has been updated. Please log in with your new password.');
+        return redirect()->route('login')->with('status', 'Password Anda telah diperbarui. Silakan masuk dengan kata sandi baru Anda.');
     }
 }

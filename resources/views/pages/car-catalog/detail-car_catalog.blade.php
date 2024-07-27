@@ -30,8 +30,24 @@
 
             </div>
         </div>
-        <div class="basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
-            <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-full rounded-lg">
+        
+        <div class="xzoom_part flex justify-center gap-8 px-10">
+            <div class="xzoom_container basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
+                <div class="w-[45rem]">
+                    <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-full rounded-lg xzoom" id="xzoom-default">
+
+                </div>
+            </div>
+            <div class="flex flex-col justify-center mt-8 gap-4">
+                @foreach ($catalog->images as $item)
+                    <div class="w-52">
+                        <a href="{{ asset('storage/catalog_cars/' . $item->img_url) }}">
+                            <img src="{{ asset('storage/catalog_cars/' . $item->img_url) }}" class="h-full rounded-lg xzoom-gallery" 
+                                xpreview="{{ asset('storage/catalog_cars/' . $item->img_url) }}">
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
         <div class="basis-full md:basis-2/3 flex flex-col mt-4">
             <div class="p-4">
@@ -53,3 +69,55 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $('.xzoom-gallery').click(function(e) {
+            e.preventDefault();
+    
+            var imageSrc = $(this).attr('src');
+            var imageXpreview = $(this).attr('xpreview');
+
+            $('#xzoom-default').attr('src', imageSrc).attr('xoriginal', imageXpreview);
+
+            $('.xzoom, .xzoom-gallery').xzoom('refresh');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.xzoom, .xzoom-gallery').xzoom({
+            sourceClass: 'xzoom-source',
+            loadingClass: 'xzoom-loading',
+            lensClass: 'xzoom-lens',
+            zoomWidth: 400,
+            title: false,
+            tint: '#333',
+            Xoffset: 15
+        });
+
+        $('.xzoom-gallery').click(function(e) {
+            e.preventDefault();
+
+            var imageSrc = $(this).attr('src');
+            var imageXpreview = $(this).attr('xpreview');
+
+            // Menghapus instance xZoom sebelumnya
+            var xzoomInstance = $('#xzoom-default').data('xzoom');
+            xzoomInstance.remove();
+
+            // Memperbarui sumber gambar dan menerapkan kembali lebar yang diinginkan
+            $('#xzoom-default').attr('src', imageSrc).attr('xoriginal', imageXpreview).on('load', function() {
+                $(this).css('width', '50rem');
+                $(this).off('load'); // Hapus event handler setelah dijalankan
+            });
+
+            console.log("xZoom has been destroyed and image updated with fixed width.");
+        });
+    });
+
+
+
+
+</script>    

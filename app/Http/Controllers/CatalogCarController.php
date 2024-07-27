@@ -18,6 +18,24 @@ class CatalogCarController extends Controller
         return view('pages.car-catalog.car_catalog', compact('catalog'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search by name
+        $results = CatalogCars::where('name', 'LIKE', "%{$query}%")->paginate(10);
+
+        $results->appends(['query' => $query]);
+
+        return response()->json([
+            'data' => $results->items(),
+            'firstItem' => $results->firstItem(),
+            'lastItem' => $results->lastItem(),
+            'total' => $results->total(),
+            'links' => $results->links('components.pagination')->render(),
+        ]);
+    }
+
     public function create()
     {
         return view('pages.car-catalog.create-car_catalog');

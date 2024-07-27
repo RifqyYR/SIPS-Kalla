@@ -16,6 +16,18 @@ class SparePartController extends Controller
         return view('pages.spare-part.sparepart', compact('sparepart'));
     }
 
+    private function ensureDirectoryHasPermissions($directory, $permissions = 0755)
+    {
+        if (is_dir($directory)) {
+            $currentPermissions = substr(sprintf('%o', fileperms($directory)), -4);
+            if ($currentPermissions !== sprintf('%o', $permissions)) {
+                chmod($directory, $permissions);
+            }
+        } else {
+            mkdir($directory, $permissions, true);
+        }
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -54,6 +66,8 @@ class SparePartController extends Controller
         ]);
 
         try {
+            $sparepartDirectory = storage_path('app/public/sparepart');
+            $this->ensureDirectoryHasPermissions($sparepartDirectory);
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
 
             SparePart::create([
@@ -93,6 +107,10 @@ class SparePartController extends Controller
         try {
             $sparepart = SparePart::where('uuid', $uuid)->first();
 
+            $sparepartDirectory = storage_path('app/public/sparepart');
+
+            $this->ensureDirectoryHasPermissions($sparepartDirectory);
+
             if ($request->file() == []) {
                 $sparepart->update([
                     'name' => $request->name,
@@ -105,6 +123,10 @@ class SparePartController extends Controller
             
             $filename = hash('sha256', time() . '-' . $request->file('img')->getClientOriginalName()) . '.' . $request->file('img')->extension();
 
+            if (Storage::exists('/public/sparepart/' . $sparepart->img_url)) {
+                Storage::delete('/public/sparepart/' . $sparepart->img_url);
+            }
+
             $sparepart->update([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -112,9 +134,6 @@ class SparePartController extends Controller
                 'description' => $request->description,
             ]);
 
-            if (Storage::exists('/public/sparepart/' . $sparepart->img_url)) {
-                Storage::delete('/public/sparepart/' . $sparepart->img_url);
-            }
             $request->file('img')->storeAs('public/sparepart/', $filename);
 
             return redirect()->route('sparepart.index')->with('success', 'Berhasil mengedit data');
@@ -129,6 +148,10 @@ class SparePartController extends Controller
             $sparepart = SparePart::where('uuid', $uuid)->first();
 
             $sparepart->delete();
+
+            if (Storage::exists('/public/sparepart/' . $sparepart->img_url)) {
+                Storage::delete('/public/sparepart/' . $sparepart->img_url);
+            }
 
             return redirect()->route('sparepart.index')->with('success', 'Berhasil menghapus data');
         } catch (\Exception $e) {

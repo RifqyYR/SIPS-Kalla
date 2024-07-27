@@ -21,7 +21,7 @@ class GeneralController extends Controller
                 $promos->map(function ($promos) {
                     return [
                         'id' => $promos->id,
-                        'imageUrl' => asset('storage/sparepart/' . $promos->img_url)
+                        'imageUrl' => asset('storage/promo/' . $promos->img_url)
                     ];
                 })
             ), 200);
@@ -102,7 +102,17 @@ class GeneralController extends Controller
         try {
             $sparepart = SparePart::all();
 
-            return response()->json(new ResponseResource('Berhasil mendapatkan data', $sparepart), 200);
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', 
+            $sparepart->map(function ($sparepart) {
+                return [
+                    'id' => $sparepart->id,
+                    'name' => $sparepart->name,
+                    'price' => $sparepart->price,
+                    'imageUrl' => asset('storage/sparepart/' . $sparepart->img_url),
+                    'description' => $sparepart->description,
+                ];
+            })
+        ), 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal mendapatkan data: ' . $e->getMessage()]);
         }

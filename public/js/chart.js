@@ -1,46 +1,43 @@
 $(document).ready(function() {
-    $.ajax({
-        url: '/get-data-pie',
-        type: 'GET',
-        success: function(data) {
-            Highcharts.chart('pieChart', {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie',
+  $.ajax({
+    url: '/get-data-pie',
+    type: 'GET',
+    success: function(data) {
+      Highcharts.chart('pieChart', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+        },
+        title: false,
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    format: '{point.percentage:.2f} %',
                 },
-                title: false,
-                tooltip: {
-                    // pointFormat: '{point.name}: <b>{point.percentage:.2f}%</b>'
-                    formatter: function() {
-                        return 'Tipe Mobil: <br>' + this.point.name + ': ' + Highcharts.numberFormat(this.percentage, 2) + '%';
-                    }
-                },
-                accessibility: {
-                    point: {
-                        valueSuffix: '%'
-                    }
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}:{point.percentage:.2f} %',
-                        },
-                        showInLegend: true
-                    }
-                },
-                series: [{
-                    name: '',
-                    colorByPoint: true,
-                    data: data.data
-                }]
-            });
-        }
-    });
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: data.labels,
+            colorByPoint: true,
+            data: data.data
+        }]
+      });
+    }
+  });
 });
 
 $(document).ready(function() {

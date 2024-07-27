@@ -107,7 +107,7 @@ class GeneralController extends Controller
                 return [
                     'id' => $sparepart->id,
                     'name' => $sparepart->name,
-                    'price' => $sparepart->price,
+                    'price' => number_format($sparepart->price, 0, ',', '.'),
                     'imageUrl' => asset('storage/sparepart/' . $sparepart->img_url),
                     'description' => $sparepart->description,
                 ];

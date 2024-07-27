@@ -1,84 +1,81 @@
-$(document).ready(function () {
+$(document).ready(function() {
     $.ajax({
-        url: "/get-data-pie",
-        type: "GET",
-        success: function (data) {
-            let seriesName = data.map((item) => item.name).join(", ");
-            Highcharts.chart("pieChart", {
+        url: '/get-data-pie',
+        type: 'GET',
+        success: function(data) {
+            Highcharts.chart('pieChart', {
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false,
-                    type: "pie",
+                    type: 'pie',
                 },
                 title: false,
                 tooltip: {
-                    pointFormat:
-                        "{series.name}: <b>{point.percentage:.2f}%</b>",
+                    formatter: function () {
+                        return this.point.name + ' ' + this.y + ': <b>' + this.percentage.toFixed(2) + '%</b>';
+                    }
                 },
                 accessibility: {
                     point: {
-                        valueSuffix: "%",
-                    },
+                        valueSuffix: '%'
+                    }
                 },
                 plotOptions: {
                     pie: {
                         allowPointSelect: true,
-                        cursor: "pointer",
+                        cursor: 'pointer',
                         dataLabels: {
                             enabled: false,
-                            format: "{point.percentage:.2f} %",
+                            format: '{point.percentage:.2f} %',
                         },
-                        showInLegend: true,
-                    },
+                        showInLegend: true
+                    }
                 },
-                series: [
-                    {
-                        name: "Persentase",
-                        colorByPoint: true,
-                        data: data,
-                    },
-                ],
+                series: [{
+                    name: data.labels,
+                    colorByPoint: true,
+                    data: data.data
+                }]
             });
-        },
+        }
     });
 });
 
-const highChart = Highcharts.chart("highChart", {
-    chart: {
-        type: "line",
-    },
-    title: {
-        text: "Services Status of Month",
-    },
-    subtitle: {
-        text: "",
-    },
-    xAxis: {
-        categories: ["Apr", "May", "Jun", "Jul"],
-    },
-    title: false,
-    yAxis: {
-        title: {
-            text: "Users",
-        },
-    },
-    plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true,
-            },
-            enableMouseTracking: false,
-        },
-    },
-    series: [
-        {
-            name: "Active",
-            data: [7.0, 6.9, 9.5, 14.5],
-        },
-        {
-            name: "Trial",
-            data: [3.9, 4.2, 5.7, 8.5],
-        },
-    ],
-});
+$(document).ready(function() {
+    $.ajax({
+        url: '/get-data-line',
+        type: 'GET',
+        success: function(data){
+            Highcharts.chart('highChart', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Status Servis per Bulan'
+                },
+                subtitle: {
+                    text: 'Status'
+                },
+                xAxis: {
+                    categories: data.categories
+                },
+                title: false,
+                yAxis: {
+                    title: {
+                        text: 'Jumlah Data'
+                    },
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: true
+                    }
+                },
+                series: data.series
+            });
+        }
+    })
+})

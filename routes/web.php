@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/get-data-pie', [DashboardController::class, 'getDataPie'])->name('dashboard.data-pie');
+    Route::get('/get-data-line', [DashboardController::class, 'getDataLine'])->name('dashboard.data-line');
 
     // Admin Management
     Route::group(['prefix' => 'admin-management'], function () {

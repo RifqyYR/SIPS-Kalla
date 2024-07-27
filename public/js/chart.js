@@ -1,81 +1,94 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
-        url: '/get-data-pie',
-        type: 'GET',
-        success: function(data) {
-            Highcharts.chart('pieChart', {
+        url: "/get-data-pie",
+        type: "GET",
+        success: function (data) {
+            let formattedData = data.data.map((item) => {
+                return { name: item.name, y: Number(item.y) };
+            });
+
+            Highcharts.chart("pieChart", {
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false,
-                    type: 'pie',
+                    type: "pie",
                 },
                 title: false,
                 tooltip: {
                     formatter: function () {
-                        return this.point.name + ' ' + this.y + ': <b>' + this.percentage.toFixed(2) + '%</b>';
-                    }
+                        return (
+                            this.point.name +
+                            " " +
+                            this.y +
+                            ": <b>" +
+                            this.percentage.toFixed(2) +
+                            "%</b>"
+                        );
+                    },
                 },
                 accessibility: {
                     point: {
-                        valueSuffix: '%'
-                    }
+                        valueSuffix: "%",
+                    },
                 },
                 plotOptions: {
                     pie: {
                         allowPointSelect: true,
-                        cursor: 'pointer',
+                        cursor: "pointer",
                         dataLabels: {
                             enabled: false,
-                            format: '{point.percentage:.2f} %',
+                            format: "{point.percentage:.2f} %",
                         },
-                        showInLegend: true
-                    }
+                        showInLegend: true,
+                    },
                 },
-                series: [{
-                    name: data.labels,
-                    colorByPoint: true,
-                    data: data.data
-                }]
+                series: [
+                    {
+                        name: data.labels,
+                        colorByPoint: true,
+                        data: formattedData,
+                    },
+                ],
             });
-        }
+        },
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
-        url: '/get-data-line',
-        type: 'GET',
-        success: function(data){
-            Highcharts.chart('highChart', {
+        url: "/get-data-line",
+        type: "GET",
+        success: function (data) {
+            Highcharts.chart("highChart", {
                 chart: {
-                    type: 'line'
+                    type: "line",
                 },
                 title: {
-                    text: 'Status Servis per Bulan'
+                    text: "Status Servis per Bulan",
                 },
                 subtitle: {
-                    text: 'Status'
+                    text: "Status",
                 },
                 xAxis: {
-                    categories: data.categories
+                    categories: data.categories,
                 },
                 title: false,
                 yAxis: {
                     title: {
-                        text: 'Jumlah Data'
+                        text: "Jumlah Data",
                     },
                 },
                 plotOptions: {
                     line: {
                         dataLabels: {
-                            enabled: true
+                            enabled: true,
                         },
-                        enableMouseTracking: true
-                    }
+                        enableMouseTracking: true,
+                    },
                 },
-                series: data.series
+                series: data.series,
             });
-        }
-    })
-})
+        },
+    });
+});

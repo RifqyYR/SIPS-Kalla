@@ -211,6 +211,28 @@
             updatePaginationLinks(data);
         }
 
+        function updateSearchResultsCatalog(data) {
+            $("#search-results").html("");
+            if (data.data.data.length !== 0) {
+                $.each(data.data, function(index, item) {
+                    $("#search-results").append(
+                        `<div class="card">
+                            <img src="${item.img_url}" alt="${item.name}" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.name}</h5>
+                                <p class="card-text">${item.description}</p>
+                                <a href="#" class="btn btn-primary">Detail</a>
+                            </div>
+                        </div>`
+                    );
+                });
+            } else {
+                $("#search-results").append('<span class="px-6 py-4 font-medium text-gray-900 text-center"class="px-6 py-4 font-medium text-gray-900 text-center">' + 
+                    'Data tidak ditemukan' + '</span>');
+            }
+            updatePaginationLinks(data);
+        }
+
         function updatePaginationLinks(data) {
             $("#pagination-links").html(
                 `<span class="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
@@ -288,6 +310,20 @@
                     },
                     success: function(data) {
                         updateSearchResultsService(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred:", status, error);
+                    }
+                });
+            } else if (window.location.pathname == '/car-catalog') {
+                $.ajax({
+                    url: "/car-catalog/search",
+                    type: "GET",
+                    data: {
+                        query: query,
+                    },
+                    success: function(data) {
+                        updateSearchResultsCatalog(data);
                     },
                     error: function(xhr, status, error) {
                         console.error("An error occurred:", status, error);

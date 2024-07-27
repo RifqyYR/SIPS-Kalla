@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
         DB::table('images')->insert([
             'uuid' => Uuid::uuid4(),
             'img_url' => 'toyota-veloz.webp',
-            'catalog_cars_id' => 2
+            'catalog_cars_id' => 1
         ]);
 
         DB::table('images')->insert([
@@ -129,7 +129,7 @@ class DatabaseSeeder extends Seeder
         DB::table('images')->insert([
             'uuid' => Uuid::uuid4(),
             'img_url' => 'toyota-veloz-3.webp',
-            'catalog_cars_id' => 2
+            'catalog_cars_id' => 3
         ]);
     }
 }

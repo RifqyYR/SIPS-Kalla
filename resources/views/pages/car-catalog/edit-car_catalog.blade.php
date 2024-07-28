@@ -34,7 +34,7 @@
             </div>
 
             <div class="mt-4">
-                <x-input-label for="img" :value="__('Upload Gambar Suku Cadang')" class="mb-2" />
+                <x-input-label for="img" :value="__('Upload Gambar Mobil')" class="mb-2" />
                 <div class="flex items-center">
                     <x-file-upload-input-multiple type="file" accept=".png,.jpg,.jpeg" name="img[]" />
                     <x-image-preview id="imgPreview" src="{{ asset('storage/catalog_cars/' . $catalog->img_url) }}" />

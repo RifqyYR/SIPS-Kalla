@@ -6,7 +6,7 @@
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
+    <div class="md:flex xl:flex md:justify-between xl:justify-between pb-4">
         <div class="pb-4">
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
@@ -18,7 +18,7 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
@@ -31,7 +31,7 @@
 
 
     @if (count($sparepart) !== 0)
-        <div class="grid grid-cols-4 justify-between mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:justify-between md:gap-6 xl:gap-4 mb-6 pl-[3.25rem] md:pl-0 xl:pl-[0]">
             @foreach ($sparepart as $item)
                 <x-card-sparepart>
                     <x-slot name="image">

@@ -36,7 +36,7 @@
             <div class="w-full">
                 @include('layouts.navigation')
             </div>
-            <div class="w-full p-10">
+            <div class="w-full p-4 md:p-8 xl:p-10">
                 {{ $slot }}
             </div>
         </div>

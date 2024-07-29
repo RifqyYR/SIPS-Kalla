@@ -18,6 +18,18 @@ class CatalogCarController extends Controller
         return view('pages.car-catalog.car_catalog', compact('catalog'));
     }
 
+    private function ensureDirectoryHasPermissions($directory, $permissions = 0755)
+    {
+        if (is_dir($directory)) {
+            $currentPermissions = substr(sprintf('%o', fileperms($directory)), -4);
+            if ($currentPermissions !== sprintf('%o', $permissions)) {
+                chmod($directory, $permissions);
+            }
+        } else {
+            mkdir($directory, $permissions, true);
+        }
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -58,6 +70,9 @@ class CatalogCarController extends Controller
         ]);
 
         try {
+            $catalogDirectory = storage_path('app/public/catalog_cars');
+            $this->ensureDirectoryHasPermissions($catalogDirectory);
+
             $catalog = CatalogCars::create([
                 'uuid' => Uuid::uuid4(),
                 'name' => $request->name,
@@ -104,6 +119,9 @@ class CatalogCarController extends Controller
     public function update(Request $request, string $uuid)
     {
         try {
+            $catalogDirectory = storage_path('app/public/catalog_cars');
+            $this->ensureDirectoryHasPermissions($catalogDirectory);
+
             $catalog = CatalogCars::where('uuid', $uuid)->first();
             if ($request->file() == []) {
                 $catalog->update([
@@ -117,8 +135,6 @@ class CatalogCarController extends Controller
             }
 
             DB::transaction(function () use ($request, $catalog) {
-                // $images = Image::where('catalog_cars_id', $catalog->id)->get();
-
                 foreach ($catalog->images as $images) {
                     if (Storage::exists('/public/catalog_cars/' . $images->img_url)) {
                         Storage::delete('/public/catalog_cars/' . $images->img_url);
@@ -142,31 +158,6 @@ class CatalogCarController extends Controller
                     $item->storeAs('public/catalog_cars/', $filename);
                 }
             });
-
-            // DB::transaction(function () use ($request, $catalog) {
-            //     $catalog->update([
-            //         'name' => $request->name,
-            //         'price' => $request->price,
-            //         'description' => $request->description,
-            //     ]);
-
-            //     foreach ($request->file('img') as $item) {
-            //         $filename = hash('sha256', time() . '-' . $item->getClientOriginalName()) . '.' . $item->extension();
-            //         $storagePath = 'public/catalog_cars/' . $filename;
-
-            //         $img = Image::where('catalog_cars_id', $catalog->id)->first();
-
-            //         if ($img && Storage::exists('public/catalog_cars/' . $img->img_url)) {
-            //             Storage::delete('public/catalog_cars/' . $img->img_url);
-            //         }
-
-            //         $img->update([
-            //             'img_url' => $filename,
-            //         ]);
-
-            //         $item->storeAs('public/catalog_cars', $filename);
-            //     }
-            // });
 
             return redirect()->route('catalog.index')->with('success', 'Berhasil mengedit data');
         } catch (\Exception $e) {

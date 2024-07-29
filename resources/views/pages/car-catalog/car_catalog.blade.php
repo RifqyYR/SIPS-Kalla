@@ -33,7 +33,7 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-fit sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-fit lg:w-96 sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
@@ -80,7 +80,7 @@
                         </x-dropdown>
                     </x-slot>
                     <x-slot name="img">
-                        <img class="max-w-xs xl:w-60 rounded-sm"
+                        <img class="w-fit xl:w-60 rounded-sm"
                             src="{{ asset('storage/catalog_cars/' . $item->images[0]->img_url) }}"
                             alt="{{ $item->name }}">
                     </x-slot>

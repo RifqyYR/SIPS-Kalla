@@ -53,7 +53,7 @@ function formatIndonesianDate($date) {
     <div class="pb-6">
         <h1 class="font-semibold text-xl text-gray-900 pb-4">Data Customer</h1>
         <div class="w-full bg-white rounded-lg shadow">
-            <div class="flex justify-between p-8 gap-10">
+            <div class="flex flex-col md:flex-row justify-between p-8 gap-1 md:gap-10">
                 <div class="flex flex-col flex-1">
                     <span class="font-semibold pb-1">Nama</span>
                     <span class="pb-2">{{ $service->client->name }}</span>
@@ -62,7 +62,7 @@ function formatIndonesianDate($date) {
                     <span class="font-semibold pb-1">Nomor Telepon</span>
                     <span>{{ $service->client->phone_number }}</span>
                 </div>
-                <div class="flex-none bg-gray-200 w-1 rounded-lg"></div>
+                <div class="md:flex-none md:bg-gray-200 md:w-1 md:rounded-lg"></div>
                 <div class="flex flex-col flex-1">
                     <span class="font-semibold pb-1">Tipe Mobil</span>
                     <span class="pb-2">{{ $service->clientCar->car_type }}</span>
@@ -76,7 +76,7 @@ function formatIndonesianDate($date) {
     <div class="pb-6">
         <h1 class="font-semibold text-xl text-gray-900 pb-4">Data Service</h1>
         <div class="w-full bg-white rounded-lg shadow">
-            <div class="flex justify-between p-8 gap-10">
+            <div class="flex flex-col md:flex-row justify-between p-8 gap-1 md:gap-10">
                 <div class="flex flex-col flex-1">
                     <span class="font-semibold pb-1">Tanggal</span>
                     <span class="pb-2">{{ formatIndonesianDate($service->date) }}</span>
@@ -87,7 +87,7 @@ function formatIndonesianDate($date) {
                     <span class="font-semibold pb-1">Jarak Tempuh</span>
                     <span>{{ $service->vehicle_km }} (Km)</span>
                 </div>
-                <div class="flex-none bg-gray-200 w-1 rounded-lg"></div>
+                <div class="md:flex-none md:bg-gray-200 md:w-1 md:rounded-lg"></div>
                 <div class="flex flex-col flex-1">
                     <span class="font-semibold pb-1">Informasi Tambahan</span>
                     <span class="pb-2">{{ $service->additional_info == null ? '-' : $service->additional_info }}</span>

@@ -27,15 +27,13 @@
                 <span class="{{ status($catalog->type)[1] }}">
                     {{ status($catalog->type)[0] }}
                 </span>
-
             </div>
         </div>
         
-        <div class="xzoom_part lg:flex xl:flex justify-center xl:gap-6">
+        <div class="xzoom_part md:flex md:flex-col xl:flex justify-center md:gap-6 xl:gap-6">
             <div class="xzoom_container basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
-                <div class="w-56 md:w-80 xl:w-[35rem]">
-                    <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-full xl:w-[35rem] rounded-lg xzoom" id="xzoom-default">
-
+                <div class="w-60 md:w-80 xl:w-[35rem]">
+                    <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-56 xl:w-[35rem] rounded-lg xzoom" id="xzoom-default">
                 </div>
             </div>
             <div class="flex lg:flex-col xl:flex-col justify-center gap-4">
@@ -116,8 +114,4 @@
             console.log("xZoom has been destroyed and image updated with fixed width.");
         });
     });
-
-
-
-
 </script>    

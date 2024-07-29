@@ -96,6 +96,7 @@ class CustomerController extends Controller
                         'client_id' => $client->id,
                         'car_type' => $request->car_type[$i],
                         'plate_number' => $request->plate_number[$i],
+                        'last_service_date' => $request->last_service_date[$i],
                         'last_service_km' => $request->last_service_km[$i]
                     ]);
                 }

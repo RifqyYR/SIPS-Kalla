@@ -115,12 +115,17 @@ class CatalogCarController extends Controller
 
                 return redirect()->route('catalog.index')->with('success', 'Berhasil mengedit data');
             }
-            
-            
+
             DB::transaction(function () use ($request, $catalog) {
-                if (Storage::exists('/public/catalog_cars/' . $request->file('img'))) {
-                    Storage::delete('/public/catalog_cars/' . $request->file('img'));
+                // $images = Image::where('catalog_cars_id', $catalog->id)->get();
+
+                foreach ($catalog->images as $images) {
+                    if (Storage::exists('/public/catalog_cars/' . $images->img_url)) {
+                        Storage::delete('/public/catalog_cars/' . $images->img_url);
+                    }
+                    $images->delete();
                 }
+
                 foreach ($request->file('img') as $item) {
                     $filename = hash('sha256', time() . '-' . $item->getClientOriginalName()) . '.' . $item->extension();
                     $catalog->update([
@@ -128,13 +133,9 @@ class CatalogCarController extends Controller
                         'price' => $request->price,
                         'description' => $request->description,
                     ]);
-
-
-                    $image = $item->delete();
-
-
-                    $img = Image::where('catalog_id', $catalog->id)->first();
-                    $img->update([
+                    Image::create([
+                        'uuid' => Uuid::uuid4(),
+                        'catalog_cars_id' => $catalog->id,
                         'img_url' => $filename,
                     ]);
 
@@ -153,8 +154,6 @@ class CatalogCarController extends Controller
             //         $filename = hash('sha256', time() . '-' . $item->getClientOriginalName()) . '.' . $item->extension();
             //         $storagePath = 'public/catalog_cars/' . $filename;
 
-            //         $item->storeAs('public/catalog_cars', $filename);
-
             //         $img = Image::where('catalog_cars_id', $catalog->id)->first();
 
             //         if ($img && Storage::exists('public/catalog_cars/' . $img->img_url)) {
@@ -164,6 +163,8 @@ class CatalogCarController extends Controller
             //         $img->update([
             //             'img_url' => $filename,
             //         ]);
+
+            //         $item->storeAs('public/catalog_cars', $filename);
             //     }
             // });
 

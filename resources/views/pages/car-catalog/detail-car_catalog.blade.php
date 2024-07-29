@@ -33,7 +33,7 @@
         
         <div class="xzoom_part lg:flex xl:flex justify-center lg:gap-6 xl:gap-8 xl:px-10">
             <div class="xzoom_container basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
-                <div class="w-56 md:w-80 lg:w-[25rem] xl:w-[45rem]">
+                <div class="w-56 md:w-80 lg:w-[25rem] xl:w-[45rem] 2xl:w-12">
                     <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-full rounded-lg xzoom" id="xzoom-default">
 
                 </div>

@@ -66,6 +66,13 @@
                     </div>
 
                     <div class="mt-4">
+                        <x-input-label :value="'Jadwal Service Terakhir ${i + 1}'" />
+                        <x-text-input id="last_service_date_${i}" class="block mt-1 w-32 md:w-fit" type="date" name="last_service_date[]" :value="old('last_service_date.${i}')"
+                            required autofocus autocomplete="last_service_date_${i}"/>
+                        <x-input-error :messages="$errors->get('last_service_date.${i}')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
                         <x-input-label :value="'Jarak Tempuh (Km) ${i + 1}'" />
                         <x-text-input id="last_service_km_${i}" class="block mt-1 w-full" type="number" name="last_service_km[]" :value="old('last_service_km.${i}')"
                             required autofocus autocomplete="last_service_km_${i}" min="0" />
@@ -117,7 +124,7 @@
 
                     <div class="mt-4">
                         <x-input-label :value="'Jadwal Service Terakhir ${i + 1}'" />
-                        <x-text-input id="last_service_date_${i}" class="block mt-1 w-fit" type="date" name="last_service_date[]" :value="old('last_service_date.${i}')"
+                        <x-text-input id="last_service_date_${i}" class="block mt-1 w-32 md:w-fit" type="date" name="last_service_date[]" :value="old('last_service_date.${i}')"
                             required autofocus autocomplete="last_service_date_${i}" max='${currentDate}' />
                         <x-input-error :messages="$errors->get('last_service_date.${i}')" class="mt-2" />
                     </div>

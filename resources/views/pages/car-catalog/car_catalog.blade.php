@@ -21,7 +21,7 @@
     </x-slot>
 
     <!-- Button -->
-    <div class="flex justify-between pb-4">
+    <div class="md:flex xl:flex md:justify-between xl:justify-between pb-4">
         <div class="pb-4">
             <label for="table-search" class="sr-only justify-end">Search</label>
             <div class="relative mt-1">
@@ -33,11 +33,11 @@
                     </svg>
                 </div>
                 <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-fit lg:w-96 sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Cari item">
             </div>
         </div>
-        <div class="pb-4">
+        <div class="pb-4 md:mt-1">
             <a href="{{ route('catalog.create') }}">
                 <x-primary-button>Tambah Item</x-primary-button>
             </a>
@@ -45,7 +45,7 @@
     </div>
 
     @if (count($catalog) !== 0)
-        <div id="search-results" class="grid grid-cols-3 mb-6 gap-12">
+        <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mb-6 gap-6 xl:gap-12">
             @foreach ($catalog as $item)
                 <x-card-catalog>
                     <x-slot name="type">
@@ -80,7 +80,7 @@
                         </x-dropdown>
                     </x-slot>
                     <x-slot name="img">
-                        <img class="max-w-xs rounded-sm"
+                        <img class="w-fit xl:w-60 rounded-sm"
                             src="{{ asset('storage/catalog_cars/' . $item->images[0]->img_url) }}"
                             alt="{{ $item->name }}">
                     </x-slot>
@@ -88,7 +88,7 @@
                     <x-slot name="detail">
                         <a href="{{ route('catalog.detail', $item->uuid) }}">
                             <div class="px-2 bg-[#01803D] text-center rounded-lg mb-4">
-                                <span class="font-semibold text-lg text-white">Detail</span>
+                                <span class="font-semibold xl:text-lg text-white">Detail</span>
                             </div>
                         </a>
                     </x-slot>

@@ -3,11 +3,11 @@
     {
         if ($type == 'NEW') {
             $status = 'Baru';
-            $class_status = 'bg-blue-500 rounded-xl px-4 text-white border border-blue-500';
+            $class_status = 'bg-blue-500 rounded-xl px-4 text-white border border-blue-500 text-sm xl:text-base';
             return [$status, $class_status];
         } else {
             $status = 'Bekas';
-            $class_status = 'bg-gray-500 rounded-xl px-4 py-1 text-white border border-gray-500';
+            $class_status = 'bg-gray-500 rounded-xl px-4 py-1 text-white border border-gray-500 text-sm xl:text-base';
             return [$status, $class_status];
         }
     }
@@ -22,25 +22,23 @@
 
     <div class="bg-white p-6 rounded flex-row shadow border">
         <div class="flex flex-row justify-between mb-6">
-            <h2 class="text-3xl font-bold">{{ $catalog->name }}</h2>
+            <h2 class="text-xl xl:text-3xl font-bold">{{ $catalog->name }}</h2>
             <div class="mt-2">
                 <span class="{{ status($catalog->type)[1] }}">
                     {{ status($catalog->type)[0] }}
                 </span>
-
             </div>
         </div>
         
-        <div class="xzoom_part flex justify-center gap-8 px-10">
+        <div class="xzoom_part md:flex md:flex-col xl:flex-row justify-center md:gap-6 xl:gap-6">
             <div class="xzoom_container basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
-                <div class="w-[45rem]">
-                    <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-full rounded-lg xzoom" id="xzoom-default">
-
+                <div class="w-60 md:w-80 xl:w-[40rem] xl:h-full">
+                    <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-56 xl:h-full xl:w-[40rem] rounded-lg xzoom" id="xzoom-default">
                 </div>
             </div>
-            <div class="flex flex-col justify-center mt-8 gap-4">
+            <div class="flex xl:flex-col justify-center gap-4">
                 @foreach ($catalog->images as $item)
-                    <div class="w-52">
+                    <div class="w-20 md:w-24 xl:w-[8rem]">
                         <a href="{{ asset('storage/catalog_cars/' . $item->img_url) }}">
                             <img src="{{ asset('storage/catalog_cars/' . $item->img_url) }}" class="h-full rounded-lg xzoom-gallery" 
                                 xpreview="{{ asset('storage/catalog_cars/' . $item->img_url) }}">
@@ -51,11 +49,11 @@
         </div>
         <div class="basis-full md:basis-2/3 flex flex-col mt-4">
             <div class="p-4">
-                <div class="flex gap-6">
-                    <div class="font-bold text-4xl">
+                <div class="flex flex-col xl:flex-row xl:gap-6">
+                    <div class="font-bold text-2xl md:text-3xl xl:text-4xl">
                         {{ $catalog->name }}
                     </div>
-                    <div class="font-semibold text-2xl mt-2">
+                    <div class="font-semibold text-lg md:text-xl xl:text-2xl mt-2">
                         (Rp. {{ number_format($catalog->price, 0, ',', '.') }})
                     </div>
                 </div>
@@ -116,8 +114,4 @@
             console.log("xZoom has been destroyed and image updated with fixed width.");
         });
     });
-
-
-
-
 </script>    

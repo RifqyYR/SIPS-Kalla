@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class="flex flex-col gap-2 mb-6">
-        <div class="flex flex-col gap-2 md:flex-row">
+    <div class="grid grid-row gap-2 mb-6">
+        <div class="grid grid-cols-2 xl:grid-cols-3 gap-2">
             <x-card class="w-full md:w-1/3">
                 <x-slot name="title">
                     {{ __('Jumlah Customer') }}
@@ -40,8 +40,6 @@
                     <img src="ic_sales.svg" alt="icon sales" width="30">
                 </x-slot>
             </x-card>
-        </div>
-        <div class="flex flex-col gap-2 md:flex-row">
             <x-card class="w-full md:w-1/3">
                 <x-slot name="title">
                     {{ __('Jumlah PIC') }}
@@ -79,12 +77,12 @@
     </div>
 
     <div class="flex flex-col text-gray-900">
-        <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex flex-col md:grid md:grid-rows-1 md:flex-row lg:grid-cols-2 gap-4">
             <div class="flex flex-col md:basis-3/5">
                 <div class="font-semibold text-xl mb-2">Grafik Servis Booking dan Kunjungan</div>
                 <div id="highChart" class="bg-white py-4 rounded-lg shadow-lg"></div>
             </div>
-            <div class="flex flex-col md:basis-2/5">
+            <div class="flex flex-col">
                 <div class="font-semibold text-xl mb-2">Grafik Katalog Mobil</div>
                 <div id="pieChart" class="bg-white py-4 rounded-lg shadow-lg"></div>
             </div>

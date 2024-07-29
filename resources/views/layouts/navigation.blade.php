@@ -63,16 +63,16 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('catalog_cars')">
+            <x-responsive-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog*')">
                 {{ __('Katalog Mobil') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('sparepart')">
+            <x-responsive-nav-link :href="route('sparepart.index')" :active="request()->routeIs('sparepart*')">
                 {{ __('Suku Cadang') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('customers')">
+            <x-responsive-nav-link :href="route('customer.index')" :active="request()->routeIs('customer*')">
                 {{ __('Customer') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :active="request()->routeIs('services')">
+            <x-responsive-nav-link :href="route('service.index')" :active="request()->routeIs('service*')">
                 {{ __('Servis') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('sales.index')" :active="request()->routeIs('sales*')">

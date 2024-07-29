@@ -7,7 +7,7 @@
 
     <div class="bg-white p-6 rounded flex-row shadow border">
         <div class="basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
-            <img src="{{ asset('storage/sparepart/' . $sparepart->img_url) }}" class="h-44 md:h-52 lg:h-80 xl:h-96 object-cover rounded-lg">
+            <img src="{{ asset('storage/sparepart/' . $sparepart->img_url) }}" class="h-44 md:h-52 xl:h-80 object-cover rounded-lg">
         </div>
         <div class="basis-full md:basis-2/3 flex flex-col">
             <div class="p-4">
@@ -19,7 +19,7 @@
                         (Rp. {{ number_format($sparepart->price, 0, ',', '.') }})
                     </div>
                 </div>
-                <hr class="mb-6  border border-gray-100">
+                <hr class="mb-6 border border-gray-100 xl:mt-4">
                 <div class="mt-1 grid">
                     <div class="prose max-w-none text-justify">
                         {!! $sparepart->description !!}

@@ -80,7 +80,7 @@
                         </x-dropdown>
                     </x-slot>
                     <x-slot name="img">
-                        <img class="max-w-xs rounded-sm"
+                        <img class="max-w-xs xl:w-60 rounded-sm"
                             src="{{ asset('storage/catalog_cars/' . $item->images[0]->img_url) }}"
                             alt="{{ $item->name }}">
                     </x-slot>

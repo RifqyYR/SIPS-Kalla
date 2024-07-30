@@ -212,23 +212,142 @@
         }
 
         function updateSearchResultsCatalog(data) {
+            function convertStatus(type) {
+                if (type == 'NEW') {
+                    status = 'Baru';
+                    class_status = 'bg-blue-500 rounded-xl px-3 py-1 text-white border border-blue-500';
+                    return [status, class_status];
+                } else {
+                    status = 'Bekas';
+                    class_status = 'bg-gray-500 rounded-xl px-3 py-1 text-white border border-gray-500';
+                    return [status, class_status];
+                }
+            }
+
             $("#search-results").html("");
             if (data.data.data.length !== 0) {
-                $.each(data.data, function(index, item) {
+                $('#search-results').addClass('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mb-6 gap-6 xl:gap-12');
+                $.each(data.data.data, function(index, item) {
+                    stats = convertStatus(item.type);
                     $("#search-results").append(
-                        `<div class="card">
-                            <img src="${item.img_url}" alt="${item.name}" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">${item.name}</h5>
-                                <p class="card-text">${item.description}</p>
-                                <a href="#" class="btn btn-primary">Detail</a>
-                            </div>
-                        </div>`
+                        `<x-card-catalog>
+                            <x-slot name="type">
+                                <span class="`+ stats[1] + `">
+                                    ` + stats[0] + `
+                                </span>
+                            </x-slot>
+                            <x-slot name="icon">
+                                <x-dropdown>
+                                    <x-slot name="trigger">
+                                        <button class="focus:outline-none transition ease-in-out duration-150">
+                                            <svg class="w-4 h-4" id="fi_2311524" enable-background="new 0 0 32 32"
+                                                height="512" viewBox="0 0 32 32" width="512"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path id="XMLID_294_"
+                                                    d="m13 16c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path>
+                                                <path id="XMLID_295_"
+                                                    d="m13 26c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path>
+                                                <path id="XMLID_297_"
+                                                    d="m13 6c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z"></path>
+                                            </svg>
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name='content'>
+                                        <x-dropdown-link href="/car-catalog/edit/${item.uuid}">
+                                            Edit
+                                        </x-dropdown-link>
+                                        <x-dropdown-link onclick="confirmDelete('${item.uuid }')">
+                                            Hapus
+                                        </x-dropdown-link>
+                                    </x-slot>
+                                </x-dropdown>
+                            </x-slot>
+                            <x-slot name="img">
+                                <img class="w-fit xl:w-60 rounded-sm"
+                                    src="{{ asset('/storage/catalog_cars/${item.images[0].img_url}') }}"
+                                    alt=" ` + item.name + `">
+                            </x-slot>
+                            <x-slot name="name">`+ item.name +`</x-slot>
+                            <x-slot name="detail">
+                                <a href="/car-catalog/detail/${item.uuid}">
+                                    <div class="px-2 bg-[#01803D] text-center rounded-lg mb-4">
+                                        <span class="font-semibold xl:text-lg text-white">Detail</span>
+                                    </div>
+                                </a>
+                            </x-slot>
+                        </x-card-catalog>`
                     );
                 });
             } else {
-                $("#search-results").append('<span class="px-6 py-4 font-medium text-gray-900 text-center"class="px-6 py-4 font-medium text-gray-900 text-center">' + 
-                    'Data tidak ditemukan' + '</span>');
+                $('#search-results').removeClass('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mb-6 gap-6 xl:gap-12');
+                $("#search-results").append(
+                    '<div class="mb-6 text-center text-gray-500">' + 
+                        '<span>' + 'Belum ada data' + '</span>' +
+                    '</div>'
+                );
+            }
+            updatePaginationLinks(data);
+        }
+
+        function updateSearchResultsSparepart(data) {
+            $("#search-results").html("");
+            if (data.data.data.length !== 0) {
+                $('#search-results').addClass('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mb-6 gap-6 xl:gap-12');
+                $.each(data.data.data, function(index, item) {
+                    $("#search-results").append(
+                        `<x-card-sparepart>
+                            <x-slot name="image">
+                                <a href="/sparepart/detail/${item.uuid}">
+                                    <img src="{{ asset('/storage/sparepart/${item.img_url}') }}"
+                                        alt="`+item.name+`"
+                                        class="rounded-md max-w-full h-60">
+                                </a>
+                            </x-slot>
+                            <x-slot name="title">
+                                <a href="/sparepart/detail'${item.uuid}">
+                                    `+item.name+`
+                                </a>
+                            </x-slot>
+                            <x-slot name="price">`+Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price).replace(",00","")+`</x-slot>
+                            <x-slot name="icon">
+                                <x-dropdown>
+                                    <x-slot name="trigger">
+                                        <button class="focus:outline-none transition ease-in-out duration-150">
+                                            <svg class="w-4 h-4" id="fi_2311524" enable-background="new 0 0 32 32"
+                                                height="512" viewBox="0 0 32 32" width="512"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path id="XMLID_294_"
+                                                    d="m13 16c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z">
+                                                </path>
+                                                <path id="XMLID_295_"
+                                                    d="m13 26c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z">
+                                                </path>
+                                                <path id="XMLID_297_"
+                                                    d="m13 6c0 1.654 1.346 3 3 3s3-1.346 3-3-1.346-3-3-3-3 1.346-3 3z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name='content'>
+                                        <x-dropdown-link href="/sparepart/edit/${item.uuid}">
+                                            Edit
+                                        </x-dropdown-link>
+                                        <x-dropdown-link onclick="confirmDelete('${item.uuid})">
+                                            Hapus
+                                        </x-dropdown-link>
+                                    </x-slot>
+                                </x-dropdown>
+                            </x-slot>
+                        </x-card-sparepart>`
+                    );
+                });
+            } else {
+                $('#search-results').removeClass('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mb-6 gap-6 xl:gap-12');
+                $("#search-results").append(
+                    '<div class="mb-6 text-center text-gray-500">' + 
+                        '<span>' + 'Belum ada data' + '</span>' +
+                    '</div>'
+                );
             }
             updatePaginationLinks(data);
         }
@@ -324,6 +443,20 @@
                     },
                     success: function(data) {
                         updateSearchResultsCatalog(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred:", status, error);
+                    }
+                });
+            } else if (window.location.pathname == '/sparepart') {
+                $.ajax({
+                    url: "/sparepart/search",
+                    type: "GET",
+                    data: {
+                        query: query,
+                    },
+                    success: function(data) {
+                        updateSearchResultsSparepart(data);
                     },
                     error: function(xhr, status, error) {
                         console.error("An error occurred:", status, error);

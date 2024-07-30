@@ -44,7 +44,7 @@
             
             <div class="mt-4">
                 <x-input-label for="description" :value="__('Deskripsi')" />
-                <textarea id="description" name="description" class="block mt-1 w-full" placeholder="Masukkan deskripsi suku cadang">{{ old('description') }}</textarea>
+                <textarea id="description" name="description" class="block mt-1 w-full" placeholder="Masukkan deskripsi katalog mobil">{{ old('description') }}</textarea>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
 

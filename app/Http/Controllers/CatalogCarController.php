@@ -23,12 +23,14 @@ class CatalogCarController extends Controller
         $query = $request->input('query');
 
         // Search by name
-        $results = CatalogCars::where('name', 'LIKE', "%{$query}%")->paginate(10);
+        $results = CatalogCars::whereHas('images', function ($q) use ($query) {
+            $q->where('name', 'LIKE', "%{$query}%");
+        })->with('images')->paginate(6);
 
         $results->appends(['query' => $query]);
 
         return response()->json([
-            'data' => $results->items(),
+            'data' => $results,
             'firstItem' => $results->firstItem(),
             'lastItem' => $results->lastItem(),
             'total' => $results->total(),

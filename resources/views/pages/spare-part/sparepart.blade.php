@@ -31,7 +31,7 @@
 
 
     @if (count($sparepart) !== 0)
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:justify-between md:gap-6 xl:gap-4 mb-6 w-full place-items-center">
+        <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:justify-between md:gap-6 xl:gap-4 mb-6 w-full place-items-center">
             @foreach ($sparepart as $item)
                 <x-card-sparepart>
                     <x-slot name="image">

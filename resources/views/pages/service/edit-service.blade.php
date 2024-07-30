@@ -8,7 +8,7 @@
     <form action="{{ route('service.update', $service->uuid) }}" method="post">
         @csrf
         <div class="container bg-white p-6 rounded">
-            <div class="mt-4 flex justify-between gap-10">
+            <div class="mt-4 flex flex-col md:flex-row justify-between gap-4 md:gap-10">
                 <div class="flex-1">
                     <x-input-label for="date" :value="__('Tanggal')" />
                     <x-text-input id="date" class="block mt-1 w-full" type="date" name="date" :value="$service->date"
@@ -50,7 +50,7 @@
                 <x-input-error :messages="$errors->get('status')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-center mt-20 gap-4">
+            <div class="flex items-center justify-center mt-10 md:mt-12 xl:mt-20 gap-4">
                 <a href="{{ route('service.index') }}">
                     <x-secondary-button>
                         {{ __('Kembali') }}

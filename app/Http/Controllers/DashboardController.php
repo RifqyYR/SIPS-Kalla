@@ -81,13 +81,15 @@ class DashboardController extends Controller
             }
         }
 
+        Carbon::setLocale('id');
+
         return [
             'categories' => array_map(function ($month) {
-                return date('F', mktime(0, 0, 0, $month, 1));
+                return Carbon::createFromFormat('m', $month)->isoFormat('MMMM');
             }, $months),
             'series' => [
-                ['name' => 'BOOK', 'data' => array_values($results['BOOK'])],
-                ['name' => 'VISIT', 'data' => array_values($results['VISIT'])]
+                ['name' => 'Servis Reservasi', 'data' => array_values($results['BOOK'])],
+                ['name' => 'Servis Kunjungan', 'data' => array_values($results['VISIT'])]
             ]
         ];
     }

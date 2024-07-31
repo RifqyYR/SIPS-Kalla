@@ -28,6 +28,14 @@ class ServiceController extends Controller
             $user = Auth::user();
             $client = Client::where('id', $user->id)->first();
 
+            $clientCarsIds = $client->cars->pluck('id')->toArray();
+            
+            if (!in_array($request->client_car_id, $clientCarsIds)) {
+                return response()->json([
+                    'message' => 'Mobil tidak ditemukan'
+                ],404);
+            }
+
             DB::transaction(function() use ($client, $request) {
                 Service::create([
                     'uuid' => Uuid::uuid4(),
@@ -66,6 +74,14 @@ class ServiceController extends Controller
         try {
             $user = Auth::user();
             $client = Client::where('id', $user->id)->first();
+
+            $clientCarsIds = $client->cars->pluck('id')->toArray();
+            
+            if (!in_array($request->client_car_id, $clientCarsIds)) {
+                return response()->json([
+                    'message' => 'Mobil tidak ditemukan'
+                ],404);
+            }
 
             DB::transaction(function() use ($client, $request) {
                 Service::create([

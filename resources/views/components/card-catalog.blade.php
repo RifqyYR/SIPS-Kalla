@@ -11,8 +11,8 @@
             {{ $img }}
         </div>
     </div>
-    <div class="flex justify-center">
-        <div class="flex flex-col w-full">
+    <div class="flex justify-center h-24 xl:h-32">
+        <div class="flex flex-col w-full justify-between">
             <span class="font-semibold xl:text-2xl mb-4 text-center">{{ $name }}</span>
             <div>{{ $detail }}</div>
         </div>

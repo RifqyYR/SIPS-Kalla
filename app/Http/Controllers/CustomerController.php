@@ -117,38 +117,80 @@ class CustomerController extends Controller
         return view('pages.customer.edit-customer', compact('client'));
     }
 
+    // public function update(Request $request, string $uuid)
+    // {
+    //     try {
+    //         // Validate Input
+    //         $request->validate([
+    //             'name' => 'required',
+    //             'email' => 'required|email',
+    //             'phone_number' => 'required|digits_between:10,15',
+    //             'address' => 'required'
+    //         ], [
+    //             'name.required' => 'Input nama harus diisi',
+    //             'email.required' => 'Input email harus diisi',
+    //             'email.email' => 'Masukkan email yang valid',
+    //             'phone_number.required' => 'Field nomor telepon harus diisi',
+    //             'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
+    //             'address.required' => 'Field alamat harus diisi',
+    //         ]);
+
+    //         $client = Client::where('uuid', $uuid)->first();
+
+    //         $client->update([
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'phone_number' => $request->phone_number,
+    //             'address' => $request->address
+    //         ]);
+
+    //         return redirect()->route('customer.index')->with('success', 'Berhasil mengedit data');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Gagal mengedit data: ' . $e->getMessage());
+    //     }
+    // }
+
     public function update(Request $request, string $uuid)
     {
         try {
             // Validate Input
-            $request->validate([
+            $validated = $request->validate([
                 'name' => 'required',
                 'email' => 'required|email',
                 'phone_number' => 'required|digits_between:10,15',
-                'address' => 'required'
+                'address' => 'required',
+                'change_password' => 'required|in:yes,no',
+                'new_password' => 'nullable|required_if:change_password,yes|string|min:8|confirmed'
             ], [
-                'name.required' => 'Input nama harus diisi',
-                'email.required' => 'Input email harus diisi',
-                'email.email' => 'Masukkan email yang valid',
-                'phone_number.required' => 'Field nomor telepon harus diisi',
-                'phone_number.digits_between' => 'Masukkan nomor telepon yang sesuai',
-                'address.required' => 'Field alamat harus diisi',
+                // Validation messages...
+                'new_password.required_if' => 'The new password is required when changing password is set to Yes.',
+                'new_password.min' => 'The new password must be at least 8 characters',
+                'new_password.confirmed' => 'The new password confirmation does not match',
             ]);
 
             $client = Client::where('uuid', $uuid)->first();
+            if (!$client) {
+                return redirect()->back()->with('error', 'Client not found');
+            }
 
             $client->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'address' => $request->address
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone_number' => $validated['phone_number'],
+                'address' => $validated['address'],
             ]);
+
+            if ($request->change_password === 'yes') {
+                $client->password = Hash::make($validated['new_password']);
+                $client->save();
+            }
 
             return redirect()->route('customer.index')->with('success', 'Berhasil mengedit data');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengedit data: ' . $e->getMessage());
         }
     }
+
 
     public function destroy(string $uuid)
     {

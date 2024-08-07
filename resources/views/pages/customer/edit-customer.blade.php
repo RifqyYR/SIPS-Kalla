@@ -36,6 +36,33 @@
                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
             </div>
 
+            <div class="mt-4">
+                <x-input-label for="change_password" :value="__('Ganti Password?')" />
+                <div class="flex items-center space-x-3">
+                    <label>
+                        <input type="radio" name="change_password" value="yes" class="mr-2">
+                        {{ __('Yes') }}
+                    </label>
+                    <label>
+                        <input type="radio" name="change_password" value="no" class="mr-2" checked>
+                        {{ __('No') }}
+                    </label>
+                </div>
+            </div>
+
+            <div id="password_fields" class="hidden">
+                <div class="mt-4">
+                    <x-input-label for="new_password" :value="__('Masukkan Password Baru')" />
+                    <x-text-input id="new_password" class="block mt-1 w-full" type="password" name="new_password" autocomplete="new-password" />
+                    <x-input-error :messages="$errors->get('new_password')" class="mt-2" />
+                </div>
+                <div class="mt-4">
+                    <x-input-label for="new_password_confirmation" :value="__('Konfirmasi Password Baru')" />
+                    <x-text-input id="new_password_confirmation" class="block mt-1 w-full" type="password" name="new_password_confirmation" autocomplete="new-password" />
+                    <x-input-error :messages="$errors->get('new_password_confirmation')" class="mt-2" />
+                </div>
+            </div>
+
             <div class="flex items-center justify-center mt-20 gap-4">
                 <a href="{{ route('customer.index') }}">
                     <x-secondary-button>
@@ -49,3 +76,18 @@
         </div>
     </form>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const changePasswordYes = document.querySelector('input[name="change_password"][value="yes"]');
+        const passwordFields = document.getElementById('password_fields');
+    
+        changePasswordYes.addEventListener('change', function () {
+            passwordFields.classList.toggle('hidden', !this.checked);
+        });
+    
+        document.querySelector('input[name="change_password"][value="no"]').addEventListener('change', function () {
+            passwordFields.classList.add('hidden');
+        });
+    });
+</script>

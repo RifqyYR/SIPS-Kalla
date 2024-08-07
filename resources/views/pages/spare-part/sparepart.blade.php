@@ -78,7 +78,7 @@
                 </x-card-sparepart>
             @endforeach
         </div>
-        <nav id="pagination-links" class="flex items-center flex-column flex-wrap md:flex-row justify-center pt-4">
+        <nav id="pagination-links-img" class="flex items-center flex-column flex-wrap md:flex-row justify-center pt-4">
             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                 {{-- Previous Page Link --}}
                 @if ($sparepart->onFirstPage())

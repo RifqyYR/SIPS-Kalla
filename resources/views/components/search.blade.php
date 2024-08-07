@@ -286,7 +286,7 @@
                     '</div>'
                 );
             }
-            updatePaginationLinks(data);
+            updatePaginationLinksImg(data);
         }
 
         function updateSearchResultsSparepart(data) {
@@ -349,7 +349,7 @@
                     '</div>'
                 );
             }
-            updatePaginationLinks(data);
+            updatePaginationLinksImg(data);
         }
 
         function updatePaginationLinks(data) {
@@ -361,6 +361,10 @@
             );
 
             $("#pagination-links").append(data.links);
+        }
+
+        function updatePaginationLinksImg(data) {
+            $("#pagination-links-img").append(data.data.links);
         }
 
         function fetchSearchResults(query) {

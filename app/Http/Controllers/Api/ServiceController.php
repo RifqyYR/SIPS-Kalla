@@ -20,7 +20,6 @@ class ServiceController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'vehicle_km' => 'required|integer',
-            'additional_info' => 'string',
             'service_type' => 'required|string',
         ]);
 
@@ -64,7 +63,6 @@ class ServiceController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'vehicle_km' => 'required|integer',
-            'additional_info' => 'string',
             'service_type' => 'required|string',
             'address' => 'required|string',
             'lat' => 'required|numeric',

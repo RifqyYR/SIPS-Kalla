@@ -154,3 +154,13 @@
         }
     });
 </script>
+
+{{-- Maksimal 5 gambar catalog car --}}
+<script>
+    document.getElementById('imgUpload').addEventListener('change', function(event) {
+        if (this.files.length > 5) {
+            alert('Hanya bisa menambahkan maksimal 5 gambar');
+            this.value = '';
+        }
+    });
+</script>

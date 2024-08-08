@@ -163,14 +163,14 @@ class CustomerController extends Controller
                 'new_password' => 'nullable|required_if:change_password,yes|string|min:8|confirmed'
             ], [
                 // Validation messages...
-                'new_password.required_if' => 'The new password is required when changing password is set to Yes.',
-                'new_password.min' => 'The new password must be at least 8 characters',
-                'new_password.confirmed' => 'The new password confirmation does not match',
+                'new_password.required_if' => 'Kata sandi baru diperlukan jika perubahan kata sandi diatur ke "Ya".',
+                'new_password.min' => 'Kata sandi baru harus minimal 8 karakter',
+                'new_password.confirmed' => 'Konfirmasi kata sandi baru tidak cocok',
             ]);
 
             $client = Client::where('uuid', $uuid)->first();
             if (!$client) {
-                return redirect()->back()->with('error', 'Client not found');
+                return redirect()->back()->with('error', 'Data Customer tidak ditemukan.');
             }
 
             $client->update([
@@ -187,7 +187,7 @@ class CustomerController extends Controller
 
             return redirect()->route('customer.index')->with('success', 'Berhasil mengedit data');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal mengedit data: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal mengedit data customer');
         }
     }
 
@@ -293,7 +293,7 @@ class CustomerController extends Controller
                 'last_service_km.integer' => 'Field jarak tempuh harus berupa angka',
                 'last_service_km.min' => 'Field jarak tempuh tidak boleh kurang dari 0',
             ]);
-            
+
             $car = ClientCars::where('uuid', $uuid)->first();
 
             $car->update([

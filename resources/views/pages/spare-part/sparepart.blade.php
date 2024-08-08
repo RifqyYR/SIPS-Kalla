@@ -31,13 +31,13 @@
 
 
     @if (count($sparepart) !== 0)
-        <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:justify-between md:gap-6 xl:gap-4 mb-6 w-full place-items-center">
+        <div id="search-results" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 xl:justify-between md:gap-6 xl:gap-4 mb-6 w-full place-items-center">
             @foreach ($sparepart as $item)
                 <x-card-sparepart>
                     <x-slot name="image">
-                        <a href="{{ route('sparepart.detail', $item->uuid) }}">
+                        <a class="flex justify-center" href="{{ route('sparepart.detail', $item->uuid) }}">
                             <img src="{{ asset('storage/sparepart/' . $item->img_url) }}" alt="{{ $item->name }}"
-                                class="rounded-md max-w-full h-60">
+                                class="rounded-md w-fit h-60">
                         </a>
                     </x-slot>
                     <x-slot name="title">

@@ -46,12 +46,12 @@
         
         <div class="xzoom_part md:flex md:flex-col xl:flex-row justify-center md:gap-6 xl:gap-6">
             <div class="xzoom_container basis-full md:basis-1/3 flex justify-center items-center mb-4 md:mb-0">
-                <div class="w-60 md:w-80 xl:w-[40rem] xl:h-full">
+                <div class="w-60 md:w-80 xl:w-[40rem] xl:h-[30rem]">
                     <img src="{{ asset('storage/catalog_cars/' . $catalog->images[0]->img_url) }}" class="h-56 xl:h-full xl:w-[40rem] rounded-lg xzoom" id="xzoom-default">
                 </div>
             </div>
             <div class="flex xl:flex-col justify-center gap-4">
-                @foreach ($catalog->images as $item)
+                @foreach ($catalog->images->take(5) as $item)
                     <div class="w-20 md:w-24 xl:w-[8rem]">
                         <a href="{{ asset('storage/catalog_cars/' . $item->img_url) }}">
                             <img src="{{ asset('storage/catalog_cars/' . $item->img_url) }}" class="h-full rounded-lg xzoom-gallery" 

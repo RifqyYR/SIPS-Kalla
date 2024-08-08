@@ -114,7 +114,7 @@
                 @foreach ($catalog->getUrlRange(1, $catalog->lastPage()) as $page => $url)
                     <li>
                         <a href="{{ $url }}"
-                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $catalog->currentPage() ? 'text-blue-600 bg-blue-50' : '' }}">{{ $page }}</a>
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ $page == $catalog->currentPage() ? 'text-blue-600 bg-blue-500' : '' }}">{{ $page }}</a>
                     </li>
                 @endforeach
 

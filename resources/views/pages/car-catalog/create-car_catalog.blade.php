@@ -49,7 +49,7 @@
             </div>
 
             <div class="flex items-center justify-center mt-20 gap-4">
-                <a href="{{ route('sparepart.index') }}">
+                <a href="{{ route('catalog.index') }}">
                     <x-secondary-button>
                         {{ __('Kembali') }}
                     </x-secondary-button>

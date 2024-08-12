@@ -79,6 +79,7 @@ class CatalogCarController extends Controller
                 'uuid' => Uuid::uuid4(),
                 'name' => $request->name,
                 'price' => doubleval($request->price),
+                'type' => $request->type,
                 'description' => $request->description,
             ]);
 

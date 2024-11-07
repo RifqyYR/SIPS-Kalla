@@ -15,7 +15,15 @@ class ClientController extends Controller
             $user = Auth::user();
             $client = Client::where('id', $user->id)->first();
 
-            return response()->json(new ResponseResource('Berhasil mendapatkan data', $client->cars), 200);
+            // Mengubah last_service_km dari int menjadi string
+            $cars = $client->cars->map(function ($car) {
+                // Mengubah last_service_km menjadi string
+                $car->last_service_km = (string)$car->last_service_km;
+                return $car;
+            });
+
+            // Mengembalikan response JSON dengan data mobil yang sudah dimodifikasi
+            return response()->json(new ResponseResource('Berhasil mendapatkan data', $cars), 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal mendapatkan data: ' . $e->getMessage()
